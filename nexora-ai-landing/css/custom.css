@@ -1,0 +1,172 @@
+/* Nexora AI — concept landing page extras
+   Tailwind handles layout. This file is brand motion, glass, and polish. */
+
+:root {
+  --nx-bg: #05060b;
+  --nx-bg-elevated: #0b0e16;
+  --nx-surface: rgba(16, 20, 32, 0.72);
+  --nx-line: rgba(148, 163, 184, 0.14);
+  --nx-accent: #22d3ee;
+  --nx-accent-2: #818cf8;
+  --nx-glow: rgba(34, 211, 238, 0.28);
+  --nav-h: 72px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 12px);
+}
+
+body {
+  background: var(--nx-bg);
+  color: #e8eef7;
+}
+
+/* Subtle grid + aurora behind the page */
+.nx-canvas {
+  background-color: var(--nx-bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(34, 211, 238, 0.10), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(129, 140, 248, 0.10), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 10% 20%, rgba(14, 165, 233, 0.08), transparent 50%),
+    linear-gradient(to bottom, transparent, var(--nx-bg));
+}
+
+.nx-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+}
+
+.nx-glass {
+  background: var(--nx-surface);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--nx-line);
+}
+
+.nx-glow-ring {
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.18),
+    0 10px 40px -12px var(--nx-glow);
+}
+
+/* Logo mark pulse */
+.nx-mark-core {
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.55));
+}
+
+/* Navbar */
+#site-nav {
+  background: rgba(5, 6, 11, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+#site-nav.is-scrolled {
+  background: rgba(5, 6, 11, 0.92);
+  border-bottom-color: var(--nx-line);
+}
+
+/* Mobile drawer */
+.nx-drawer {
+  transform: translateX(100%);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nx-drawer.is-open {
+  transform: translateX(0);
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+/* Cards */
+.nx-card {
+  background: linear-gradient(180deg, rgba(18, 22, 36, 0.9), rgba(12, 15, 24, 0.9));
+  border: 1px solid var(--nx-line);
+  transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.nx-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34, 211, 238, 0.35);
+  box-shadow: 0 18px 50px -24px rgba(34, 211, 238, 0.45);
+}
+
+.nx-card.is-active {
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 18px 50px -20px rgba(34, 211, 238, 0.5);
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+.reveal-delay-4 { transition-delay: 320ms; }
+
+/* How it works connector */
+.nx-step-line {
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.45), transparent);
+}
+
+@media (min-width: 768px) {
+  .nx-step-line-v {
+    background: linear-gradient(180deg, transparent, rgba(34, 211, 238, 0.35), transparent);
+  }
+}
+
+/* Future vision rail */
+.nx-rail {
+  background: linear-gradient(180deg, rgba(34, 211, 238, 0.0), rgba(34, 211, 238, 0.55), rgba(129, 140, 248, 0.55), rgba(34, 211, 238, 0.0));
+}
+
+/* Workspace mock (non-functional visual) */
+.nx-workspace {
+  background:
+    radial-gradient(ellipse at top left, rgba(34, 211, 238, 0.08), transparent 40%),
+    linear-gradient(180deg, #10141e, #0a0d14);
+}
+
+.nx-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+/* Form focus */
+.nx-field:focus {
+  outline: none;
+  border-color: rgba(34, 211, 238, 0.7);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .nx-card { transition: none; }
+  .nx-drawer { transition: none; }
+}
+
+/* Hide native number spin if any */
+input[type="email"],
+input[type="text"],
+select,
+textarea {
+  color-scheme: dark;
+}
