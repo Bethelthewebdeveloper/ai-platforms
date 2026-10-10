@@ -556,3 +556,118 @@ section[id] {
     color: #777;
     font-size: 9px;
 }
+
+.benefits {
+    padding-bottom: 20px;
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.benefit-card {
+    grid-column: span 2;
+    min-width: 0;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #202020;
+    background: linear-gradient(145deg, #111, #080808);
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.benefit-card:nth-child(-n+2) {
+    grid-column: span 3;
+}
+
+.benefit-card:hover {
+    transform: translateY(-4px);
+    border-color: #414141;
+}
+
+.benefit-card h3 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.benefit-card p {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.mini-dashboard {
+    height: 125px;
+    padding: 13px;
+    background: #0a0a0a;
+    border: 1px solid #1d1d1d;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mini-chart-label {
+    color: #777;
+    font-size: 9px;
+    margin-bottom: 15px;
+}
+
+.mini-dashboard svg {
+    width: 100%;
+    height: 65px;
+}
+
+.integration-visual {
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.integration-visual::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 80px;
+    border: 1px solid #242424;
+    border-radius: 50%;
+    transform: rotate(-20deg);
+}
+
+.integration-visual span {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 29px;
+    height: 29px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    background: #171717;
+    font-size: 9px;
+    color: #ddd;
+}
+
+.integration-visual span:nth-child(3) {
+    width: 38px;
+    height: 38px;
+    background: #eee;
+    color: #111;
+}
+
+.visual-icon {
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    color: #bcbcbc;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
