@@ -1435,7 +1435,6 @@ svg {
     background: var(--background);
 }
 
-/* Solutions Grid */
 
 .solutions-grid {
     display: grid;
@@ -1443,7 +1442,6 @@ svg {
     gap: 22px;
 }
 
-/* Individual Solution Card */
 
 .solution-card {
     position: relative;
@@ -1461,7 +1459,6 @@ svg {
         background 0.3s ease;
 }
 
-/* Solution Card Hover */
 
 .solution-card:hover {
     transform: translateY(-6px);
@@ -1469,7 +1466,6 @@ svg {
     background: var(--surface-light);
 }
 
-/* Solution Number */
 
 .solution-number {
     position: absolute;
@@ -1483,7 +1479,6 @@ svg {
     letter-spacing: 1px;
 }
 
-/* Solution Icon */
 
 .solution-icon {
     width: 58px;
@@ -1510,7 +1505,6 @@ svg {
     transform: scale(1.05);
 }
 
-/* Solution Title */
 
 .solution-card h3 {
     margin-bottom: 13px;
@@ -1519,7 +1513,6 @@ svg {
     line-height: 1.5;
 }
 
-/* Solution Description */
 
 .solution-card > p {
     color: var(--muted);
@@ -1527,7 +1520,6 @@ svg {
     line-height: 1.85;
 }
 
-/* Solution Feature List */
 
 .solution-list {
     display: grid;
@@ -1548,8 +1540,6 @@ svg {
     font-size: 0.8rem;
 }
 
-/* Check Marks */
-
 .solution-list li span {
     flex-shrink: 0;
     color: #00D9FF;
@@ -1557,9 +1547,6 @@ svg {
 }
 
 
-/* =========================================
-   PART 3: SOLUTIONS CALL TO ACTION
-========================================= */
 
 .solutions-cta {
     position: relative;
@@ -1590,14 +1577,12 @@ svg {
         );
 }
 
-/* CTA Text */
 
 .solutions-cta-content {
     position: relative;
     z-index: 1;
 }
 
-/* CTA Small Heading */
 
 .cta-eyebrow {
     color: #00D9FF;
@@ -1606,7 +1591,6 @@ svg {
     letter-spacing: 1.5px;
 }
 
-/* CTA Main Heading */
 
 .solutions-cta h3 {
     margin: 12px 0;
@@ -1616,25 +1600,18 @@ svg {
     letter-spacing: -0.8px;
 }
 
-/* CTA Description */
 
 .solutions-cta p {
     color: var(--muted);
     font-size: 0.88rem;
 }
 
-/* CTA Button */
 
 .solutions-cta > .btn {
     position: relative;
     z-index: 1;
     flex-shrink: 0;
 }
-
-
-/* =========================================
-   PART 3: TABLET RESPONSIVENESS
-========================================= */
 
 @media (max-width: 900px) {
 
@@ -1648,10 +1625,6 @@ svg {
 
 }
 
-
-/* =========================================
-   PART 3: MOBILE RESPONSIVENESS
-========================================= */
 
 @media (max-width: 600px) {
 
@@ -1881,7 +1854,6 @@ svg {
     font-weight: 600;
 }
 
-/* MISSION AND VISION */
 
 .about-pillars {
     display: grid;
@@ -1956,7 +1928,6 @@ svg {
     line-height: 1.8;
 }
 
-/* ABOUT RESPONSIVENESS */
 
 @media (max-width: 992px) {
     .about-grid {
@@ -2066,8 +2037,6 @@ svg {
     z-index: 1;
 }
 
-/* CONTACT INFORMATION */
-
 .contact-info {
     padding-top: 10px;
 }
@@ -2134,7 +2103,6 @@ svg {
     color: var(--primary-light);
 }
 
-/* CONTACT FORM WRAPPER */
 
 .contact-form-wrapper {
     padding: 35px;
@@ -2234,9 +2202,6 @@ svg {
     line-height: 1.6;
 }
 
-/* =========================
-   FOOTER
-========================= */
 
 .site-footer {
     position: relative;
@@ -2245,7 +2210,6 @@ svg {
     border-top: 1px solid var(--border);
 }
 
-/* FOOTER MAIN */
 
 .footer-main {
     display: grid;
@@ -2288,7 +2252,6 @@ svg {
     line-height: 1.9;
 }
 
-/* FOOTER LINKS */
 
 .footer-links,
 .footer-cta {
@@ -2361,10 +2324,6 @@ svg {
     transform: translateY(-2px);
 }
 
-/* =========================
-   CONTACT & FOOTER
-   RESPONSIVE DESIGN
-========================= */
 
 @media (max-width: 992px) {
     .contact-grid {
@@ -2431,9 +2390,6 @@ svg {
     }
 }
 
-/* =========================
-   CONTACT DECORATIVE GRAPHICS
-========================= */
 
 .contact-section {
     position: relative;
@@ -2529,9 +2485,6 @@ svg {
     left: 5px;
 }
 
-/* =========================
-   FOOTER DECORATIVE GRAPHIC
-========================= */
 
 .footer-brand {
     position: relative;
@@ -2625,9 +2578,6 @@ svg {
     inset: 12px;
 }
 
-/* =========================
-   RESPONSIVE GRAPHICS
-========================= */
 
 @media (max-width: 768px) {
     .contact-graphic {
@@ -2676,4 +2626,8 @@ svg {
         top: 20px;
         right: 10px;
     }
+}
+
+html{
+    scroll-behavior: smooth;
 }
