@@ -597,7 +597,14 @@ svg {
 
 }
 
-
+@keyframes floatingWorkspace{
+    0%, 100%{
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
 .visual-glow {
 
     position: absolute;
@@ -640,11 +647,22 @@ svg {
     box-shadow:
         0 30px 90px rgba(0, 0, 0, 0.35),
         0 0 50px rgba(37, 99, 255, 0.08);
-
+        animation: floatingWorkspace 4s ease-in-out infinite;
 }
 
-
-
+@keyframes floatingWorkspace{
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-10px);
+    }
+}
+@media (prefers-reduced-motion: reduce){
+    .hero-dashboard{
+        animation: none;
+    }
+}
 
 .dashboard-header {
 
