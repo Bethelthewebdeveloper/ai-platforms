@@ -297,7 +297,7 @@ svg {
 
     isolation: isolate;
 
-    padding: 105px 0 125px;
+    padding: 30px 0 80px;
 
     background: var(--navy);
 
@@ -640,14 +640,16 @@ svg {
         #0B1728 70%
     );
 
-    border: 1px solid rgba(110, 167, 255, 0.23);
+    border: 1px solid rgba(110, 174, 255, 0.55);
 
     border-radius: var(--radius-large);
 
     box-shadow:
         0 30px 90px rgba(0, 0, 0, 0.35),
-        0 0 50px rgba(37, 99, 255, 0.08);
-        animation: floatingWorkspace 4s ease-in-out infinite;
+        0 0 20px rgba(0, 153, 255, 0.025),
+        0 0 45px rgba(0, 153, 255, 0.020),
+        0 0 80px rgba(0, 153, 255, 0.12);
+        animation: floatingWorkspace 3s ease-in-out infinite;
 }
 
 @keyframes floatingWorkspace{
@@ -1111,7 +1113,7 @@ svg {
 
 .tools-section {
     position: relative;
-    padding: 115px 0;
+    padding: 30px 0;
     background:
         radial-gradient(
             ellipse at 85% 10%,
@@ -1429,7 +1431,7 @@ svg {
 
 .solutions-section {
     position: relative;
-    padding: 115px 0;
+    padding: 30px 0;
     background: var(--background);
 }
 
@@ -1698,13 +1700,11 @@ svg {
     }
 
 }
-/* =========================
-   ABOUT SECTION
-========================= */
+
 
 .about-section {
     position: relative;
-    padding: 110px 0;
+    padding: 35px 0;
     background: var(--background);
     overflow: hidden;
 }
@@ -1716,7 +1716,6 @@ svg {
     gap: 65px;
 }
 
-/* ABOUT CONTENT */
 
 .about-content {
     max-width: 560px;
@@ -1732,8 +1731,6 @@ svg {
 .about-description + .about-description {
     margin-top: 15px;
 }
-
-/* ABOUT VISUAL */
 
 .about-visual {
     position: relative;
@@ -1776,7 +1773,6 @@ svg {
     border-color: var(--border-hover);
 }
 
-/* PANEL HEADER */
 
 .about-panel-header {
     display: flex;
@@ -1817,7 +1813,6 @@ svg {
     box-shadow: 0 0 12px var(--cyan);
 }
 
-/* PANEL MESSAGE */
 
 .about-message {
     padding: 22px;
@@ -1842,7 +1837,6 @@ svg {
     line-height: 1.8;
 }
 
-/* ABOUT VALUES */
 
 .about-values {
     display: grid;
@@ -2031,7 +2025,7 @@ svg {
 
 .contact-section {
     position: relative;
-    padding: 110px 0;
+    padding: 30px 0;
     background: var(--background-light);
     overflow: hidden;
 }
