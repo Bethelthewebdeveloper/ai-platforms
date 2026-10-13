@@ -2631,3 +2631,269 @@ svg {
 html{
     scroll-behavior: smooth;
 }
+
+/* ========================================
+   BUSINESSGROWTH AI TOOLS POPUP
+======================================== */
+
+.bg-tool-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(5, 10, 25, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+.bg-tool-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.bg-tool-modal-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 35px;
+
+    color: #ffffff;
+    background: #10182b;
+
+    border: 1px solid rgba(110, 130, 255, 0.35);
+    border-radius: 22px;
+
+    box-shadow:
+        0 0 35px rgba(75, 100, 255, 0.18),
+        0 25px 80px rgba(0, 0, 0, 0.45);
+
+    transform: translateY(25px) scale(0.97);
+
+    transition: transform 0.3s ease;
+}
+
+.bg-tool-modal.show .bg-tool-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.bg-tool-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+
+    border: none;
+    border-radius: 50%;
+
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bg-tool-close:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: rotate(90deg);
+}
+
+.bg-tool-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 65px;
+    height: 65px;
+
+    margin-bottom: 20px;
+
+    color: #a5b4fc;
+    background: rgba(99, 102, 241, 0.15);
+
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    border-radius: 18px;
+
+    font-size: 30px;
+
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.12);
+}
+
+.bg-tool-label {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #a5b4fc;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.bg-tool-title {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: clamp(24px, 5vw, 30px);
+    font-weight: 700;
+}
+
+.bg-tool-description {
+    margin-bottom: 25px;
+
+    color: #c3cada;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.bg-tool-form label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #e2e8f0;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.bg-tool-form textarea {
+    display: block;
+
+    width: 100%;
+    min-height: 115px;
+
+    padding: 15px;
+
+    color: #ffffff;
+    background: #0a1020;
+
+    border: 1px solid #303b55;
+    border-radius: 12px;
+
+    outline: none;
+    resize: vertical;
+
+    font: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.bg-tool-form textarea::placeholder {
+    color: #7f8ba5;
+}
+
+.bg-tool-form textarea:focus {
+    border-color: #818cf8;
+
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.12);
+}
+
+.bg-tool-submit {
+    width: 100%;
+
+    margin-top: 15px;
+    padding: 14px 20px;
+
+    color: #ffffff;
+
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.bg-tool-submit:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
+
+.bg-tool-result {
+    margin-top: 22px;
+    padding: 18px;
+
+    color: #e2e8f0;
+    background: rgba(99, 102, 241, 0.09);
+
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    border-radius: 12px;
+
+    font-size: 13px;
+    line-height: 1.9;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.bg-tool-note {
+    margin: 18px 0 0;
+
+    color: #8e9ab2;
+
+    font-size: 11px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 576px) {
+
+    .bg-tool-modal {
+        padding: 12px;
+    }
+
+    .bg-tool-modal-content {
+        padding: 25px 20px;
+        border-radius: 18px;
+    }
+
+    .bg-tool-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 25px;
+    }
+
+}
