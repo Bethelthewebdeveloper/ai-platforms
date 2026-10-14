@@ -170,11 +170,13 @@ svg {
 
 .logo-symbol {
 
-    width: 42px;
+    width: 45px;
 
-    height: 42px;
+    height: 45px; 
 
-    display: grid;
+    display: block;
+
+    object-fit: contain;
 
     place-items: center;
 
@@ -182,9 +184,9 @@ svg {
 
     color: var(--white);
 
-    font-size: 23px;
+    /* font-size: 23px;
 
-    font-weight: 800;
+    font-weight: 800; */
 
     border-radius: 13px;
 
@@ -197,7 +199,11 @@ svg {
 
     font-size: 20px;
 
-    font-weight: 800;
+    font-weight: 700;
+
+    color: #ffffff;
+
+    white-space: nowrap;
 
     letter-spacing: -0.8px;
 
@@ -206,7 +212,7 @@ svg {
 
 .logo-text span {
 
-    color: var(--electric-blue);
+    color: #00d4ff;
 
 }
 
@@ -2291,7 +2297,6 @@ svg {
     text-decoration: none;
 }
 
-/* FOOTER BOTTOM */
 
 .footer-bottom {
     display: flex;
@@ -2632,9 +2637,6 @@ html{
     scroll-behavior: smooth;
 }
 
-/* ========================================
-   BUSINESSGROWTH AI TOOLS POPUP
-======================================== */
 
 .bg-tool-modal {
     position: fixed;
@@ -2877,7 +2879,6 @@ html{
 }
 
 
-/* MOBILE RESPONSIVENESS */
 
 @media (max-width: 576px) {
 
@@ -2895,5 +2896,28 @@ html{
         height: 55px;
         font-size: 25px;
     }
+}
 
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.brand-logo .logo-symbol {
+    display: block;
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    display: block;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .brand-logo img {
+        width: 200px;
+    }
 }

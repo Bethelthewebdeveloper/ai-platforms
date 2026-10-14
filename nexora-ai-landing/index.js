@@ -2,11 +2,9 @@ console.log("javascript Loaded")
 
 document.addEventListener("DOMContentLoaded", function () {
 
-// 1. SMOOTH SCROLLING
 document.documentElement.style.scrollBehavior = "smooth";
 
 
-// 2. AUTOMATIC COPYRIGHT YEAR
 const currentYear = document.getElementById("currentYear");
 
 if (currentYear) {
@@ -14,7 +12,6 @@ if (currentYear) {
 }
 
 
-// 3. CONTACT FORM VALIDATION
 const contactForm = document.getElementById("contactForm");
 const formNotice = document.getElementById("formNotice");
 
@@ -39,7 +36,6 @@ if (contactForm && formNotice) {
 }
 
 
-// 4. NAVIGATION ACTIVE STATE
 const navLinks = document.querySelectorAll(".nav-links a");
 
 navLinks.forEach(function (link) {
@@ -57,7 +53,6 @@ navLinks.forEach(function (link) {
 });
 
 
-// 5. BACK TO TOP
 const backToTop = document.querySelector(".back-to-top");
 
 if (backToTop) {
@@ -72,7 +67,6 @@ if (backToTop) {
 }
 
 
-// 6. BUTTON CLICK FEEDBACK
 const actionLinks = document.querySelectorAll(
     ".hero-buttons a, .tools-footer a, .solutions-cta a, .about-content a, .footer-cta a"
 );
@@ -98,11 +92,6 @@ actionLinks.forEach(function (link) {
 });
 
 
-// alert("JavaScript is Working")
-
-// ========================================
-// 7. BUSINESSGROWTH AI TOOLS POPUP
-// ========================================
 
 const aiTools = [
     {
@@ -150,7 +139,6 @@ const aiTools = [
 ];
 
 
-// Create the popup automatically
 const toolModal = document.createElement("div");
 
 toolModal.id = "businessGrowthToolModal";
@@ -205,7 +193,6 @@ toolModal.innerHTML = `
 document.body.appendChild(toolModal);
 
 
-// Find the popup elements
 const toolModalContent = toolModal.querySelector(
     ".bg-tool-modal-content"
 );
@@ -223,143 +210,8 @@ const toolResult = toolModal.querySelector(".bg-tool-result");
 const toolClose = toolModal.querySelector(".bg-tool-close");
 
 
-// Open the correct popup when an Explore Tool link is clicked
-// document.addEventListener("click", function (event) {
 
-//     const exploreLink = event.target.closest("a");
 
-//     if (!exploreLink) {
-//         return;
-//     }
-
-//     const linkText = exploreLink.textContent
-//         .replace(/\s+/g, " ")
-//         .trim()
-//         .toLowerCase();
-
-//     if (linkText !== "explore tool") {
-//         return;
-//     }
-
-//     const toolCards = document.querySelectorAll(
-//         "#tools .tool-card, #tools .ai-tool-card, #tools .feature-card"
-//     );
-
-//     let cardIndex = -1;
-
-//     toolCards.forEach(function (card, index) {
-//         if (card.contains(exploreLink)) {
-//             cardIndex = index;
-//         }
-//     });
-
-//     // Fallback: use the order of the Explore Tool links
-//     if (cardIndex === -1) {
-//         const allExploreLinks = Array.from(
-//             document.querySelectorAll("#tools a")
-//         ).filter(function (link) {
-//             return link.textContent
-//                 .replace(/\s+/g, " ")
-//                 .trim()
-//                 .toLowerCase() === "explore tool";
-//         });
-
-//         cardIndex = allExploreLinks.indexOf(exploreLink);
-//     }
-
-//     if (cardIndex < 0 || cardIndex >= aiTools.length) {
-//         return;
-//     }
-
-//     event.preventDefault();
-
-//     const selectedTool = aiTools[cardIndex];
-
-//     toolTitle.textContent = selectedTool.name;
-//     toolIcon.className = "bi " + selectedTool.icon;
-
-//     toolDescription.textContent = selectedTool.description;
-//     toolInput.placeholder = selectedTool.placeholder;
-//     toolSubmit.textContent = selectedTool.button;
-
-//     toolInput.value = "";
-//     toolResult.hidden = true;
-//     toolResult.textContent = "";
-
-//     toolModal.classList.add("show");
-//     document.body.style.overflow = "hidden";
-
-//     toolInput.focus();
-
-// });
-
-// Open the correct popup when an Explore Tool link is clicked
-// document.addEventListener("click", function (event) {
-
-//     const exploreLink = event.target.closest("a");
-
-//     if (!exploreLink) return;
-
-//     const linkText = exploreLink.textContent
-//         .replace(/\s+/g, " ")
-//         .trim()
-//         .toLowerCase();
-
-//     if (linkText !== "explore tool") return;
-
-//     // Stop the browser from scrolling to the contact section
-//     event.preventDefault();
-
-//     const toolCards = document.querySelectorAll(
-//         "#tools .tool-card, #tools .ai-tool-card, #tools .feature-card"
-//     );
-
-//     let cardIndex = -1;
-
-//     toolCards.forEach(function (card, index) {
-//         if (card.contains(exploreLink)) {
-//             cardIndex = index;
-//         }
-//     });
-
-//     if (cardIndex === -1) {
-//         const allExploreLinks = Array.from(
-//             document.querySelectorAll("#tools a")
-//         ).filter(function (link) {
-//             return link.textContent
-//                 .replace(/\s+/g, " ")
-//                 .trim()
-//                 .toLowerCase() === "explore tool";
-//         });
-
-//         cardIndex = allExploreLinks.indexOf(exploreLink);
-//     }
-
-//     if (cardIndex < 0 || cardIndex >= aiTools.length) {
-//         console.error("Could not identify the selected AI tool.");
-//         return;
-//     }
-
-//     const selectedTool = aiTools[cardIndex];
-
-//     toolTitle.textContent = selectedTool.name;
-//     toolIcon.className = "bi " + selectedTool.icon;
-//     toolDescription.textContent = selectedTool.description;
-//     toolInput.placeholder = selectedTool.placeholder;
-//     toolSubmit.textContent = selectedTool.button;
-
-//     toolInput.value = "";
-//     toolResult.hidden = true;
-//     toolResult.textContent = "";
-
-//     toolModal.classList.add("show");
-//     document.body.style.overflow = "hidden";
-
-//     toolInput.focus();
-
-// });
-
-// BUSINESSGROWTH AI TOOLS POPUP
 document.addEventListener("click", function (event) {
 
     const exploreLink = event.target.closest(".tool-link");
@@ -408,11 +260,9 @@ document.addEventListener("click", function (event) {
 });
 
 
-// Close popup using the X button
 toolClose.addEventListener("click", closeToolModal);
 
 
-// Close popup by clicking outside it
 toolModal.addEventListener("click", function (event) {
 
     if (event.target === toolModal) {
@@ -421,8 +271,6 @@ toolModal.addEventListener("click", function (event) {
 
 });
 
-
-// Close popup using Escape
 document.addEventListener("keydown", function (event) {
 
     if (event.key === "Escape" &&
@@ -441,7 +289,6 @@ function closeToolModal() {
 }
 
 
-// Interactive sample demonstrations
 toolForm.addEventListener("submit", function (event) {
 
     event.preventDefault();
@@ -529,4 +376,22 @@ toolForm.addEventListener("submit", function (event) {
         block: "nearest"
     });
 
+});
+
+const themeToggle = document.getElementById("themeToggle");
+const themeIcon = themeToggle.querySelector("i");
+
+themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    const isDarkMode = document.body.classList.contains("dark-mode");
+
+    themeIcon.className = isDarkMode
+        ? "bi bi-sun-fill"
+        : "bi bi-moon-stars-fill";
+
+    themeToggle.setAttribute(
+        "aria-label",
+        isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+    );
 });
