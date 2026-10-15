@@ -1,0 +1,790 @@
+/* =========================
+   GENERAL SETTINGS
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #050510;
+    --card-background: rgba(15, 15, 40, 0.82);
+
+    --blue: #00c6ff;
+    --purple: #8b35f5;
+    --pink: #e32be8;
+
+    --text: #ffffff;
+    --muted: #a8abc8;
+
+    --border: rgba(255, 255, 255, 0.12);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: var(--text);
+    background: var(--background);
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(31, 54, 164, 0.25),
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(135, 20, 185, 0.22),
+            transparent 40%
+        ),
+        #050510;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.6;
+
+    animation: float 12s ease-in-out infinite alternate;
+}
+
+.orb-one {
+    width: 280px;
+    height: 280px;
+
+    background: #075be8;
+
+    top: 5%;
+    left: 5%;
+}
+
+.orb-two {
+    width: 320px;
+    height: 320px;
+
+    background: #8c14c9;
+
+    right: 0;
+    bottom: 0;
+
+    animation-delay: -4s;
+}
+
+.orb-three {
+    width: 200px;
+    height: 200px;
+
+    background: #007cff;
+
+    left: 65%;
+    top: 40%;
+
+    animation-delay: -7s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-35px, 30px) scale(1.12);
+    }
+
+    100% {
+        transform: translate(30px, -25px) scale(0.95);
+    }
+}
+
+
+/* =========================
+   CENTER THE FORM
+========================= */
+
+.page-container {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================
+   SIGNUP CARD
+========================= */
+
+.signup-card {
+    width: 100%;
+    max-width: 470px;
+
+    padding: 38px;
+
+    background: var(--card-background);
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(79, 49, 211, 0.08);
+
+    animation: cardAppear 0.8s ease both;
+
+    transition:
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.signup-card:hover {
+    border-color: rgba(132, 99, 255, 0.35);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.5),
+        0 0 45px rgba(105, 55, 255, 0.13);
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+/* Business Growth Logo */
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin-bottom: 28px;
+
+    animation: logoAppear 1s ease both;
+}
+
+.brand-logo {
+    display: block;
+
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    transition:
+        transform 0.4s ease,
+        filter 0.4s ease;
+}
+
+/* Logo Hover Effect */
+
+.brand-logo:hover {
+    transform: scale(1.04);
+
+    filter: drop-shadow(
+        0 0 15px rgba(0, 140, 255, 0.35)
+    );
+}
+
+/* Logo Entrance Animation */
+
+@keyframes logoAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/* =========================
+   HEADING
+========================= */
+
+.form-heading {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.form-heading h1 {
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: -0.7px;
+}
+
+.form-heading h1 span {
+    color: var(--pink);
+}
+
+.form-heading p {
+    color: var(--muted);
+    font-size: 12px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================
+   INPUT FIELDS
+========================= */
+
+.name-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+}
+
+.input-group {
+    margin-bottom: 19px;
+}
+
+.input-group label {
+    display: block;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    margin-bottom: 8px;
+    color: #e4e4f5;
+}
+
+.input-group input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 13px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 9px;
+
+    outline: none;
+
+    color: white;
+    font-family: inherit;
+    font-size: 12px;
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+.input-group input::placeholder {
+    color: #777b9d;
+    transition: color 0.3s ease;
+}
+
+.input-group input:hover {
+    border-color: rgba(0, 198, 255, 0.45);
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.input-group input:focus {
+    border-color: var(--blue);
+
+    background: rgba(0, 198, 255, 0.045);
+
+    box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.1);
+}
+
+.input-group input:focus::placeholder {
+    color: #a7b7d9;
+}
+
+.password-hint {
+    display: block;
+
+    color: #8588aa;
+    font-size: 10px;
+
+    margin-top: 7px;
+}
+
+
+/* =========================
+   PASSWORD SHOW/HIDE
+========================= */
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 60px;
+}
+
+.toggle-password {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+
+    color: var(--blue);
+    font-family: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: var(--pink);
+}
+
+
+/* =========================
+   TERMS AND CONDITIONS
+========================= */
+
+.terms-row {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin: 6px 0 22px;
+}
+
+.terms-row input {
+    margin-top: 4px;
+
+    accent-color: var(--purple);
+
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.terms-row label {
+    color: var(--muted);
+
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+.terms-row a,
+.login-text a {
+    color: #9b8cff;
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+.terms-row a:hover,
+.login-text a:hover {
+    color: var(--blue);
+}
+
+
+/* =========================
+   SIGNUP BUTTON
+========================= */
+
+.signup-button {
+    width: 100%;
+    height: 47px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: none;
+    border-radius: 9px;
+
+    color: white;
+
+    background: linear-gradient(
+        100deg,
+        #00bdf4,
+        #4968f5,
+        #a32df0
+    );
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        filter 0.3s ease;
+}
+
+.signup-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.6s ease;
+}
+
+.signup-button:hover::before {
+    left: 150%;
+}
+
+.signup-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 30px rgba(93, 77, 255, 0.3),
+        0 0 20px rgba(0, 198, 255, 0.12);
+
+    filter: brightness(1.1);
+}
+
+.signup-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.button-arrow {
+    font-size: 18px;
+
+    transition: transform 0.3s ease;
+}
+
+.signup-button:hover .button-arrow {
+    transform: translateX(5px);
+}
+
+
+/* =========================
+   FEEDBACK MESSAGE
+========================= */
+
+.message {
+    font-size: 12px;
+    text-align: center;
+
+    margin-top: 12px;
+
+    line-height: 1.6;
+}
+
+.message:empty {
+    display: none;
+}
+
+.message.success {
+    color: #66e6ac;
+}
+
+.message.error {
+    color: #ff7b9c;
+}
+
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 0 20px;
+}
+
+.divider span {
+    height: 1px;
+    flex: 1;
+
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.divider p {
+    color: #8588aa;
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   SOCIAL BUTTONS
+========================= */
+
+.social-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.social-button {
+    min-height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: #e6e6f7;
+
+    font-family: inherit;
+    font-size: 10px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.social-button:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border-color: rgba(143, 115, 255, 0.5);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.google-icon {
+    font-size: 17px;
+    font-weight: 700;
+
+    background: conic-gradient(
+        from -45deg,
+        #4285f4 0deg 90deg,
+        #34a853 90deg 180deg,
+        #fbbc05 180deg 270deg,
+        #ea4335 270deg 360deg
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+.facebook-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 17px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    background: #1877f2;
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.x-icon {
+    font-size: 16px;
+}
+
+
+/* =========================
+   LOGIN LINK
+========================= */
+
+.login-text {
+    text-align: center;
+
+    margin-top: 25px;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.login-text a {
+    font-weight: 600;
+    margin-left: 3px;
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 500px) {
+
+    .page-container {
+        padding: 24px 15px;
+    }
+
+    .signup-card {
+        padding: 28px 21px;
+
+        border-radius: 18px;
+    }
+
+    .form-heading h1 {
+        font-size: 23px;
+    }
+
+    .form-heading p {
+        font-size: 11px;
+    }
+
+    .name-fields {
+        gap: 10px;
+    }
+
+    .input-group input {
+        height: 44px;
+        font-size: 11px;
+    }
+
+    .social-buttons {
+        gap: 7px;
+    }
+
+    .social-button {
+        gap: 5px;
+        font-size: 9px;
+    }
+
+    .orb-one {
+        width: 180px;
+        height: 180px;
+    }
+
+    .orb-two {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 350px) {
+
+    .signup-card {
+        padding: 24px 15px;
+    }
+
+    .name-fields {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .social-button span:last-child {
+        display: none;
+    }
+
+    .social-button {
+        min-height: 45px;
+    }
+}
+
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+@media (max-width: 500px) {
+    .brand-logo {
+        max-width: 250px;
+    }
+}

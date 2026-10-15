@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | BusinessGrowth</title>
+
+    <link rel="stylesheet" href="auth.css">
+    <script src="auth.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+    
+    <div class="background">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+    </div>
+
+    
+    <main class="page-container">
+
+        
+        <section class="signup-card">
+
+            
+            <div class="logo">
+                <img src="../../images/logo.jpg" alt="BusinessGrowth Logo" 
+                width="100" height="100" class="brand-logo">
+            </div>
+
+            
+            <div class="form-heading">
+                <h1>Create an account<span>.</span></h1>
+
+                <p>Join us today. It only takes a minute.</p>
+            </div>
+
+            
+            <form id="signupForm">
+
+                
+                <div class="name-fields">
+
+                    <div class="input-group">
+                        <label for="firstName">First Name</label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            placeholder="First name"
+                            autocomplete="given-name"
+                            required
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <label for="lastName">Last Name</label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            placeholder="Last name"
+                            autocomplete="family-name"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                
+                <div class="input-group">
+                    <label for="username">Username</label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Choose a username"
+                        autocomplete="username"
+                        minlength="3"
+                        required
+                    >
+                </div>
+
+                
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <small class="password-hint">
+                        Use at least 8 characters.
+                    </small>
+                </div>
+
+                
+                <div class="terms-row">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+                    <label for="terms">
+                        I agree to the
+                        <a href="#terms">Terms of Service</a>
+                        and
+                        <a href="#privacy">Privacy Policy</a>.
+                    </label>
+
+                </div>
+
+                
+                <button type="submit" class="signup-button">
+                    <span>Create Account</span>
+                    <span class="button-arrow">→</span>
+                </button>
+
+                
+                <p id="message" class="message" role="status"></p>
+
+            </form>
+
+        
+            <div class="divider">
+                <span></span>
+                <p>Or continue with</p>
+                <span></span>
+            </div>
+
+        
+            <div class="social-buttons">
+
+                <button type="button" class="social-button" aria-label="Continue with Google">
+                    <span class="google-icon">G</span>
+                    <span>Google</span>
+                </button>
+
+                <button type="button" class="social-button" aria-label="Continue with Facebook">
+                    <span class="facebook-icon">f</span>
+                    <span>Facebook</span>
+                </button>
+
+                <button type="button" class="social-button" aria-label="Continue with X">
+                    <span class="x-icon">𝕏</span>
+                    <span>Twitter</span>
+                </button>
+
+            </div>
+
+            
+            <p class="login-text">
+                Already have an account?
+                <a href="login.html">Log in</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    
+
+</body>
+</html>
