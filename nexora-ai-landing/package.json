@@ -1,0 +1,22 @@
+{
+  "name":"ai-platforms",
+  "version":"1.0.0",
+  "description":"BusinessGrowth AI platform",
+  "main":"index.js",
+  "scripts":{
+  "dev":"vite --host 0.0.0.0",
+  "build":"vite build",
+  "preview":"vite preview"
+  },
+  "repository":{
+  "type":"git",
+  "url":"git+https://github.com/Bethelthewebdeveloper/ai-platforms.git"
+  },
+  "keywords":[],
+  "author":"",
+  "license":"ISC",
+  "type":"module",
+  "devDependencies":{
+  "vite":"^8.3.4"
+}
+}
