@@ -1,1154 +1,846 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta charset="UTF-8">
+    <meta
+      name="description"
+      content="BusinessGrowth is building intelligent AI-powered tools to help businesses automate work, improve productivity, and grow smarter."
+    />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="BusinessGrowth is building intelligent AI-powered tools to help businesses automate work, improve productivity, and grow smarter.">
-
-    <meta name="theme-color" content="#07111F">
+    <meta name="theme-color" content="#07111F" />
 
     <title>BusinessGrowth | Intelligence That Moves Business Forward</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar container">
+        <a href="index.html" class="brand-logo">
+          <img
+            src="images/logo-removebg-preview.png"
+            alt=""
+            class="logo-symbol"
+          />
+          <span class="logo-text"> Business<span>Growth</span> </span>
+        </a>
+        <ul class="nav-links">
+          <li>
+            <a href="#home" class="active">Home</a>
+          </li>
 
-</head>
-<body>
-<header class="header">
+          <li>
+            <a href="#tools">AI Tools</a>
+          </li>
 
-        <nav class="navbar container">
-            <a href="index.html" class="brand-logo">
-                 <img src="images/logo-removebg-preview.png" alt="" class="logo-symbol">
-                <span class="logo-text">
-                    Business<span>Growth</span>
-                </span>
+          <li>
+            <a href="#solutions">Solutions</a>
+          </li>
 
-            </a>
-            <ul class="nav-links">
+          <li>
+            <a href="#about">About</a>
+          </li>
+        </ul>
 
-                <li>
-                    <a href="#home" class="active">Home</a>
-                </li>
+        <a href="./authentication/auth.html" class="nav-button">
+          Get started
 
-                <li>
-                    <a href="#tools">AI Tools</a>
-                </li>
-
-                <li>
-                    <a href="#solutions">Solutions</a>
-                </li>
-
-                <li>
-                    <a href="#about">About</a>
-                </li>
-
-            </ul>
-            
-            <a href="./dashboards/authentication/auth.html" class="nav-button">
-
-                Get started
-
-                <span>↗️</span>
-
-            </a>
-
-        </nav>
-
+          <span>↗️</span>
+        </a>
+      </nav>
     </header>
 
     <main>
-
-        <section class="hero" id="home">
-
-            <div class="hero-background"></div>
-
-            <div class="hero-container container">
-                <div class="hero-content">
-
-                    <div class="hero-badge">
-
-                        <span class="status-dot"></span>
-
-                        THE NEXT ERA OF BUSINESS INTELLIGENCE
-
-                    </div>
-
-
-                    <h1>
-
-                        Your Business.
-
-                        <span class="gradient-text">
-                            Supercharged by AI.
-                        </span>
-
-                    </h1>
-
-
-                    <p class="hero-description">
-
-                        Work smarter, move faster, and unlock new
-                        possibilities with intelligent tools designed
-                        to help businesses solve problems and grow.
-
-                    </p>
-                    <div class="hero-buttons">
-
-                        <a href="#tools" class="btn btn-primary">
-
-                            Explore AI Tools
-
-                            <span>↗️</span>
-
-                        </a>
-
-
-                        <a href="./dashboards/authentication/auth.html" class="btn btn-primary">
-
-                            Get started
-
-                            <span>↗️</span>
-
-                        </a>
-
-                    </div>
-
-                    <div class="hero-trust">
-
-                        <div class="trust-icon">✦</div>
-
-                        <p>
-                            Built for ambitious businesses.
-                            Designed for a smarter future.
-                        </p>
-
-                    </div>
-
-                </div>
-                <div class="hero-visual">
-
-                    <div class="visual-glow"></div>
-                    <div class="hero-dashboard">
-                        <div class="dashboard-header">
-
-                            <div class="dashboard-brand">
-
-                                <a href="index.html" class="brand-logo">
-                 <img src="images/logo-removebg-preview.png" alt="" class="logo-symbol">
-                <span class="logo-text">
-                    Business<span>Growth</span>
-                </span>
-
-            </a>
-
-                            </div>
-
-
-                            <span class="dashboard-menu">•••</span>
-
-                        </div>
-
-                        <div class="dashboard-welcome">
-
-                            <span class="dashboard-eyebrow">
-                                YOUR NEXT BIG IDEA
-                            </span>
-
-                            <h3>
-                                Let's build something
-                                <span>extraordinary.</span>
-                            </h3>
-
-                            <p>
-                                Imagine what intelligent tools
-                                could do for your business.
-                            </p>
-
-                        </div>
-
-                        <div class="ai-prompt">
-
-                            <p>
-                                What would you like to accomplish today?
-                            </p>
-
-                            <div class="prompt-bottom">
-
-                                <span class="prompt-plus">+</span>
-
-                                <span class="prompt-hint">
-                                    Explore your possibilities...
-                                </span>
-
-                                <span class="prompt-arrow">↗️</span>
-
-                            </div>
-
-                        </div>
-                        <div class="dashboard-cards">
-
-
-                            <div class="dashboard-card">
-
-                                <div class="dashboard-card-icon">
-                                    ✧
-                                </div>
-
-                                <h4>AI Assistant</h4>
-
-                                <p>
-                                    Smarter ideas
-                                </p>
-
-                            </div>
-
-
-
-                            <div class="dashboard-card">
-
-                                <div class="dashboard-card-icon">
-                                    ◈
-                                </div>
-
-                                <h4>AI Insights</h4>
-
-                                <p>
-                                    Better decisions
-                                </p>
-
-                            </div>
-
-
-
-                            <div class="dashboard-card">
-
-                                <div class="dashboard-card-icon">
-                                    ⟳
-                                </div>
-
-                                <h4>Automation</h4>
-
-                                <p>
-                                    Less busywork
-                                </p>
-
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="dashboard-footer">
-
-                            <span class="footer-status-dot"></span>
-
-                            Your next chapter starts here.
-
-                        </div>
-
-                    </div>
-                </div>
-
-
+      <section class="hero" id="home">
+        <div class="hero-background"></div>
+
+        <div class="hero-container container">
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span class="status-dot"></span>
+
+              THE NEXT ERA OF BUSINESS INTELLIGENCE
             </div>
 
-        </section>
-
-        <section class="tools-section" id="tools">
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <span class="section-badge">
-                        <span class="status-dot"></span>
-                        INTELLIGENCE AT YOUR FINGERTIPS
-                    </span>
-
-                    <h2>
-                        Powerful tools.
-                        <span class="gradient-text">
-                            Limitless possibilities.
-                        </span>
-                    </h2>
-
-                    <p>
-                        Discover smarter ways to work, solve problems,
-                        and grow your business with AI-powered solutions
-                        designed for the way modern businesses operate.
-                    </p>
-
-                </div>
-
-                <div class="tools-grid">
-
-                    <article class="tool-card">
-
-                        <div class="tool-card-top">
-
-                            <div class="tool-icon">
-                                ✧
-                            </div>
-
-                            <span class="tool-number">
-                                01
-                            </span>
-
-                        </div>
-
-                        <h3>AI Business Assistant</h3>
-
-                        <p>
-                            Generate ideas, draft business content,
-                            organize tasks, and get assistance with
-                            everyday business challenges.
-                        </p>
-
-                        <a href="" class="tool-link">
-                            Explore tool <span>↗️</span>
-                        </a>
-
-                    </article>
-                    <article class="tool-card">
-
-                        <div class="tool-card-top">
-
-                            <div class="tool-icon">
-                                ✎
-                            </div>
-
-                            <span class="tool-number">
-                                02
-                            </span>
-
-                        </div>
-
-                        <h3>AI Content Creator</h3>
-
-                        <p>
-                            Create marketing copy, social media posts,
-                            product descriptions, and engaging content
-                            for your business.
-                        </p>
-
-                        <a href="#contact" class="tool-link">
-                            Explore tool <span>↗️</span>
-                        </a>
-
-                    </article>
-
-                    <article class="tool-card">
-
-                        <div class="tool-card-top">
-
-                            <div class="tool-icon">
-                                ◈
-                            </div>
-
-                            <span class="tool-number">
-                                03
-                            </span>
-
-                        </div>
-
-                        <h3>AI Business Insights</h3>
-
-                        <p>
-                            Organize business information, identify
-                            useful patterns, and turn available data
-                            into insights for better decisions.
-                        </p>
-
-                        <a href="#contact" class="tool-link">
-                            Explore tool <span>↗️</span>
-                        </a>
-
-                    </article>
-                    <article class="tool-card">
-
-                        <div class="tool-card-top">
-
-                            <div class="tool-icon">
-                                ⟳
-                            </div>
-
-                            <span class="tool-number">
-                                04
-                            </span>
-
-                        </div>
-
-                        <h3>Workflow Automation</h3>
-
-                        <p>
-                            Simplify repetitive tasks, organize
-                            business processes, and discover
-                            opportunities to save valuable time.
-                        </p>
-
-                        <a href="#contact" class="tool-link">
-                            Explore tool <span>↗️</span>
-                        </a>
-
-                    </article>
-                    <article class="tool-card">
-
-                        <div class="tool-card-top">
-
-                            <div class="tool-icon">
-                                ◎
-                            </div>
-
-                            <span class="tool-number">
-                                05
-                            </span>
-
-                        </div>
-
-                        <h3>AI Marketing Assistant</h3>
-
-                        <p>
-                            Develop campaign ideas, plan promotions,
-                            improve marketing messages, and reach
-                            your target audience more effectively.
-                        </p>
-
-                        <a href="#contact" class="tool-link">
-                            Explore tool <span>↗️</span>
-                        </a>
-
-                    </article>
-
-                    <article class="tool-card">
-
-                        <div class="tool-card-top">
-
-                            <div class="tool-icon">
-                                ↗️
-                            </div>
-
-                            <span class="tool-number">
-                                06
-                            </span>
-
-                        </div>
-
-                        <h3>Business Growth Planner</h3>
-
-                        <p>
-                            Explore growth strategies, organize
-                            business goals, and develop practical
-                            plans for your next stage of growth.
-                        </p>
-
-                        <a href="#contact" class="tool-link">
-                            Explore tool <span>↗️</span>
-                        </a>
-
-                    </article>
-
-
-                </div>
-
-                <div class="tools-footer">
-
-                    <p>
-                        One platform. More possibilities.
-                        Smarter ways to grow.
-                    </p>
-
-                    <a href="./dashboards/authentication/auth.html" class="btn btn-primary">
-                        Get started
-                        <span>↗️</span>
-                    </a>
-
-                </div>
-
+            <h1>
+              Your Business.
+
+              <span class="gradient-text"> Supercharged by AI. </span>
+            </h1>
+
+            <p class="hero-description">
+              Work smarter, move faster, and unlock new possibilities with
+              intelligent tools designed to help businesses solve problems and
+              grow.
+            </p>
+            <div class="hero-buttons">
+              <a href="#tools" class="btn btn-primary">
+                Explore AI Tools
+
+                <span>↗️</span>
+              </a>
+
+              <a
+                href="./authentication/auth.html"
+                class="btn btn-primary"
+              >
+                Get started
+
+                <span>↗️</span>
+              </a>
             </div>
 
-        </section>
+            <div class="hero-trust">
+              <div class="trust-icon">✦</div>
 
-        <section class="solutions-section" id="solutions">
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <span class="section-badge">
-                        BUILT AROUND YOUR BUSINESS
-                    </span>
-
-                    <h2>
-                        Real challenges.
-                        <span class="gradient-text">
-                            Smarter solutions.
-                        </span>
-                    </h2>
-
-                    <p>
-                        Every business faces challenges. BusinessGrowth
-                        aims to make work easier with intelligent tools
-                        that help teams save time, improve productivity,
-                        and discover new opportunities.
-                    </p>
-
-                </div>
-
-
-                <div class="solutions-grid">
-
-                    <article class="solution-card">
-
-                        <div class="solution-number">
-                            01
-                        </div>
-
-                        <div class="solution-icon">
-                            ⚡
-                        </div>
-
-                        <h3>Productivity & Efficiency</h3>
-
-                        <p>
-                            Reduce repetitive work, organize daily tasks,
-                            and give your team more time to focus on
-                            important business activities.
-                        </p>
-
-                        <ul class="solution-list">
-
-                            <li>
-                                <span>✓</span>
-                                Task organization
-                            </li>
-
-                            <li>
-                                <span>✓</span>
-                                AI-assisted workflows
-                            </li>
-
-                            <li>
-                                <span>✓</span>
-                                Smarter work planning
-                            </li>
-
-                        </ul>
-
-                    </article>
-
-                    <article class="solution-card">
-
-                        <div class="solution-number">
-                            02
-                        </div>
-
-                        <div class="solution-icon">
-                            ◈
-                        </div>
-
-                        <h3>Business Decision-Making</h3>
-
-                        <p>
-                            Make better-informed decisions by organizing
-                            available information and identifying
-                            opportunities for improvement.
-                        </p>
-
-                        <ul class="solution-list">
-
-                            <li>
-                                <span>✓</span>
-                                Business insights
-                            </li>
-
-                            <li>
-                                <span>✓</span>
-                                Goal tracking
-                            </li>
-
-                            <li>
-                                <span>✓</span>
-                                Growth planning
-                            </li>
-
-                        </ul>
-
-                    </article>
-
-                    <article class="solution-card">
-
-                        <div class="solution-number">
-                            03
-                        </div>
-
-                        <div class="solution-icon">
-                            ↗️
-                        </div>
-
-                        <h3>Marketing & Business Growth</h3>
-
-                        <p>
-                            Create better marketing content, explore
-                            new strategies, and develop ideas to help
-                            your business reach more customers.
-                        </p>
-
-                        <ul class="solution-list">
-
-                            <li>
-                                <span>✓</span>
-                                Content generation
-                            </li>
-
-                            <li>
-                                <span>✓</span>
-                                Marketing ideas
-                            </li>
-
-                            <li>
-                                <span>✓</span>
-                                Business strategy
-                            </li>
-
-                        </ul>
-
-                    </article>
-
-
-                </div>
-
-                <div class="solutions-cta">
-
-                    <div class="solutions-cta-content">
-
-                        <span class="cta-eyebrow">
-                            YOUR NEXT CHAPTER STARTS HERE
-                        </span>
-
-                        <h3>
-                            Ready to rethink
-                            <span class="gradient-text">
-                                how you work?
-                            </span>
-                        </h3>
-
-                        <p>
-                            Discover how intelligent business tools
-                            could help you move forward.
-                        </p>
-
-                    </div>
-
-                    <a href="#contact" class="btn btn-primary">
-
-                        Let's Talk
-
-                        <span>↗️</span>
-
-                    </a>
-
-                </div>
-
+              <p>
+                Built for ambitious businesses. Designed for a smarter future.
+              </p>
             </div>
-
-        </section>
-
-        <section class="about-section" id="about">
-
-            <div class="container">
-
-                <div class="about-grid">
-
-                    <div class="about-content">
-
-                        <span class="section-badge">
-                            <span class="status-dot"></span>
-                            GET TO KNOW US
-                        </span>
-
-                        <h2>
-                            We're building a
-                            <span class="gradient-text">
-                                smarter future
-                            </span>
-                            for business.
-                        </h2>
-
-                        <p class="about-description">
-                            BusinessGrowth is an emerging technology
-                            platform focused on helping businesses
-                            work smarter through artificial intelligence,
-                            automation, and practical digital solutions.
-                        </p>
-
-                        <p class="about-description">
-                            Our goal is to make intelligent technology
-                            more useful and accessible, helping businesses
-                            simplify everyday work, explore new ideas,
-                            and discover opportunities to grow.
-                        </p>
-
-                        <a href="#contact" class="btn btn-primary">
-                            Connect With Us
-                            <span>↗️</span>
-                        </a>
-
-                    </div>
-
-
-                    <div class="about-visual">
-
-                        <div class="about-glow"></div>
-
-                        <div class="about-panel">
-
-                            <div class="about-panel-header">
-
-                                <a href="index.html" class="brand-logo">
-                 <img src="images/logo-removebg-preview.png" alt="" class="logo-symbol">
-                <span class="logo-text">
-                    Business<span>Growth</span>
-                </span>
-
-            </a>
-                            </div>
-
-                            <div class="about-message">
-
-                                <span class="about-message-label">
-                                    THE BIGGER PICTURE
-                                </span>
-
-                                <h3>
-                                    Better thinking.
-                                    <span>Better possibilities.</span>
-                                </h3>
-
-                                <p>
-                                    We believe technology should help
-                                    people spend less time on repetitive
-                                    work and more time building something
-                                    meaningful.
-                                </p>
-
-                            </div>
-
-
-                            <div class="about-values">
-
-                                <div class="about-value">
-
-                                    <div class="about-value-icon">
-                                        ✦
-                                    </div>
-
-                                    <div>
-                                        <h4>Innovation</h4>
-                                        <p>
-                                            Exploring smarter ways to work.
-                                        </p>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="about-value">
-
-                                    <div class="about-value-icon">
-                                        ◈
-                                    </div>
-
-                                    <div>
-                                        <h4>Practical Solutions</h4>
-                                        <p>
-                                            Technology built around real needs.
-                                        </p>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="about-value">
-
-                                    <div class="about-value-icon">
-                                        ↗️
-                                    </div>
-
-                                    <div>
-                                        <h4>Growth</h4>
-                                        <p>
-                                            Helping businesses move forward.
-                                        </p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+          </div>
+          <div class="hero-visual">
+            <div class="visual-glow"></div>
+            <div class="hero-dashboard">
+              <div class="dashboard-header">
+                <div class="dashboard-brand">
+                  <a href="index.html" class="brand-logo">
+                    <img
+                      src="images/logo-removebg-preview.png"
+                      alt=""
+                      class="logo-symbol"
+                    />
+                    <span class="logo-text"> Business<span>Growth</span> </span>
+                  </a>
                 </div>
 
-                <div class="about-pillars">
+                <span class="dashboard-menu">•••</span>
+              </div>
 
-                    <article class="pillar-card">
+              <div class="dashboard-welcome">
+                <span class="dashboard-eyebrow"> YOUR NEXT BIG IDEA </span>
 
-                        <span class="pillar-number">
-                            01 / OUR MISSION
-                        </span>
+                <h3>
+                  Let's build something
+                  <span>extraordinary.</span>
+                </h3>
 
-                        <div class="pillar-icon">
-                            ◎
-                        </div>
+                <p>
+                  Imagine what intelligent tools could do for your business.
+                </p>
+              </div>
 
-                        <h3>Make Work Smarter</h3>
+              <div class="ai-prompt">
+                <p>What would you like to accomplish today?</p>
 
-                        <p>
-                            Our mission is to develop useful AI-powered
-                            tools that help businesses simplify tasks,
-                            improve productivity, and solve everyday
-                            challenges.
-                        </p>
+                <div class="prompt-bottom">
+                  <span class="prompt-plus">+</span>
 
-                    </article>
+                  <span class="prompt-hint">
+                    Explore your possibilities...
+                  </span>
 
+                  <span class="prompt-arrow">↗️</span>
+                </div>
+              </div>
+              <div class="dashboard-cards">
+                <div class="dashboard-card">
+                  <div class="dashboard-card-icon">✧</div>
 
-                    <article class="pillar-card">
+                  <h4>AI Assistant</h4>
 
-                        <span class="pillar-number">
-                            02 / OUR VISION
-                        </span>
-
-                        <div class="pillar-icon">
-                            ✧
-                        </div>
-
-                        <h3>Unlock New Possibilities</h3>
-
-                        <p>
-                            Our vision is to make intelligent business
-                            technology more accessible and help
-                            businesses confidently explore new
-                            opportunities for growth.
-                        </p>
-
-                    </article>
-
-
-                    <article class="pillar-card">
-
-                        <span class="pillar-number">
-                            03 / OUR APPROACH
-                        </span>
-
-                        <div class="pillar-icon">
-                            ◈
-                        </div>
-
-                        <h3>Build With Purpose</h3>
-
-                        <p>
-                            We aim to create solutions that are useful,
-                            approachable, and designed around the
-                            real problems businesses need to solve.
-                        </p>
-
-                    </article>
-
+                  <p>Smarter ideas</p>
                 </div>
 
+                <div class="dashboard-card">
+                  <div class="dashboard-card-icon">◈</div>
+
+                  <h4>AI Insights</h4>
+
+                  <p>Better decisions</p>
+                </div>
+
+                <div class="dashboard-card">
+                  <div class="dashboard-card-icon">⟳</div>
+
+                  <h4>Automation</h4>
+
+                  <p>Less busywork</p>
+                </div>
+              </div>
+
+              <div class="dashboard-footer">
+                <span class="footer-status-dot"></span>
+
+                Your next chapter starts here.
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-        </section>
-
-        <section class="contact-section" id="contact">
-
-    <div class="container">
-
-        <div class="section-heading">
-
+      <section class="tools-section" id="tools">
+        <div class="container">
+          <div class="section-heading">
             <span class="section-badge">
-                <i class="bi bi-chat-dots"></i>
-                GET IN TOUCH
+              <span class="status-dot"></span>
+              INTELLIGENCE AT YOUR FINGERTIPS
             </span>
 
             <h2>
-                Let's Grow Your Business
-                <span class="gradient-text">Together.</span>
+              Powerful tools.
+              <span class="gradient-text"> Limitless possibilities. </span>
             </h2>
 
             <p>
-                Have questions about BusinessGrowth or want to explore
-                how AI can help your business? We'd love to hear from you.
+              Discover smarter ways to work, solve problems, and grow your
+              business with AI-powered solutions designed for the way modern
+              businesses operate.
             </p>
+          </div>
 
+          <div class="tools-grid">
+            <article class="tool-card">
+              <div class="tool-card-top">
+                <div class="tool-icon">✧</div>
+
+                <span class="tool-number"> 01 </span>
+              </div>
+
+              <h3>AI Business Assistant</h3>
+
+              <p>
+                Generate ideas, draft business content, organize tasks, and get
+                assistance with everyday business challenges.
+              </p>
+
+              <a href="" class="tool-link"> Explore tool <span>↗️</span> </a>
+            </article>
+            <article class="tool-card">
+              <div class="tool-card-top">
+                <div class="tool-icon">✎</div>
+
+                <span class="tool-number"> 02 </span>
+              </div>
+
+              <h3>AI Content Creator</h3>
+
+              <p>
+                Create marketing copy, social media posts, product descriptions,
+                and engaging content for your business.
+              </p>
+
+              <a href="#contact" class="tool-link">
+                Explore tool <span>↗️</span>
+              </a>
+            </article>
+
+            <article class="tool-card">
+              <div class="tool-card-top">
+                <div class="tool-icon">◈</div>
+
+                <span class="tool-number"> 03 </span>
+              </div>
+
+              <h3>AI Business Insights</h3>
+
+              <p>
+                Organize business information, identify useful patterns, and
+                turn available data into insights for better decisions.
+              </p>
+
+              <a href="#contact" class="tool-link">
+                Explore tool <span>↗️</span>
+              </a>
+            </article>
+            <article class="tool-card">
+              <div class="tool-card-top">
+                <div class="tool-icon">⟳</div>
+
+                <span class="tool-number"> 04 </span>
+              </div>
+
+              <h3>Workflow Automation</h3>
+
+              <p>
+                Simplify repetitive tasks, organize business processes, and
+                discover opportunities to save valuable time.
+              </p>
+
+              <a href="#contact" class="tool-link">
+                Explore tool <span>↗️</span>
+              </a>
+            </article>
+            <article class="tool-card">
+              <div class="tool-card-top">
+                <div class="tool-icon">◎</div>
+
+                <span class="tool-number"> 05 </span>
+              </div>
+
+              <h3>AI Marketing Assistant</h3>
+
+              <p>
+                Develop campaign ideas, plan promotions, improve marketing
+                messages, and reach your target audience more effectively.
+              </p>
+
+              <a href="#contact" class="tool-link">
+                Explore tool <span>↗️</span>
+              </a>
+            </article>
+
+            <article class="tool-card">
+              <div class="tool-card-top">
+                <div class="tool-icon">↗️</div>
+
+                <span class="tool-number"> 06 </span>
+              </div>
+
+              <h3>Business Growth Planner</h3>
+
+              <p>
+                Explore growth strategies, organize business goals, and develop
+                practical plans for your next stage of growth.
+              </p>
+
+              <a href="#contact" class="tool-link">
+                Explore tool <span>↗️</span>
+              </a>
+            </article>
+          </div>
+
+          <div class="tools-footer">
+            <p>One platform. More possibilities. Smarter ways to grow.</p>
+
+            <a
+              href="./authentication/auth.html"
+              class="btn btn-primary"
+            >
+              Get started
+              <span>↗️</span>
+            </a>
+          </div>
         </div>
+      </section>
 
-<div class="contact-decoration" aria-hidden="true">
-    <div class="contact-orb contact-orb-one"></div>
-    <div class="contact-orb contact-orb-two"></div>
+      <section class="solutions-section" id="solutions">
+        <div class="container">
+          <div class="section-heading">
+            <span class="section-badge"> BUILT AROUND YOUR BUSINESS </span>
 
-    <div class="contact-graphic">
-        <div class="graphic-circle">
-            <i class="bi bi-chat-square-dots-fill"></i>
+            <h2>
+              Real challenges.
+              <span class="gradient-text"> Smarter solutions. </span>
+            </h2>
+
+            <p>
+              Every business faces challenges. BusinessGrowth aims to make work
+              easier with intelligent tools that help teams save time, improve
+              productivity, and discover new opportunities.
+            </p>
+          </div>
+
+          <div class="solutions-grid">
+            <article class="solution-card">
+              <div class="solution-number">01</div>
+
+              <div class="solution-icon">⚡</div>
+
+              <h3>Productivity & Efficiency</h3>
+
+              <p>
+                Reduce repetitive work, organize daily tasks, and give your team
+                more time to focus on important business activities.
+              </p>
+
+              <ul class="solution-list">
+                <li>
+                  <span>✓</span>
+                  Task organization
+                </li>
+
+                <li>
+                  <span>✓</span>
+                  AI-assisted workflows
+                </li>
+
+                <li>
+                  <span>✓</span>
+                  Smarter work planning
+                </li>
+              </ul>
+            </article>
+
+            <article class="solution-card">
+              <div class="solution-number">02</div>
+
+              <div class="solution-icon">◈</div>
+
+              <h3>Business Decision-Making</h3>
+
+              <p>
+                Make better-informed decisions by organizing available
+                information and identifying opportunities for improvement.
+              </p>
+
+              <ul class="solution-list">
+                <li>
+                  <span>✓</span>
+                  Business insights
+                </li>
+
+                <li>
+                  <span>✓</span>
+                  Goal tracking
+                </li>
+
+                <li>
+                  <span>✓</span>
+                  Growth planning
+                </li>
+              </ul>
+            </article>
+
+            <article class="solution-card">
+              <div class="solution-number">03</div>
+
+              <div class="solution-icon">↗️</div>
+
+              <h3>Marketing & Business Growth</h3>
+
+              <p>
+                Create better marketing content, explore new strategies, and
+                develop ideas to help your business reach more customers.
+              </p>
+
+              <ul class="solution-list">
+                <li>
+                  <span>✓</span>
+                  Content generation
+                </li>
+
+                <li>
+                  <span>✓</span>
+                  Marketing ideas
+                </li>
+
+                <li>
+                  <span>✓</span>
+                  Business strategy
+                </li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="solutions-cta">
+            <div class="solutions-cta-content">
+              <span class="cta-eyebrow"> YOUR NEXT CHAPTER STARTS HERE </span>
+
+              <h3>
+                Ready to rethink
+                <span class="gradient-text"> how you work? </span>
+              </h3>
+
+              <p>
+                Discover how intelligent business tools could help you move
+                forward.
+              </p>
+            </div>
+
+            <a href="#contact" class="btn btn-primary">
+              Let's Talk
+
+              <span>↗️</span>
+            </a>
+          </div>
         </div>
+      </section>
 
-        <span class="graphic-dot graphic-dot-one"></span>
-        <span class="graphic-dot graphic-dot-two"></span>
-        <span class="graphic-dot graphic-dot-three"></span>
-    </div>
-</div>
-        <div class="contact-grid">
+      <section class="about-section" id="about">
+        <div class="container">
+          <div class="about-grid">
+            <div class="about-content">
+              <span class="section-badge">
+                <span class="status-dot"></span>
+                GET TO KNOW US
+              </span>
 
+              <h2>
+                We're building a
+                <span class="gradient-text"> smarter future </span>
+                for business.
+              </h2>
+
+              <p class="about-description">
+                BusinessGrowth is an emerging technology platform focused on
+                helping businesses work smarter through artificial intelligence,
+                automation, and practical digital solutions.
+              </p>
+
+              <p class="about-description">
+                Our goal is to make intelligent technology more useful and
+                accessible, helping businesses simplify everyday work, explore
+                new ideas, and discover opportunities to grow.
+              </p>
+
+              <a href="#contact" class="btn btn-primary">
+                Connect With Us
+                <span>↗️</span>
+              </a>
+            </div>
+
+            <div class="about-visual">
+              <div class="about-glow"></div>
+
+              <div class="about-panel">
+                <div class="about-panel-header">
+                  <a href="index.html" class="brand-logo">
+                    <img
+                      src="images/logo-removebg-preview.png"
+                      alt=""
+                      class="logo-symbol"
+                    />
+                    <span class="logo-text"> Business<span>Growth</span> </span>
+                  </a>
+                </div>
+
+                <div class="about-message">
+                  <span class="about-message-label"> THE BIGGER PICTURE </span>
+
+                  <h3>
+                    Better thinking.
+                    <span>Better possibilities.</span>
+                  </h3>
+
+                  <p>
+                    We believe technology should help people spend less time on
+                    repetitive work and more time building something meaningful.
+                  </p>
+                </div>
+
+                <div class="about-values">
+                  <div class="about-value">
+                    <div class="about-value-icon">✦</div>
+
+                    <div>
+                      <h4>Innovation</h4>
+                      <p>Exploring smarter ways to work.</p>
+                    </div>
+                  </div>
+
+                  <div class="about-value">
+                    <div class="about-value-icon">◈</div>
+
+                    <div>
+                      <h4>Practical Solutions</h4>
+                      <p>Technology built around real needs.</p>
+                    </div>
+                  </div>
+
+                  <div class="about-value">
+                    <div class="about-value-icon">↗️</div>
+
+                    <div>
+                      <h4>Growth</h4>
+                      <p>Helping businesses move forward.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-pillars">
+            <article class="pillar-card">
+              <span class="pillar-number"> 01 / OUR MISSION </span>
+
+              <div class="pillar-icon">◎</div>
+
+              <h3>Make Work Smarter</h3>
+
+              <p>
+                Our mission is to develop useful AI-powered tools that help
+                businesses simplify tasks, improve productivity, and solve
+                everyday challenges.
+              </p>
+            </article>
+
+            <article class="pillar-card">
+              <span class="pillar-number"> 02 / OUR VISION </span>
+
+              <div class="pillar-icon">✧</div>
+
+              <h3>Unlock New Possibilities</h3>
+
+              <p>
+                Our vision is to make intelligent business technology more
+                accessible and help businesses confidently explore new
+                opportunities for growth.
+              </p>
+            </article>
+
+            <article class="pillar-card">
+              <span class="pillar-number"> 03 / OUR APPROACH </span>
+
+              <div class="pillar-icon">◈</div>
+
+              <h3>Build With Purpose</h3>
+
+              <p>
+                We aim to create solutions that are useful, approachable, and
+                designed around the real problems businesses need to solve.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact">
+        <div class="container">
+          <div class="section-heading">
+            <span class="section-badge">
+              <i class="bi bi-chat-dots"></i>
+              GET IN TOUCH
+            </span>
+
+            <h2>
+              Let's Grow Your Business
+              <span class="gradient-text">Together.</span>
+            </h2>
+
+            <p>
+              Have questions about BusinessGrowth or want to explore how AI can
+              help your business? We'd love to hear from you.
+            </p>
+          </div>
+
+          <div class="contact-decoration" aria-hidden="true">
+            <div class="contact-orb contact-orb-one"></div>
+            <div class="contact-orb contact-orb-two"></div>
+
+            <div class="contact-graphic">
+              <div class="graphic-circle">
+                <i class="bi bi-chat-square-dots-fill"></i>
+              </div>
+
+              <span class="graphic-dot graphic-dot-one"></span>
+              <span class="graphic-dot graphic-dot-two"></span>
+              <span class="graphic-dot graphic-dot-three"></span>
+            </div>
+          </div>
+          <div class="contact-grid">
             <div class="contact-info">
+              <h3>Let's Start a Conversation</h3>
 
-                <h3>Let's Start a Conversation</h3>
+              <p class="contact-description">
+                Tell us about your business goals, challenges, or ideas. We're
+                building smarter tools to help businesses move forward.
+              </p>
 
-                <p class="contact-description">
-                    Tell us about your business goals, challenges, or ideas.
-                    We're building smarter tools to help businesses move forward.
-                </p>
-
-                <div class="contact-item">
-
-                    <div class="contact-icon">
-                        <i class="bi bi-envelope"></i>
-                    </div>
-
-                    <div>
-                        <h4>Email Us</h4>
-                        <p>Send us your questions and enquiries.</p>
-                        <span>Contact email coming soon</span>
-                    </div>
-
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="bi bi-envelope"></i>
                 </div>
 
-                <div class="contact-item">
+                <div>
+                  <h4>Email Us</h4>
+                  <p>Send us your questions and enquiries.</p>
+                  <span>Contact email coming soon</span>
+                </div>
+              </div>
 
-                    <div class="contact-icon">
-                        <i class="bi bi-lightning-charge"></i>
-                    </div>
-
-                    <div>
-                        <h4>AI-Powered Solutions</h4>
-                        <p>
-                            Discover smarter ways to improve productivity
-                            and grow your business.
-                        </p>
-                    </div>
-
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="bi bi-lightning-charge"></i>
                 </div>
 
-                <div class="contact-item">
+                <div>
+                  <h4>AI-Powered Solutions</h4>
+                  <p>
+                    Discover smarter ways to improve productivity and grow your
+                    business.
+                  </p>
+                </div>
+              </div>
 
-                    <div class="contact-icon">
-                        <i class="bi bi-people"></i>
-                    </div>
-
-                    <div>
-                        <h4>Business Partnerships</h4>
-                        <p>
-                            Interested in collaborating with us?
-                            Let's explore the possibilities.
-                        </p>
-                    </div>
-
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="bi bi-people"></i>
                 </div>
 
+                <div>
+                  <h4>Business Partnerships</h4>
+                  <p>
+                    Interested in collaborating with us? Let's explore the
+                    possibilities.
+                  </p>
+                </div>
+              </div>
             </div>
 
             <div class="contact-form-wrapper">
+              <div class="contact-form-heading">
+                <h3>Send Us a Message</h3>
+                <p>Fill in the form below to get started.</p>
+              </div>
 
-                <div class="contact-form-heading">
-                    <h3>Send Us a Message</h3>
-                    <p>Fill in the form below to get started.</p>
+              <form class="contact-form" id="contactForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="contactName">Full Name</label>
+
+                    <input
+                      type="text"
+                      id="contactName"
+                      name="name"
+                      placeholder="Enter your full name"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contactEmail">Email Address</label>
+
+                    <input
+                      type="email"
+                      id="contactEmail"
+                      name="email"
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
                 </div>
 
-                <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                  <label for="contactSubject">Subject</label>
 
-                    <div class="form-row">
+                  <input
+                    type="text"
+                    id="contactSubject"
+                    name="subject"
+                    placeholder="What would you like to discuss?"
+                    required
+                  />
+                </div>
 
-                        <div class="form-group">
-                            <label for="contactName">Full Name</label>
+                <div class="form-group">
+                  <label for="contactMessage">Your Message</label>
 
-                            <input
-                                type="text"
-                                id="contactName"
-                                name="name"
-                                placeholder="Enter your full name"
-                                required
-                            >
-                        </div>
+                  <textarea
+                    id="contactMessage"
+                    name="message"
+                    rows="5"
+                    placeholder="Tell us how we can help..."
+                    required
+                  ></textarea>
+                </div>
 
-                        <div class="form-group">
-                            <label for="contactEmail">Email Address</label>
+                <button type="submit" class="btn btn-primary contact-submit">
+                  Send Message
+                  <i class="bi bi-arrow-right"></i>
+                </button>
 
-                            <input
-                                type="email"
-                                id="contactEmail"
-                                name="email"
-                                placeholder="Enter your email"
-                                required
-                            >
-                        </div>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="contactSubject">Subject</label>
-
-                        <input
-                            type="text"
-                            id="contactSubject"
-                            name="subject"
-                            placeholder="What would you like to discuss?"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="contactMessage">Your Message</label>
-
-                        <textarea
-                            id="contactMessage"
-                            name="message"
-                            rows="5"
-                            placeholder="Tell us how we can help..."
-                            required
-                        ></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary contact-submit">
-                        Send Message
-                        <i class="bi bi-arrow-right"></i>
-                    </button>
-
-                    <p class="form-notice" id="formNotice" aria-live="polite"></p>
-
-                </form>
-
+                <p class="form-notice" id="formNotice" aria-live="polite"></p>
+              </form>
             </div>
-
+          </div>
         </div>
-
-    </div>
-
-</section>
+      </section>
     </main>
 
     <footer class="site-footer">
-
-    <div class="container">
-
+      <div class="container">
         <div class="footer-main">
-
-            <div class="footer-brand">
-
-                <a href="#home" class="logo">
-
-               <a href="index.html" class="brand-logo">
-                 <img src="images/logo-removebg-preview.png" alt="" class="logo-symbol">
-                <span class="logo-text">
-                    Business<span>Growth</span>
-                </span>
-
-            </a>
- 
+          <div class="footer-brand">
+            <a href="#home" class="logo">
+              <a href="index.html" class="brand-logo">
+                <img
+                  src="images/logo-removebg-preview.png"
+                  alt=""
+                  class="logo-symbol"
+                />
+                <span class="logo-text"> Business<span>Growth</span> </span>
+              </a>
             </a>
 
-                <p>
-                    Helping businesses work smarter, make better decisions,
-                    and grow with the power of artificial intelligence.
-                </p>
+            <p>
+              Helping businesses work smarter, make better decisions, and grow
+              with the power of artificial intelligence.
+            </p>
+          </div>
 
+          <div class="footer-visual" aria-hidden="true">
+            <div class="footer-visual-glow"></div>
+
+            <div class="footer-visual-icon">
+              <i class="bi bi-lightning-charge-fill"></i>
             </div>
 
-<div class="footer-visual" aria-hidden="true">
-    <div class="footer-visual-glow"></div>
+            <div class="footer-visual-ring footer-ring-one"></div>
+            <div class="footer-visual-ring footer-ring-two"></div>
+          </div>
 
-    <div class="footer-visual-icon">
-        <i class="bi bi-lightning-charge-fill"></i>
-    </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
 
-    <div class="footer-visual-ring footer-ring-one"></div>
-    <div class="footer-visual-ring footer-ring-two"></div>
-</div>
+            <a href="#home">Home</a>
+            <a href="#tools">AI Tools</a>
+            <a href="#solutions">Solutions</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+          </div>
 
-            <div class="footer-links">
+          <div class="footer-links">
+            <h4>Our Focus</h4>
 
-                <h4>Quick Links</h4>
+            <a href="#tools">Business Automation</a>
+            <a href="#tools">AI Content Creation</a>
+            <a href="#tools">Business Insights</a>
+            <a href="#solutions">Business Growth</a>
+          </div>
 
-                <a href="#home">Home</a>
-                <a href="#tools">AI Tools</a>
-                <a href="#solutions">Solutions</a>
-                <a href="#about">About Us</a>
-                <a href="#contact">Contact</a>
+          <div class="footer-cta">
+            <h4>Ready to Grow Smarter?</h4>
 
-            </div>
+            <p>
+              Explore how AI can help you take your business to the next level.
+            </p>
 
-            <div class="footer-links">
-
-                <h4>Our Focus</h4>
-
-                <a href="#tools">Business Automation</a>
-                <a href="#tools">AI Content Creation</a>
-                <a href="#tools">Business Insights</a>
-                <a href="#solutions">Business Growth</a>
-
-            </div>
-
-            <div class="footer-cta">
-
-                <h4>Ready to Grow Smarter?</h4>
-
-                <p>
-                    Explore how AI can help you take your business
-                    to the next level.
-                </p>
-
-                <a href="#tools" class="btn btn-primary">
-                    Explore AI Tools
-                    <i class="bi bi-arrow-up-right"></i>
-                </a>
-
-            </div>
-
+            <a href="#tools" class="btn btn-primary">
+              Explore AI Tools
+              <i class="bi bi-arrow-up-right"></i>
+            </a>
+          </div>
         </div>
 
         <div class="footer-bottom">
+          <p>
+            &copy; <span id="currentYear"></span> BusinessGrowth. All rights
+            reserved.
+          </p>
 
-            <p>
-                &copy; <span id="currentYear"></span> BusinessGrowth.
-                All rights reserved.
-            </p>
-
-            <a href="#home" class="back-to-top">
-                Back to Top
-                <i class="bi bi-arrow-up"></i>
-            </a>
-
+          <a href="#home" class="back-to-top">
+            Back to Top
+            <i class="bi bi-arrow-up"></i>
+          </a>
         </div>
-
-    </div>
-
-</footer>
-</body>
-<script src="./index.js">
-
-</script>
+      </div>
+    </footer>
+  </body>
+  <script src="./index.js"></script>
 </html>

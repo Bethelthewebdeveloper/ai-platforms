@@ -841,75 +841,135 @@ body.light-mode .nav-link.active {
     color: var(--primary-color);
 }
 
+.notification-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 50px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.notification-dot[hidden] {
+  display: none;
+}
+
+.notifications-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 1000;
+  width: min(360px, calc(100vw - 32px));
+  max-height: 420px;
+  overflow-y: auto;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.notifications-popover[hidden] {
+  display: none !important;
+}
+
+.popover-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.text-button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.text-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .notification-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-
-    padding: 12px 0;
-
-    border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 16px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  transition: background 0.2s ease;
 }
 
 .notification-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
-.notification-item > div {
-    min-width: 0;
+.notification-item:hover {
+  background: var(--hover-bg, #f8fafc);
+}
+
+.notification-item.is-read {
+  opacity: 0.6;
 }
 
 .notification-item strong {
-    display: block;
-    font-size: 11px;
-    margin-bottom: 3px;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
 }
 
 .notification-item p {
-    color: var(--muted-color);
-    font-size: 10px;
-    line-height: 1.6;
+  margin: 0 0 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted-text, #64748b);
 }
 
 .notification-item small {
-    display: block;
-    color: var(--muted-color);
-    font-size: 9px;
-    margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted-text, #64748b);
 }
 
 .notification-icon {
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 9px;
-
-    flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
 }
 
 .notification-icon.blue {
-    color: #6ca0ff;
-    background: rgba(40, 100, 255, 0.15);
+  background: #dbeafe;
+  color: #2563eb;
 }
 
 .notification-icon.green {
-    color: #00d99a;
-    background: rgba(0, 217, 154, 0.12);
+  background: #dcfce7;
+  color: #16a34a;
 }
 
 .notification-icon.purple {
-    color: #ad8aff;
-    background: rgba(138, 92, 246, 0.15);
+  background: #f3e8ff;
+  color: #9333ea;
 }
 
-
-/* =========================================
-   18. PROFILE DROPDOWN
-========================================= */
+.dropdown-wrap {
+  position: relative;
+}
 
 .profile-popover {
     width: 200px;
@@ -951,10 +1011,6 @@ body.light-mode .nav-link.active {
 }
 
 
-/* =========================================
-   19. PAGE CONTENT
-========================================= */
-
 .page-content {
     width: 100%;
     max-width: 1800px;
@@ -966,10 +1022,6 @@ body.light-mode .nav-link.active {
     flex: 1;
 }
 
-
-/* =========================================
-   20. WELCOME SECTION
-========================================= */
 
 .welcome-row {
     display: flex;
@@ -1020,9 +1072,6 @@ body.light-mode .nav-link.active {
 }
 
 
-/* =========================================
-   21. STATISTICS GRID
-========================================= */
 
 .stats-grid {
     display: grid;
@@ -1033,9 +1082,6 @@ body.light-mode .nav-link.active {
 }
 
 
-/* =========================================
-   22. STATISTICS CARDS
-========================================= */
 
 .stat-card {
     position: relative;
@@ -1111,9 +1157,6 @@ body.light-mode .nav-link.active {
 }
 
 
-/* =========================================
-   23. STATISTICS CARD HEADINGS
-========================================= */
 
 .stat-top {
     display: flex;
@@ -1164,9 +1207,6 @@ body.light-mode .nav-link.active {
 }
 
 
-/* =========================================
-   24. STATISTICS VALUES
-========================================= */
 
 .stat-value {
     display: block;
@@ -1221,4 +1261,200 @@ body.light-mode .nav-link.active {
     flex-direction: column;
     gap: 17px;
     min-width: 0;
+}
+
+.panel {
+    min-width: 0;
+    padding: 16px;
+
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-medium);
+
+    transition:
+        background var(--transition),
+        border-color var(--transition);
+}
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.panel-heading h2,
+.assistant-heading h2,
+.growth-top h2 {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 700;
+}
+
+.panel-subtitle {
+    color: var(--muted-color);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.overview-panel {
+    padding: 17px 16px 12px;
+}
+
+.overview-panel .panel-heading {
+    margin-bottom: 12px;
+}
+
+.select-control {
+    max-width: 145px;
+    padding: 8px 11px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+
+    background: var(--surface-light);
+    color: var(--text-color);
+
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.select-control option {
+    background: var(--surface-color);
+    color: var(--text-color);
+}
+
+.chart-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 6px;
+}
+
+.chart-summary > span:first-child {
+    color: var(--muted-color);
+    font-size: 11px;
+}
+
+.chart-summary strong {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.chart-summary .positive {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+
+    color: var(--success-color);
+    font-size: 10px;
+}
+
+.chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 215px;
+}
+
+.chart-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.quick-panel {
+    padding: 15px 12px 13px;
+}
+
+.quick-panel .panel-heading {
+    padding: 0 2px;
+    margin-bottom: 13px;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.quick-action {
+    min-width: 0;
+    min-height: 118px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 12px 10px;
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    color: #ffffff;
+    text-align: left;
+
+    transition:
+        transform var(--transition),
+        filter var(--transition),
+        box-shadow var(--transition);
+}
+
+.quick-action:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+.quick-purple {
+    background: linear-gradient(145deg, #7439ed, #4220a7);
+}
+
+.quick-blue {
+    background: linear-gradient(145deg, #1678e9, #0753bd);
+}
+
+.quick-green {
+    background: linear-gradient(145deg, #00a982, #00745d);
+}
+
+.quick-orange {
+    background: linear-gradient(145deg, #d98220, #9b4b0c);
+}
+
+.quick-indigo {
+    background: linear-gradient(145deg, #294edc, #192b91);
+}
+
+.quick-icon {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.17);
+    color: #ffffff;
+
+    font-size: 17px;
+}
+
+.quick-action strong {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.quick-action small {
+    color: rgba(255, 255, 255, 0.85);
+
+    font-size: 10px;
+    line-height: 1.5;
 }
