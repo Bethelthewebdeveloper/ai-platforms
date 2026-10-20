@@ -112,20 +112,6 @@
             <span>Help &amp; Support</span>
           </a>
         </nav>
-
-        <div class="upgrade-card">
-          <div class="upgrade-rocket">
-            <i class="bi bi-rocket-takeoff-fill"></i>
-          </div>
-
-          <h3>Upgrade to Pro</h3>
-
-          <p>Unlock more AI tools, advanced analytics and premium features.</p>
-
-          <button class="btn btn-primary btn-block" data-action="upgrade">
-            Upgrade Now
-          </button>
-        </div>
       </aside>
 
       <main class="main-area" id="dashboard">
@@ -174,7 +160,11 @@
                 aria-expanded="false"
               >
                 <i class="bi bi-bell"></i>
-                <span class="notification-dot">3</span>
+                <span
+                  class="notification-dot"
+                  id="notificationBadge"
+                  hidden
+                ></span>
               </button>
 
               <div
@@ -185,51 +175,18 @@
                 <div class="popover-heading">
                   <strong>Notifications</strong>
 
-                  <button class="text-button" id="markRead" type="button">
+                  <button
+                    class="text-button"
+                    id="markRead"
+                    type="button"
+                    hidden
+                  >
                     Mark all read
                   </button>
                 </div>
 
-                <div class="notification-item">
-                  <span class="notification-icon blue">
-                    <i class="bi bi-person-plus"></i>
-                  </span>
-
-                  <div>
-                    <strong>New customer registered</strong>
-
-                    <p>Sarah Johnson joined your customer list.</p>
-
-                    <small>2 hours ago</small>
-                  </div>
-                </div>
-
-                <div class="notification-item">
-                  <span class="notification-icon green">
-                    <i class="bi bi-graph-up-arrow"></i>
-                  </span>
-
-                  <div>
-                    <strong>Revenue is up 18%</strong>
-
-                    <p>Your revenue is trending upward this month.</p>
-
-                    <small>3 hours ago</small>
-                  </div>
-                </div>
-
-                <div class="notification-item">
-                  <span class="notification-icon purple">
-                    <i class="bi bi-check2-circle"></i>
-                  </span>
-
-                  <div>
-                    <strong>Task completed</strong>
-
-                    <p>Landing page design was marked complete.</p>
-
-                    <small>5 hours ago</small>
-                  </div>
+                <div id="notificationsList">
+                  <!-- JavaScript will display notifications here -->
                 </div>
               </div>
             </div>
@@ -367,6 +324,81 @@
               </div>
             </article>
           </section>
+
+          <section class="content-section" id="ai-tools">
+          <div class="section-heading">
+            <div>
+              <h2>Explore AI Tools</h2>
+              <p>Choose a tool to help you get things done.</p>
+            </div>
+          </div>
+
+          <div class="tools-grid" id="toolsGrid">
+            <article class="stat-card stat-blue" data-tool="writing">
+              <div class="stat-card-top">
+                <span class="stat-icon blue">
+                  <i class="bi bi-pencil-square"></i>
+                </span>
+              </div>
+
+              <h3>Writing Assistant</h3>
+
+              <p>Write, rewrite, summarize, and improve your content.</p>
+
+              <button class="tool-launch" data-launch="writing">
+                Open tool <i class="bi bi-arrow-up-right"></i>
+              </button>
+            </article>
+
+            <article class="stat-card stat-green" data-tool="coding">
+              <div class="tool-card-top">
+                <span class="stat-icon purple">
+                  <i class="bi bi-code-slash"></i>
+                </span>
+              </div>
+
+              <h3>Coding Assistant</h3>
+
+              <p>Understand code, find bugs, and build applications.</p>
+
+              <button class="tool-launch" data-launch="coding">
+                Open tool <i class="bi bi-arrow-up-right"></i>
+              </button>
+            </article>
+
+            <article class="stat-card stat-purple" data-tool="research">
+              <div class="tool-card-top">
+                <span class="stat-icon green">
+                  <i class="bi bi-search"></i>
+                </span>
+              </div>
+
+              <h3>Research Assistant</h3>
+
+              <p>Organize information and explore new ideas.</p>
+
+              <button class="tool-launch" data-launch="research">
+                Open tool <i class="bi bi-arrow-up-right"></i>
+              </button>
+            </article>
+
+            <article class="stat-card stat-orange" data-tool="learning">
+              <div class="tool-card-top">
+                <span class="stat-icon orange">
+                  <i class="bi bi-lightbulb"></i>
+                </span>
+              </div>
+
+              <h3>Learning Assistant</h3>
+
+              <p>Learn difficult topics with simpler explanations.</p>
+
+              <button class="tool-launch" data-launch="learning">
+                Open tool <i class="bi bi-arrow-up-right"></i>
+              </button>
+            </article>
+          </div>
+        </section>
 
           <section class="dashboard-grid">
             <div class="left-column">
@@ -602,15 +634,65 @@
                   </div>
                 </div>
               </article>
-
             </div>
-
           </section>
-
         </div>
+        <footer class="status-bar">
+          <a
+            href="individual.html"
+            class="brand-logo"
+            aria-label="BusinessGrowth home"
+          >
+            <img
+              src="../images/logo-removebg-preview.png"
+              alt=""
+              class="logo-symbol"
+            />
+            <span class="brand-copy">
+              <strong>BusinessGrowth</strong>
+            </span>
+          </a>
+
+          <span class="footer-dot">•</span>
+
+          <span>Your success is our mission.</span>
+        </footer>
       </main>
     </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <i class="bi bi-check-circle-fill"></i>
+
+      <span id="toastMessage">Done</span>
+    </div>
+
+    <dialog class="action-dialog" id="actionDialog">
+      <form method="dialog" class="dialog-form">
+        <button class="dialog-close" aria-label="Close dialog">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <span class="dialog-icon">
+          <i class="bi bi-stars"></i>
+        </span>
+
+        <h2 id="dialogTitle">Quick action</h2>
+
+        <p id="dialogDescription">
+          This feature will be connected as we build the BusinessGrowth backend.
+        </p>
+
+        <div id="dialogFields"></div>
+
+        <div class="dialog-actions">
+          <button class="btn btn-secondary" value="cancel">Cancel</button>
+
+          <button class="btn btn-primary" id="dialogConfirm" value="confirm">
+            Continue
+          </button>
+        </div>
+      </form>
+    </dialog>
   </body>
-  
   <script src="business.js"></script>
 </html>

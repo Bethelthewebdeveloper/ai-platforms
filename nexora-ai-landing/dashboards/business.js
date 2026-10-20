@@ -1078,3 +1078,91 @@ if (viewAllDeals) {
     }
   });
 }
+
+function renderNotifications() {
+  if (
+    !notificationBadge ||
+    !notificationsList ||
+    !markReadButton
+  ) {
+    return;
+  }
+
+  // Count only unread notifications
+  const unreadCount = notifications.filter(
+    (notification) => !notification.read,
+  ).length;
+
+  // Update the notification badge
+  notificationBadge.hidden = unreadCount === 0;
+
+  if (unreadCount > 0) {
+    notificationBadge.textContent =
+      unreadCount > 99 ? "99+" : unreadCount;
+
+    notificationToggle?.setAttribute(
+      "aria-label",
+      // ${unreadCount}, unreadnotifications,
+    );
+  } else {
+    notificationBadge.textContent = "";
+
+    notificationToggle?.setAttribute(
+      "aria-label",
+      "Notifications",
+    );
+  }
+
+  // Show "Mark all read" only when unread notifications exist
+  markReadButton.hidden = unreadCount === 0;
+
+  // Show empty state only when there are no notifications at all
+  if (notifications.length === 0) {
+    notificationsList.innerHTML = `
+      <div class="notifications-empty">
+        <i class="bi bi-bell-slash"></i>
+        <strong>No notifications yet</strong>
+        <p>New notifications will appear here.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  // Display both read and unread notifications
+  notificationsList.innerHTML = notifications
+    .map((notification) => {
+      const timeText = formatNotificationTime(notification.time);
+
+      return `
+        <div class="notification-item ${
+          notification.read ? "is-read" : "is-unread"
+        }">
+          <span class="notification-icon ${escapeNotificationText(
+            notification.color,
+          )}">
+            <i class="bi ${escapeNotificationText(notification.icon)}"></i>
+          </span>
+
+          <div class="notification-content">
+            <strong>
+              ${escapeNotificationText(notification.title)}
+            </strong>
+
+            <p>
+              ${escapeNotificationText(notification.description)}
+            </p>
+
+            <small>${timeText}</small>
+
+            ${
+              notification.read
+                ? '<span class="read-status">Read</span>'
+                : '<span class="unread-status">New</span>'
+            }
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}

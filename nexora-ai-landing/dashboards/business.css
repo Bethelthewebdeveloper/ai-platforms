@@ -1248,6 +1248,131 @@ body.light-mode .nav-link.active {
 }
 
 
+
+.content-section {
+margin-bottom: 42px;
+}
+
+.section-heading {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 15px;
+margin-bottom: 20px;
+}
+
+.section-heading h2 {
+font-size: 19px;
+margin-bottom: 3px;
+}
+
+.section-heading p {
+font-size: 12px;
+}
+
+.text-link {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+
+background: transparent;
+border: 0;
+
+color: var(--blue);
+font-weight: 700;
+white-space: nowrap;
+
+}
+
+.text-link:hover {
+color: #93c5fd;
+}
+
+.heading-icon {
+font-size: 22px;
+color: var(--text-muted);
+}
+
+.tools-grid {
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 17px;
+}
+
+.tool-card {
+min-width: 0;
+padding: 19px;
+
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+
+transition: 0.2s ease;
+
+}
+
+.tool-card:hover {
+border-color: rgba(96, 165, 250, 0.45);
+transform: translateY(-3px);
+}
+
+.tool-card-top {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 18px;
+}
+
+.favorite-button {
+width: 34px;
+height: 34px;
+
+display: grid;
+place-items: center;
+
+color: var(--text-muted);
+background: transparent;
+
+border: 1px solid var(--border);
+border-radius: 9px;
+
+}
+
+.favorite-button:hover,
+.favorite-button.is-favorite {
+color: #fbbf24;
+background: rgba(251, 191, 36, 0.1);
+}
+
+.tool-card h3 {
+font-size: 14px;
+margin-bottom: 8px;
+}
+
+.tool-card > p {
+color: var(--text-muted);
+font-size: 12px;
+line-height: 1.8;
+min-height: 65px;
+}
+
+.tool-launch {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+
+margin-top: 16px;
+padding: 0;
+
+color: var(--blue);
+background: transparent;
+border: 0;
+
+font-size: 12px;
+font-weight: 700;
+
+}
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.65fr) minmax(290px, 1fr);
@@ -2807,4 +2932,37 @@ body.light-mode .deal-status.proposal {
         animation-iteration-count: 1 !important;
     }
 
+}
+
+/* Unread notification */
+.notification-item.is-unread {
+  background: rgba(59, 130, 246, 0.06);
+}
+
+/* Read notification */
+.notification-item.is-read {
+  opacity: 0.7;
+  background: transparent;
+}
+
+/* Notification status */
+.read-status,
+.unread-status {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.read-status {
+  color: #6b7280;
+}
+
+.unread-status {
+  color: #2563eb;
+}
+
+/* Notification badge */
+.notification-dot[hidden] {
+  display: none !important;
 }
