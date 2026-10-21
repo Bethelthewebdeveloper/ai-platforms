@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Individual Onboarding | Nexora AI</title>
+
+    <link rel="stylesheet" href="individual-onboarding.css">
+</head>
+
+<body>
+
+    <main class="onboarding-container">
+
+        <section class="onboarding-card">
+
+            <!-- Nexora AI Logo -->
+            <div class="logo">
+                <img src="../images/logo.jpg" alt="logo">
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-section">
+                <p>PERSONALIZE YOUR EXPERIENCE</p>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+                <small>Step 1 of 1</small>
+            </div>
+
+            <!-- Introduction -->
+            <header class="onboarding-header">
+                <h1>Let's get to know you!</h1>
+
+                <p>
+                    Tell us a little about yourself so Business Growth
+                    can personalize your experience.
+                </p>
+            </header>
+
+            <form id="individualOnboardingForm">
+
+                <!-- Question 1 -->
+                <div class="form-group">
+                    <label for="role">
+                        1. What best describes you?
+                    </label>
+
+                    <select id="role" name="role" required>
+                        <option value="">Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="professional">Working professional</option>
+                        <option value="freelancer">Freelancer</option>
+                        <option value="creator">Content creator</option>
+                        <option value="job-seeker">Job seeker</option>
+                        <option value="researcher">Researcher</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="form-group">
+                    <label for="goal">
+                        2. What would you like to achieve with Business Growth?
+                    </label>
+
+                    <select id="goal" name="goal" required>
+                        <option value="">Choose your main goal</option>
+                        <option value="learning">Learn new skills</option>
+                        <option value="productivity">Improve productivity</option>
+                        <option value="content">Create content</option>
+                        <option value="career">Grow my career</option>
+                        <option value="business">Explore business opportunities</option>
+                        <option value="research">Research and solve problems</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="form-group">
+                    <label for="experience">
+                        3. How familiar are you with AI tools?
+                    </label>
+
+                    <select id="experience" name="experience" required>
+                        <option value="">Choose your experience level</option>
+                        <option value="beginner">Beginner — I'm just starting</option>
+                        <option value="intermediate">Intermediate — I have some experience</option>
+                        <option value="advanced">Advanced — I use AI regularly</option>
+                    </select>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="form-group">
+                    <label for="interest">
+                        4. Which AI tools interest you most?
+                    </label>
+
+                    <select id="interest" name="interest" required>
+                        <option value="">Choose an area of interest</option>
+                        <option value="writing">Writing and research</option>
+                        <option value="images">Image generation and design</option>
+                        <option value="coding">Coding and development</option>
+                        <option value="video">Video and audio creation</option>
+                        <option value="automation">Productivity and automation</option>
+                        <option value="data">Data analysis</option>
+                        <option value="all">All of the above</option>
+                    </select>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="form-group">
+                    <label for="frequency">
+                        5. How often do you expect to use AI tools?
+                    </label>
+
+                    <select id="frequency" name="frequency" required>
+                        <option value="">Choose how often</option>
+                        <option value="daily">Every day</option>
+                        <option value="weekly">Several times a week</option>
+                        <option value="occasionally">Occasionally</option>
+                        <option value="exploring">I'm just exploring</option>
+                    </select>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="form-group">
+                    <label for="challenge">
+                        6. What is your biggest challenge when using AI?
+                    </label>
+
+                    <select id="challenge" name="challenge" required>
+                        <option value="">Select your biggest challenge</option>
+                        <option value="prompts">Writing effective prompts</option>
+                        <option value="finding-tools">Finding the right AI tools</option>
+                        <option value="accuracy">Getting accurate results</option>
+                        <option value="time">Saving time and improving productivity</option>
+                        <option value="learning">Understanding how AI works</option>
+                        <option value="none">I don't have a major challenge</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Additional Question -->
+                <div class="form-group">
+                    <label for="interests">
+                        7. What would you most like to learn or create?
+                    </label>
+
+                    <textarea
+                        id="interests"
+                        name="interests"
+                        rows="3"
+                        placeholder="Tell us about your interests or goals..."
+                    ></textarea>
+                </div>
+
+                <!-- Feedback -->
+                <p
+                    id="onboardingMessage"
+                    class="message"
+                    aria-live="polite"
+                ></p>
+
+                <!-- Submit -->
+                <button type="submit" id="continueButton">
+                    Complete Setup →
+                </button>
+
+            </form>
+
+            <p class="footer-text">
+                Your journey with Business Growth starts here.
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="individual-onboarding.js"></script>
+</body>
+</html>
