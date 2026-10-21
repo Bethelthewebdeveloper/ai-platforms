@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07111f" />
+    <meta
+      name="description"
+      content="Your BusinessGrowth individual workspace for AI tools, productivity, and personal growth."
+    />
+
+    <title>BusinessGrowth | Individual Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="../../dashboards/business/business.css" />
+    <script src="../../dashboards/business/business.js" defer></script>
+  </head>
+
+  <body>
+    <div class="app-shell">
+
+      <aside class="sidebar" id="sidebar">
+
+        <a
+          href="individual.html"
+          class="brand-logo"
+          aria-label="BusinessGrowth home"
+        >
+          <img
+            src="../../images/logo-removebg-preview.png"
+            alt=""
+            class="logo-symbol"
+          />
+
+          <span class="brand-copy">
+            <strong>BusinessGrowth</strong>
+            <small>AI Tools for Real Business Growth</small>
+          </span>
+        </a>
+
+        <nav class="sidebar-nav" aria-label="Main navigation">
+
+          <a class="nav-link" href="#ai-tools" data-section="AI Tools">
+            <i class="bi bi-stars" aria-hidden="true"></i>
+            <span>AI Tools</span>
+          </a>
+
+          <button
+            class="nav-link nav-expand"
+            type="button"
+            data-section="CRM"
+            aria-expanded="true"
+            aria-controls="crmSubNav"
+          >
+            <i class="bi bi-people" aria-hidden="true"></i>
+            <span>CRM</span>
+            <i
+              class="bi bi-chevron-down nav-chevron"
+              aria-hidden="true"
+            ></i>
+          </button>
+
+          <div class="sub-nav open" id="crmSubNav">
+            <a href="../individual/pages/customer.html" data-section="Customers">Customers</a>
+            <a href="#deals" data-section="Deals">Deals</a>
+          </div>
+
+          <a class="nav-link" href="#company" data-section="Company">
+            <i class="bi bi-building" aria-hidden="true"></i>
+            <span>Company</span>
+          </a>
+
+          <a
+            class="nav-link"
+            href="#integrations"
+            data-section="Integrations"
+          >
+            <i class="bi bi-link-45deg" aria-hidden="true"></i>
+            <span>Integrations</span>
+          </a>
+
+
+          <button
+            class="nav-link nav-expand"
+            type="button"
+            data-section="Business Management"
+            aria-expanded="true"
+            aria-controls="managementSubNav"
+          >
+            <i class="bi bi-bar-chart-line" aria-hidden="true"></i>
+            <span>Business Management</span>
+            <i
+              class="bi bi-chevron-down nav-chevron"
+              aria-hidden="true"
+            ></i>
+          </button>
+
+          <div class="sub-nav open" id="managementSubNav">
+            <a href="#projects" data-section="Projects">Projects</a>
+            <a href="#tasks" data-section="Tasks">Tasks</a>
+            <a href="#calendar" data-section="Calendar">Calendar</a>
+            <a href="#reports" data-section="Reports">Reports</a>
+          </div>
+
+          <div class="nav-spacer"></div>
+
+
+          <a class="nav-link" href="#settings" data-section="Settings">
+            <i class="bi bi-gear" aria-hidden="true"></i>
+            <span>Settings</span>
+          </a>
+
+          <a
+            class="nav-link"
+            href="#help"
+            data-section="Help & Support"
+          >
+            <i class="bi bi-question-circle" aria-hidden="true"></i>
+            <span>Help &amp; Support</span>
+          </a>
+
+        </nav>
+      </aside>
+
+      <main class="main-area" id="dashboard">
+
+
+        <header class="topbar">
+
+          <button
+            class="icon-btn mobile-menu"
+            id="menuToggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-controls="sidebar"
+            aria-expanded="false"
+          >
+            <i class="bi bi-list" aria-hidden="true"></i>
+          </button>
+
+
+          <label class="search-box" for="globalSearch">
+            <i class="bi bi-search" aria-hidden="true"></i>
+
+            <input
+              id="globalSearch"
+              type="search"
+              placeholder="Search anything..."
+              aria-label="Search dashboard"
+            />
+
+            <kbd aria-hidden="true">Ctrl K</kbd>
+          </label>
+
+
+          <div class="topbar-actions">
+
+
+            <button
+              class="icon-btn theme-toggle"
+              id="themeToggle"
+              type="button"
+              aria-label="Switch to light mode"
+              title="Toggle light/dark mode"
+            >
+              <i class="bi bi-sun" aria-hidden="true"></i>
+            </button>
+
+
+            <div class="dropdown-wrap">
+
+              <button
+                class="icon-btn notification-btn"
+                id="notificationToggle"
+                type="button"
+                aria-label="Notifications"
+                aria-controls="notificationsPopover"
+                aria-expanded="false"
+              >
+                <i class="bi bi-bell" aria-hidden="true"></i>
+
+                <span
+                  class="notification-dot"
+                  id="notificationBadge"
+                  hidden
+                ></span>
+              </button>
+
+              <div
+                class="popover notifications-popover"
+                id="notificationsPopover"
+                hidden
+              >
+                <div class="popover-heading">
+
+                  <strong>Notifications</strong>
+
+                  <button
+                    class="text-button"
+                    id="markRead"
+                    type="button"
+                    hidden
+                  >
+                    Mark all read
+                  </button>
+
+                </div>
+
+                <div id="notificationsList">
+                  <!-- Notifications are rendered by JavaScript. -->
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="dropdown-wrap">
+
+              <button
+                class="profile-button"
+                id="profileToggle"
+                type="button"
+                aria-label="Open profile menu"
+                aria-controls="profilePopover"
+                aria-expanded="false"
+              >
+                <span class="avatar" aria-hidden="true">U</span>
+
+                <span class="profile-copy">
+                  <strong id="profileName">User</strong>
+                  <small id="profileRole">Individual</small>
+                </span>
+
+                <i
+                  class="bi bi-chevron-down"
+                  aria-hidden="true"
+                ></i>
+              </button>
+
+              <div
+                class="popover profile-popover"
+                id="profilePopover"
+                hidden
+              >
+                <a href="#profile" data-section="My Profile">
+                  <i class="bi bi-person" aria-hidden="true"></i>
+                  My Profile
+                </a>
+
+                <a href="#settings" data-section="Settings">
+                  <i class="bi bi-gear" aria-hidden="true"></i>
+                  Account Settings
+                </a>
+
+                <button type="button" data-action="signout">
+                  <i
+                    class="bi bi-box-arrow-right"
+                    aria-hidden="true"
+                  ></i>
+                  Sign out
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </header>
+
+        <div class="page-content">
+
+
+          <section class="welcome-row">
+
+            <div class="welcome-section">
+
+              <p class="greeting">
+                <span id="greetingText">Good afternoon</span>
+
+                <span id="greetingName"></span>
+
+                <span class="greeting-emoji" aria-hidden="true">
+                  👋
+                </span>
+              </p>
+
+              <h1>
+                Welcome back
+                <span id="welcomeName"></span>!
+              </h1>
+
+              <p class="welcome-description">
+                Here's what's happening with your personal workspace today.
+              </p>
+
+            </div>
+
+            <div class="date-display">
+              <i class="bi bi-calendar3" aria-hidden="true"></i>
+              <span id="todayDate">Today</span>
+            </div>
+
+          </section>
+
+          <section
+            class="stats-grid"
+            aria-label="Dashboard statistics"
+          >
+
+
+            <article class="stat-card stat-blue">
+
+              <div class="stat-top">
+                <span>Total Customers</span>
+
+                <span class="stat-icon">
+                  <i
+                    class="bi bi-people-fill"
+                    aria-hidden="true"
+                  ></i>
+                </span>
+              </div>
+
+              <strong class="stat-value" id="totalCustomers">--</strong>
+
+              <div class="stat-change">
+                <i class="bi bi-arrow-up" aria-hidden="true"></i>
+                <span id="customerChange">--</span>
+                <span>vs. last 30 days</span>
+              </div>
+
+            </article>
+
+
+            <article class="stat-card stat-green">
+
+              <div class="stat-top">
+                <span>Revenue</span>
+
+                <span class="stat-icon">
+                  <i
+                    class="bi bi-graph-up-arrow"
+                    aria-hidden="true"
+                  ></i>
+                </span>
+              </div>
+
+              <strong class="stat-value" id="totalRevenue">--</strong>
+
+              <div class="stat-change">
+                <i class="bi bi-arrow-up" aria-hidden="true"></i>
+                <span id="revenueChange">--</span>
+                <span>vs. last 30 days</span>
+              </div>
+
+            </article>
+
+
+            <article class="stat-card stat-purple">
+
+              <div class="stat-top">
+                <span>Active Deals</span>
+
+                <span class="stat-icon">
+                  <i class="bi bi-briefcase" aria-hidden="true"></i>
+                </span>
+              </div>
+
+              <strong class="stat-value" id="activeDeals">--</strong>
+
+              <div class="stat-change">
+                <i class="bi bi-arrow-up" aria-hidden="true"></i>
+                <span id="dealsChange">--</span>
+                <span>vs. last 30 days</span>
+              </div>
+
+            </article>
+
+
+            <article class="stat-card stat-orange">
+
+              <div class="stat-top">
+                <span>Tasks Completed</span>
+
+                <span class="stat-icon">
+                  <i
+                    class="bi bi-check2-circle"
+                    aria-hidden="true"
+                  ></i>
+                </span>
+              </div>
+
+              <strong class="stat-value" id="completedCount">--</strong>
+
+              <div class="stat-change">
+                <i class="bi bi-arrow-up" aria-hidden="true"></i>
+                <span id="tasksChange">--</span>
+                <span>vs. last 7 days</span>
+              </div>
+
+            </article>
+
+          </section>
+
+
+          <section
+            class="content-section"
+            id="ai-tools"
+            aria-labelledby="aiToolsHeading"
+          >
+
+            <div class="section-heading">
+              <div>
+                <h2 id="aiToolsHeading">Explore AI Tools</h2>
+
+                <p>
+                  Choose a tool to help you get things done.
+                </p>
+              </div>
+            </div>
+
+            <div class="tools-grid" id="toolsGrid">
+
+              <!-- Writing Assistant -->
+
+              <article class="stat-card stat-blue" data-tool="writing">
+
+                <div class="tool-card-top">
+                  <span class="stat-icon blue">
+                    <i
+                      class="bi bi-pencil-square"
+                      aria-hidden="true"
+                    ></i>
+                  </span>
+                </div>
+
+                <h3>Writing Assistant</h3>
+
+                <p>
+                  Write, rewrite, summarize, and improve your content.
+                </p>
+
+                <button
+                  class="tool-launch"
+                  type="button"
+                  data-launch="writing"
+                >
+                  Open tool
+                  <i
+                    class="bi bi-arrow-up-right"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+
+              </article>
+
+              <!-- Coding Assistant -->
+
+              <article class="stat-card stat-green" data-tool="coding">
+
+                <div class="tool-card-top">
+                  <span class="stat-icon purple">
+                    <i
+                      class="bi bi-code-slash"
+                      aria-hidden="true"
+                    ></i>
+                  </span>
+                </div>
+
+                <h3>Coding Assistant</h3>
+
+                <p>
+                  Understand code, find bugs, and build applications.
+                </p>
+
+                <button
+                  class="tool-launch"
+                  type="button"
+                  data-launch="coding"
+                >
+                  Open tool
+                  <i
+                    class="bi bi-arrow-up-right"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+
+              </article>
+
+              <!-- Research Assistant -->
+
+              <article class="stat-card stat-purple" data-tool="research">
+
+                <div class="tool-card-top">
+                  <span class="stat-icon green">
+                    <i
+                      class="bi bi-search"
+                      aria-hidden="true"
+                    ></i>
+                  </span>
+                </div>
+
+                <h3>Research Assistant</h3>
+
+                <p>
+                  Organize information and explore new ideas.
+                </p>
+
+                <button
+                  class="tool-launch"
+                  type="button"
+                  data-launch="research"
+                >
+                  Open tool
+                  <i
+                    class="bi bi-arrow-up-right"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+
+              </article>
+
+              <!-- Learning Assistant -->
+
+              <article class="stat-card stat-orange" data-tool="learning">
+
+                <div class="tool-card-top">
+                  <span class="stat-icon orange">
+                    <i
+                      class="bi bi-lightbulb"
+                      aria-hidden="true"
+                    ></i>
+                  </span>
+                </div>
+
+                <h3>Learning Assistant</h3>
+
+                <p>
+                  Learn difficult topics with simpler explanations.
+                </p>
+
+                <button
+                  class="tool-launch"
+                  type="button"
+                  data-launch="learning"
+                >
+                  Open tool
+                  <i
+                    class="bi bi-arrow-up-right"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+
+              </article>
+
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer class="status-bar">
+
+          <a
+            href="individual.html"
+            class="brand-logo"
+            aria-label="BusinessGrowth home"
+          >
+            <img
+              src="../../images/logo-removebg-preview.png"
+              alt=""
+              class="logo-symbol"
+            />
+
+            <span class="brand-copy">
+              <strong>BusinessGrowth</strong>
+            </span>
+          </a>
+
+          <span class="footer-dot" aria-hidden="true">•</span>
+
+          <span>Your success is our mission.</span>
+
+        </footer>
+
+      </main>
+    </div>
+  </body>
+  <script src="../../dashboards/business.js"></script>
+</html>
