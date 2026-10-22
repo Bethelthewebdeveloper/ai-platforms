@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Business Onboarding | BusinessGrowth</title>
+
+    <link rel="stylesheet" href="business-onboarding.css">
+</head>
+
+<body>
+
+    <main class="onboarding-container">
+
+        <!-- Logo and Welcome -->
+        <header class="onboarding-header">
+            <img src="../images/logo.jpg" alt="BusinessGrowth Logo" class="logo">
+
+            <h1>Let's Grow Your Business 🚀</h1>
+
+            <p>
+                Tell us a little about your business so BusinessGrowth
+                can better support your goals.
+            </p>
+        </header>
+
+        <!-- Progress Indicator -->
+        <div class="progress-section">
+            <div class="progress-info">
+                <span id="step-label">Step 1 of 2</span>
+                <span id="progress-percentage">50%</span>
+            </div>
+
+            <div class="progress-track">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Onboarding Form -->
+        <form id="business-onboarding-form">
+
+            <!-- STEP 1 -->
+            <section class="onboarding-step active" id="step-1">
+
+                <div class="step-heading">
+                    <h2>About Your Business</h2>
+                    <p>Let's start with some basic information.</p>
+                </div>
+
+                <!-- Question 1 -->
+                <div class="form-group">
+                    <label for="business-name">
+                        1. What is your business name?
+                    </label>
+
+                    <input
+                        type="text"
+                        id="business-name"
+                        name="businessName"
+                        placeholder="Enter your business name"
+                        required
+                    >
+                </div>
+
+                <!-- Question 2 -->
+                <div class="form-group">
+                    <label for="business-industry">
+                        2. Which industry is your business in?
+                    </label>
+
+                    <select
+                        id="business-industry"
+                        name="industry"
+                        required
+                    >
+                        <option value="">Select your industry</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Education">Education</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Retail and E-commerce">Retail &amp; E-commerce</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Marketing and Advertising">Marketing &amp; Advertising</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Professional Services">Professional Services</option>
+                        <option value="Hospitality">Hospitality</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="form-group">
+                    <label for="business-size">
+                        3. How large is your business?
+                    </label>
+
+                    <select
+                        id="business-size"
+                        name="businessSize"
+                        required
+                    >
+                        <option value="">Select your business size</option>
+                        <option value="Just me">Just me</option>
+                        <option value="2-10 employees">2–10 employees</option>
+                        <option value="11-50 employees">11–50 employees</option>
+                        <option value="51-200 employees">51–200 employees</option>
+                        <option value="201-500 employees">201–500 employees</option>
+                        <option value="500+ employees">500+ employees</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-next" id="next-button">
+                        Continue →
+                    </button>
+                </div>
+
+            </section>
+
+
+            <!-- STEP 2 -->
+            <section class="onboarding-step" id="step-2">
+
+                <div class="step-heading">
+                    <h2>Your Role &amp; Goals</h2>
+                    <p>Help us understand how BusinessGrowth can help.</p>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="form-group">
+                    <label for="business-role">
+                        4. What is your role?
+                    </label>
+
+                    <select
+                        id="business-role"
+                        name="businessRole"
+                        required
+                    >
+                        <option value="">Select your role</option>
+                        <option value="Founder or Owner">Founder / Owner</option>
+                        <option value="CEO or Executive">CEO / Executive</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Team Lead">Team Lead</option>
+                        <option value="Employee">Employee</option>
+                        <option value="Consultant">Consultant</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Question 5 -->
+                <fieldset class="form-group goals-fieldset">
+
+                    <legend>
+                        5. What do you want BusinessGrowth to help your business accomplish?
+                    </legend>
+
+                    <p class="field-hint">
+                        Select at least one goal, up to a maximum of three.
+                    </p>
+
+                    <div class="goals-grid">
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Marketing and customer acquisition"
+                            >
+                            <span>Marketing &amp; customer acquisition</span>
+                        </label>
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Sales growth"
+                            >
+                            <span>Sales growth</span>
+                        </label>
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Content creation"
+                            >
+                            <span>Content creation</span>
+                        </label>
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Productivity and workflow automation"
+                            >
+                            <span>Productivity &amp; workflow automation</span>
+                        </label>
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Customer support"
+                            >
+                            <span>Customer support</span>
+                        </label>
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Business strategy and planning"
+                            >
+                            <span>Business strategy &amp; planning</span>
+                        </label>
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Research and decision-making"
+                            >
+                            <span>Research &amp; decision-making</span>
+                        </label>
+
+                        <label class="goal-option">
+                            <input
+                                type="checkbox"
+                                name="businessGoals"
+                                value="Data analysis"
+                            >
+                            <span>Data analysis</span>
+                        </label>
+
+                    </div>
+
+                    <small id="goals-error" class="error-message" aria-live="polite"></small>
+
+                </fieldset>
+
+                <!-- Question 6: Optional -->
+                <div class="form-group">
+                    <label for="business-challenge">
+                        6. What is your biggest business challenge?
+                        <span class="optional-label">(Optional)</span>
+                    </label>
+
+                    <textarea
+                        id="business-challenge"
+                        name="businessChallenge"
+                        rows="4"
+                        placeholder="Tell us about a challenge you would like help solving..."
+                    ></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-back" id="back-button">
+                        ← Back
+                    </button>
+
+                    <button type="submit" class="btn btn-submit">
+                        Complete Setup ✓
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- Feedback Message -->
+            <p id="form-message" class="form-message" aria-live="polite"></p>
+
+        </form>
+
+        <footer class="onboarding-footer">
+            <p>Your business information should only be accessible to authorized users.</p>
+        </footer>
+
+    </main>
+
+    <script src="business-onboarding.js"></script>
+
+</body>
+</html>
