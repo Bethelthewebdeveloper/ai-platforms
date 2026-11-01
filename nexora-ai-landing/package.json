@@ -1,22 +1,23 @@
 {
-  "name":"ai-platforms",
-  "version":"1.0.0",
-  "description":"BusinessGrowth AI platform",
-  "main":"index.js",
-  "scripts":{
-  "dev":"vite --host 0.0.0.0",
-  "build":"vite build",
-  "preview":"vite preview"
+  "name": "businessgrowth-backend",
+  "version": "1.0.0",
+  "description": "BusinessGrowth AI Backend",
+  "type": "module",
+  "main": "backend/src/server.js",
+  "scripts": {
+    "dev": "node --watch backend/src/server.js",
+    "start": "node backend/src/server.js"
   },
-  "repository":{
-  "type":"git",
-  "url":"git+https://github.com/Bethelthewebdeveloper/ai-platforms.git"
-  },
-  "keywords":[],
-  "author":"",
-  "license":"ISC",
-  "type":"module",
-  "devDependencies":{
-  "vite":"^8.3.4"
-}
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.0",
+    "morgan": "^1.12.1",
+    "openai": "^7.47.0"
+  }
 }
