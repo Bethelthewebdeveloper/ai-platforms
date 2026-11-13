@@ -1,0 +1,603 @@
+
+/* =========================================
+   BUSINESSGROWTH LOGIN PAGE
+   ========================================= */
+
+/* 1. GENERAL SETTINGS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #050510;
+    --card-background: rgba(15, 15, 40, 0.86);
+
+    --blue: #00c6ff;
+    --purple: #8b35f5;
+    --pink: #e32be8;
+
+    --text: #ffffff;
+    --muted: #a8abc8;
+
+    --border: rgba(255, 255, 255, 0.12);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: var(--text);
+    background: var(--background);
+    overflow-x: hidden;
+}
+
+
+/* 2. ANIMATED BACKGROUND */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(31, 54, 164, 0.25),
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(135, 20, 185, 0.22),
+            transparent 40%
+        ),
+        #050510;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.6;
+
+    animation: float 12s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+.orb-one {
+    width: 280px;
+    height: 280px;
+    background: #075be8;
+    top: 5%;
+    left: 5%;
+}
+
+.orb-two {
+    width: 320px;
+    height: 320px;
+    background: #8c14c9;
+    right: 0;
+    bottom: 0;
+    animation-delay: -4s;
+}
+
+.orb-three {
+    width: 200px;
+    height: 200px;
+    background: #007cff;
+    left: 65%;
+    top: 40%;
+    animation-delay: -7s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-35px, 30px) scale(1.12);
+    }
+
+    100% {
+        transform: translate(30px, -25px) scale(0.95);
+    }
+}
+
+
+/* 3. PAGE LAYOUT */
+
+.page-container {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+
+/* 4. LOGIN CARD */
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+
+    padding: 40px 38px;
+
+    background: var(--card-background);
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(79, 49, 211, 0.08);
+
+    animation: cardAppear 0.8s ease both;
+
+    transition:
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.login-card:hover {
+    border-color: rgba(132, 99, 255, 0.35);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.5),
+        0 0 45px rgba(105, 55, 255, 0.13);
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* 5. LOGO */
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin-bottom: 28px;
+
+    animation: logoAppear 1s ease both;
+}
+
+.brand-logo {
+    display: block;
+
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+
+    object-fit: contain;
+    border-radius: 8px;
+
+    transition:
+        transform 0.4s ease,
+        filter 0.4s ease;
+}
+
+.brand-logo:hover {
+    transform: scale(1.04);
+
+    filter: drop-shadow(
+        0 0 15px rgba(0, 140, 255, 0.35)
+    );
+}
+
+@keyframes logoAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* 6. FORM HEADING */
+
+.form-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-heading h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.7px;
+}
+
+.form-heading h1 span {
+    color: var(--pink);
+}
+
+.form-heading p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 8px;
+    line-height: 1.7;
+}
+
+
+/* 7. INPUT FIELDS */
+
+.input-group {
+    margin-bottom: 21px;
+}
+
+.input-group label {
+    display: block;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    margin-bottom: 8px;
+    color: #e4e4f5;
+}
+
+.input-group input {
+    width: 100%;
+    height: 47px;
+
+    padding: 0 13px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 9px;
+
+    outline: none;
+
+    color: white;
+    font-family: inherit;
+    font-size: 12px;
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.input-group input::placeholder {
+    color: #777b9d;
+}
+
+.input-group input:hover {
+    border-color: rgba(0, 198, 255, 0.45);
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.input-group input:focus {
+    border-color: var(--blue);
+
+    background: rgba(0, 198, 255, 0.045);
+
+    box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.1);
+}
+
+
+/* 8. PASSWORD SHOW / HIDE */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 65px;
+}
+
+.toggle-password {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+
+    color: var(--blue);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: var(--pink);
+}
+
+
+/* 9. FORGOT PASSWORD */
+
+.forgot-password {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: -8px;
+    margin-bottom: 24px;
+}
+
+.forgot-password a {
+    color: #9b8cff;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: var(--blue);
+}
+
+
+/* 10. LOGIN BUTTON */
+
+.login-button {
+    width: 100%;
+    min-height: 47px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: none;
+    border-radius: 9px;
+
+    color: white;
+
+    background: linear-gradient(
+        100deg,
+        #00bdf4,
+        #4968f5,
+        #a32df0
+    );
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        filter 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.login-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+
+    pointer-events: none;
+}
+
+.login-button:hover::before {
+    left: 150%;
+}
+
+.login-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 30px rgba(93, 77, 255, 0.3),
+        0 0 20px rgba(0, 198, 255, 0.12);
+
+    filter: brightness(1.1);
+}
+
+.login-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.login-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+    box-shadow: none;
+}
+
+.login-button:disabled::before {
+    display: none;
+}
+
+.button-arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.login-button:hover .button-arrow {
+    transform: translateX(5px);
+}
+
+
+/* 11. FEEDBACK MESSAGES */
+
+.message {
+    font-size: 12px;
+    text-align: center;
+
+    margin-top: 12px;
+
+    line-height: 1.6;
+}
+
+.message:empty {
+    display: none;
+}
+
+.message.success {
+    color: #66e6ac;
+}
+
+.message.error {
+    color: #ff7b9c;
+}
+
+
+/* 12. SIGNUP LINK */
+
+.signup-text {
+    text-align: center;
+
+    margin-top: 27px;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.signup-text a {
+    color: #9b8cff;
+
+    font-weight: 600;
+    margin-left: 3px;
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+.signup-text a:hover {
+    color: var(--blue);
+}
+
+
+/* 13. RESPONSIVE DESIGN */
+
+@media (max-width: 500px) {
+    .page-container {
+        padding: 24px 15px;
+    }
+
+    .login-card {
+        padding: 30px 22px;
+        border-radius: 18px;
+    }
+
+    .brand-logo {
+        width: 160px;
+    }
+
+    .form-heading h1 {
+        font-size: 23px;
+    }
+
+    .form-heading p {
+        font-size: 11px;
+    }
+
+    .input-group input {
+        height: 45px;
+    }
+
+    .orb-one {
+        width: 180px;
+        height: 180px;
+    }
+
+    .orb-two {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 350px) {
+    .page-container {
+        padding: 18px 10px;
+    }
+
+    .login-card {
+        padding: 25px 16px;
+    }
+
+    .brand-logo {
+        width: 140px;
+    }
+
+    .form-heading h1 {
+        font-size: 21px;
+    }
+}
+
+
+/* 14. ACCESSIBILITY */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+}
+
+
+/* 15. REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

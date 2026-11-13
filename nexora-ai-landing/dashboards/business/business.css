@@ -2966,3 +2966,550 @@ body.light-mode .deal-status.proposal {
 .notification-dot[hidden] {
   display: none !important;
 }
+
+/* Dropdown visibility */
+
+.popover[hidden] {
+    display: none !important;
+}
+
+.popover.show {
+    display: block;
+}
+
+/* Fix notification text in dark mode */
+body.dark-mode .notifications-popover,
+body.dark .notifications-popover,
+html[data-theme="dark"] .notifications-popover {
+    background: #111827;
+    color: #f9fafb;
+    border: 1px solid #263449;
+}
+
+/* Notification headings and messages */
+/* body.dark-mode .notifications-popover h3,
+body.dark-mode .notifications-popover h4,
+body.dark-mode .notifications-popover p,
+body.dark-mode .notifications-popover span,
+body.dark-mode .notifications-popover a,
+body.dark .notifications-popover h3,
+body.dark .notifications-popover h4,
+body.dark .notifications-popover p,
+body.dark .notifications-popover span,
+body.dark .notifications-popover a,
+html[data-theme="dark"] .notifications-popover h3,
+html[data-theme="dark"] .notifications-popover h4,
+html[data-theme="dark"] .notifications-popover p,
+html[data-theme="dark"] .notifications-popover span,
+html[data-theme="dark"] .notifications-popover a {
+    color: #f9fafb;
+}
+
+/* Secondary notification text */
+/* body.dark-mode .notifications-popover .muted,
+body.dark .notifications-popover .muted,
+html[data-theme="dark"] .notifications-popover .muted {
+    color: #aab6c8;
+}  */
+
+/* FIX: Notification text visibility */
+.notifications-popover {
+    color: #1f2937 !important;
+    background: #ffffff !important;
+}
+
+.notifications-popover h1,
+.notifications-popover h2,
+.notifications-popover h3,
+.notifications-popover h4,
+.notifications-popover p,
+.notifications-popover span,
+.notifications-popover div,
+.notifications-popover label {
+    color: #1f2937 !important;
+}
+
+/* Secondary notification message */
+.notifications-popover .muted,
+.notifications-popover .empty-state,
+.notifications-popover .notification-message {
+    color: #64748b !important;
+}
+
+/* Keep Mark all read blue */
+.notifications-popover button {
+    color: #2563eb !important;
+}
+
+
+/* =====================================
+   ZEN MEMORY CENTER
+===================================== */
+
+#memory-center {
+    scroll-margin-top: 100px;
+}
+
+#memory-center .stat-card {
+    margin-bottom: 20px;
+    padding: 22px;
+}
+
+#memory-center .stat-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+#memory-center .stat-card > p {
+    color: var(--muted-color);
+    font-size: 12px;
+    margin-bottom: 18px;
+    line-height: 1.7;
+}
+
+/* Memory search */
+
+#memory-center .search-box {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Memory list */
+
+#memoryList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.memory-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 17px;
+
+    background: var(--surface-light);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+
+    transition: border-color var(--transition),
+                transform var(--transition);
+}
+
+.memory-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.memory-card > p {
+    color: var(--text-color);
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.memory-card > small {
+    color: var(--muted-color);
+    font-size: 11px;
+}
+
+.memory-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.memory-actions button {
+    margin-top: 0;
+}
+
+.memory-actions button:last-child {
+    color: var(--danger-color);
+}
+
+/* Memory form */
+
+#memoryForm {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+#memoryForm label {
+    color: var(--text-color);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 9px;
+}
+
+#memoryForm textarea,
+#memoryForm select,
+#memoryForm input {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 11px 13px;
+
+    color: var(--text-color);
+    background: var(--surface-light);
+
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+
+    font-size: 12px;
+
+    transition: border-color var(--transition);
+}
+
+#memoryForm textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+#memoryForm textarea:focus,
+#memoryForm select:focus,
+#memoryForm input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+#memoryForm textarea::placeholder {
+    color: var(--muted-color);
+}
+
+#memoryForm select option {
+    color: var(--text-color);
+    background: var(--surface-color);
+}
+
+#memoryForm .tool-launch {
+    justify-content: center;
+    width: fit-content;
+
+    margin-top: 14px;
+    padding: 11px 20px;
+
+    color: #ffffff;
+    background: linear-gradient(110deg, #3277ff, #4837f5);
+
+    border-radius: 9px;
+
+    transition: transform var(--transition),
+                box-shadow var(--transition);
+}
+
+#memoryForm .tool-launch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(40, 100, 255, 0.25);
+}
+
+/* Refresh button */
+
+#memory-center .section-heading .tool-launch {
+    margin-top: 0;
+    padding: 10px 14px;
+
+    color: var(--text-color);
+    background: var(--surface-light);
+
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+}
+
+#memory-center .section-heading .tool-launch:hover {
+    border-color: var(--primary-color);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    #memory-center .stat-card {
+        padding: 16px;
+    }
+
+    #memory-center .section-heading {
+        align-items: flex-start;
+    }
+
+    .memory-card {
+        padding: 13px;
+    }
+
+    .memory-actions {
+        gap: 15px;
+    }
+}
+
+
+/* =====================================
+   ZEN CHAT INTERFACE
+===================================== */
+
+#zen-chat {
+    scroll-margin-top: 100px;
+}
+
+.zen-chat-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 18px;
+    min-height: 600px;
+}
+
+/* Conversation sidebar */
+
+.zen-chat-sidebar {
+    padding: 20px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    overflow-y: auto;
+}
+
+.zen-chat-sidebar h3 {
+    color: var(--text-color);
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+#zenConversationList {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+#zenConversationList p {
+    color: var(--muted-color);
+    font-size: 12px;
+}
+
+.zen-conversation-item {
+    width: 100%;
+    padding: 12px;
+    text-align: left;
+    color: var(--text-color);
+    background: var(--surface-light);
+    border: 1px solid transparent;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.zen-conversation-item:hover,
+.zen-conversation-item.active {
+    border-color: var(--primary-color);
+    background: rgba(40, 100, 255, 0.12);
+}
+
+/* Main chat area */
+
+.zen-chat-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 600px;
+    padding: 20px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+}
+
+.zen-chat-messages {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 420px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 15px 5px;
+}
+
+/* Welcome message */
+
+.zen-welcome {
+    margin: auto;
+    text-align: center;
+}
+
+.zen-welcome > i {
+    color: var(--primary-color);
+    font-size: 38px;
+}
+
+.zen-welcome h3 {
+    color: var(--text-color);
+    margin: 15px 0 8px;
+    font-size: 20px;
+}
+
+.zen-welcome p {
+    color: var(--muted-color);
+    font-size: 13px;
+}
+
+/* Message bubbles */
+
+.zen-message {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 80%;
+}
+
+.zen-message.user {
+    align-self: flex-end;
+}
+
+.zen-message.assistant {
+    align-self: flex-start;
+}
+
+.zen-message-label {
+    color: var(--muted-color);
+    font-size: 11px;
+}
+
+.zen-message-content {
+    padding: 13px 16px;
+    border-radius: 13px;
+    color: var(--text-color);
+    background: var(--surface-light);
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.zen-message.user .zen-message-content {
+    color: #ffffff;
+    background: var(--primary-color);
+}
+
+/* Message input */
+
+.zen-chat-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 12px;
+    margin-top: 15px;
+    background: var(--surface-light);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.zen-chat-form textarea {
+    flex: 1;
+    min-width: 0;
+    max-height: 150px;
+    padding: 10px;
+    resize: vertical;
+    color: var(--text-color);
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.zen-chat-form textarea::placeholder {
+    color: var(--muted-color);
+}
+
+#zenSendButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    color: #ffffff;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#zenSendButton:hover {
+    background: var(--primary-hover);
+}
+
+#zenSendButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.zen-chat-disclaimer {
+    margin-top: 10px;
+    color: var(--muted-color);
+    font-size: 10px;
+    text-align: center;
+}
+
+/* Memory suggestions */
+
+#zenMemorySuggestion:not([hidden]) {
+    padding: 15px;
+    margin-top: 15px;
+    background: var(--surface-light);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 12px;
+}
+
+/* Mobile layout */
+
+@media (max-width: 800px) {
+    .zen-chat-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .zen-chat-sidebar {
+        max-height: 180px;
+    }
+
+    .zen-chat-main {
+        min-height: 500px;
+        padding: 13px;
+    }
+
+    .zen-chat-messages {
+        min-height: 350px;
+    }
+
+    .zen-message {
+        max-width: 92%;
+    }
+}
+
+
+/* ZEN Conversation History Actions */
+.zen-conversation-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.zen-conversation-row .zen-conversation-item {
+    width: 100%;
+}
+
+.zen-history-action {
+    align-self: flex-start;
+    padding: 4px 7px;
+    color: var(--muted-color);
+    background: transparent;
+    border: none;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.zen-history-action:hover {
+    color: var(--primary-color);
+}

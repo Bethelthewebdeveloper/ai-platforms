@@ -3,6 +3,8 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
+import authRoutes from "./routes/auth.routes.js";
+import onboardingRoutes from "./routes/onboarding.routes.js";
 
 const app = express();
 
@@ -34,6 +36,8 @@ const apiLimiter = rateLimit({
 });
 
 app.use("/api", apiLimiter);
+app.use("/api/auth", authRoutes);
+app.use("/api/onboarding", onboardingRoutes);
 
 // Home route
 app.get("/", (req, res) => {

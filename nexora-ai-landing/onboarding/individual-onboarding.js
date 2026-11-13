@@ -1,28 +1,31 @@
-// ========================================
-// NEXORA AI - INDIVIDUAL ONBOARDING
-// ========================================
+// =====================================
+// BUSINESSGROWTH - INDIVIDUAL ONBOARDING
+// =====================================
 
-// 1. Select the HTML elements
-const onboardingForm = document.getElementById(
-    "individualOnboardingForm"
-);
+const API_URL = "http://127.0.0.1:4000/api/onboarding/individual";
 
-const onboardingMessage = document.getElementById(
-    "onboardingMessage"
-);
+const onboardingForm = document.getElementById("individualOnboardingForm");
+const onboardingMessage = document.getElementById("onboardingMessage");
+const continueButton = document.getElementById("continueButton");
 
-const continueButton = document.getElementById(
-    "continueButton"
-);
-
-
-// 2. Listen for form submission
-onboardingForm.addEventListener("submit", function (event) {
-
-    // Prevent the page from refreshing
+onboardingForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    // 3. Collect the user's answers
+    const token = sessionStorage.getItem("businessGrowthToken");
+
+    if (!token) {
+        showOnboardingMessage(
+            "Your session has expired. Please log in again.",
+            "error"
+        );
+
+        setTimeout(() => {
+            window.location.href = "../auth/login.html";
+        }, 1500);
+
+        return;
+    }
+
     const onboardingData = {
         role: document.getElementById("role").value,
         goal: document.getElementById("goal").value,
@@ -33,7 +36,6 @@ onboardingForm.addEventListener("submit", function (event) {
         interests: document.getElementById("interests").value.trim()
     };
 
-    // 4. Check that the required questions are answered
     const requiredAnswers = [
         onboardingData.role,
         onboardingData.goal,
@@ -43,56 +45,58 @@ onboardingForm.addEventListener("submit", function (event) {
         onboardingData.challenge
     ];
 
-    const allAnswered = requiredAnswers.every(function (answer) {
-        return answer !== "";
-    });
-
-    if (!allAnswered) {
+    if (requiredAnswers.some(answer => !answer)) {
         showOnboardingMessage(
-            "Please answer all required questions before continuing.",
+            "Please answer all required questions.",
             "error"
         );
-
         return;
     }
 
-    // 5. Save the answers in the browser
-    try {
-        localStorage.setItem(
-            "nexoraIndividualOnboarding",
-            JSON.stringify(onboardingData)
-        );
-    } catch (error) {
-        showOnboardingMessage(
-            "We couldn't save your answers. Please try again.",
-            "error"
-        );
-
-        return;
-    }
-
-    // 6. Show a success message
-    showOnboardingMessage(
-        "Your onboarding is complete! Welcome to Business Growth.",
-        "success"
-    );
-
-    // 7. Disable the button while preparing to continue
     continueButton.disabled = true;
-    continueButton.textContent = "Setup Complete ✓";
+    continueButton.textContent = "Saving your answers...";
 
-    // 8. Continue to the individual dashboard
-    setTimeout(function () {
-        window.location.href = "../dashboards/individual.html";
-    }, 1500);
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(onboardingData)
+        });
 
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Unable to save onboarding.");
+        }
+
+        showOnboardingMessage(
+            "Your onboarding is complete! Welcome to BusinessGrowth.",
+            "success"
+        );
+
+        continueButton.textContent = "Setup Complete ✓";
+
+        setTimeout(() => {
+            window.location.href = "../dashboards/individual/individual.html";
+        }, 1500);
+
+    } catch (error) {
+        console.error("Onboarding error:", error);
+
+        showOnboardingMessage(
+            error.message || "Something went wrong. Please try again.",
+            "error"
+        );
+
+        continueButton.disabled = false;
+        continueButton.textContent = "Continue";
+    }
 });
 
-
-// 9. Display messages to the user
 function showOnboardingMessage(message, type) {
-
     onboardingMessage.textContent = message;
-
     onboardingMessage.className = "message " + type;
 }

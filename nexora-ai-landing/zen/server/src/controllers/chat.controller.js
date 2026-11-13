@@ -1,21 +1,16 @@
 import mongoose from "mongoose";
 import zenAgent from "../services/ai/zen.agent.js";
-import Conversation from "../models/conversation.js";
+import Conversation from "../models/Conversation.js";
 
 import { getMemories } from "../services/memory/memory.service.js";
 import { detectMemorySuggestion } from "../services/memory/memory.suggestion.service.js";
 
 const sendMessage = async (req, res) => {
   try {
-    const { userId, message, conversationId } = req.body;
+    // Get the authenticated BusinessGrowth user's ID
+    const userId = req.user._id.toString();
 
-    // Validate user ID
-    if (!userId || typeof userId !== "string" || !userId.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: "A user ID is required.",
-      });
-    }
+    const { message, conversationId } = req.body;
 
     // Validate message
     if (!message || typeof message !== "string" || !message.trim()) {
@@ -32,7 +27,6 @@ const sendMessage = async (req, res) => {
       });
     }
 
-    const cleanUserId = userId.trim();
     const cleanMessage = message.trim();
 
     // Find an existing conversation or create a new one
@@ -48,7 +42,7 @@ const sendMessage = async (req, res) => {
 
       conversation = await Conversation.findOne({
         _id: conversationId,
-        userId: cleanUserId,
+        userId,
       });
 
       if (!conversation) {
@@ -59,13 +53,13 @@ const sendMessage = async (req, res) => {
       }
     } else {
       conversation = new Conversation({
-        userId: cleanUserId,
+        userId,
         title: cleanMessage.slice(0, 60),
       });
     }
 
-    // Retrieve the user's saved memories
-    const memories = await getMemories(cleanUserId);
+    // Retrieve the authenticated user's saved memories
+    const memories = await getMemories(userId);
 
     const memoryContext = memories
       .slice(0, 10)
@@ -75,13 +69,13 @@ const sendMessage = async (req, res) => {
       )
       .join("\n");
 
-    // Add the current user message to the conversation
+    // Save the user's message
     conversation.messages.push({
       role: "user",
       content: cleanMessage,
     });
 
-    // Keep the latest 20 messages as conversation context
+    // Keep the latest 20 messages as context
     const recentMessages = conversation.messages.slice(-20);
 
     const conversationContext = recentMessages
@@ -97,7 +91,7 @@ const sendMessage = async (req, res) => {
 You are ZEN, an intelligent personal AI assistant.
 
 Use the user's saved memories when relevant.
-Use the conversation history to understand context and follow-up questions.
+Use conversation history to understand context and follow-up questions.
 Do not invent memories or claim to remember information that is not provided.
 
 USER'S SAVED MEMORIES:
@@ -109,7 +103,6 @@ ${conversationContext}
 Respond naturally, helpfully, and honestly.
 `;
 
-    // Save the user's message
     await conversation.save();
 
     // Generate ZEN's response

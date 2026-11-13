@@ -2608,3 +2608,56 @@ canvas.chart {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =====================================
+   PERSONALIZED AI TOOL RECOMMENDATIONS
+===================================== */
+
+.tools-grid [data-tool].recommended-tool {
+    position: relative;
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 18px rgba(59, 130, 246, 0.15);
+    transform: translateY(-3px);
+}
+
+.tools-grid [data-tool].recommended-tool::after {
+    content: "RECOMMENDED FOR YOU";
+    display: inline-block;
+    width: fit-content;
+    margin-top: 12px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.tools-grid [data-tool] {
+    transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* =====================================
+   AI TOOL RECOMMENDATION BADGE
+===================================== */
+
+#toolsGrid [data-tool].recommended-tool::after {
+    content: "RECOMMENDED FOR YOU" !important;
+    display: inline-block !important;
+    width: fit-content;
+    margin-top: 14px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    line-height: 1.5;
+}
+
+#toolsGrid [data-tool].recommended-tool {
+    border: 2px solid #3b82f6 !important;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+}

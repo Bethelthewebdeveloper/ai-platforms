@@ -27,12 +27,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link rel="stylesheet" href="../../dashboards/business/business.css" />
-    <script src="../../dashboards/business/business.js" defer></script>
+     <script src="individual.js" defer></script>
   </head>
 
   <body>
     <div class="app-shell">
-
       <aside class="sidebar" id="sidebar">
 
         <a
@@ -59,6 +58,14 @@
             <span>AI Tools</span>
           </a>
 
+          <a class="nav-link" href="#memory-center" data-section="Memory Center">
+    <i class="bi bi-brain" aria-hidden="true"></i>
+    <span>ZEN Memory Center</span>
+    </a>
+    <a class="nav-link" href="#zen-chat" data-section="ZEN Chat">
+    <i class="bi bi-chat-dots" aria-hidden="true"></i>
+    <span>Chat with ZEN</span>
+</a>
           <button
             class="nav-link nav-expand"
             type="button"
@@ -238,7 +245,8 @@
                 aria-controls="profilePopover"
                 aria-expanded="false"
               >
-                <span class="avatar" aria-hidden="true">U</span>
+                <!-- <span class="avatar" aria-hidden="true">U</span> -->
+                 <span class="avatar" id="profileAvatar">U</span>
 
                 <span class="profile-copy">
                   <strong id="profileName">User</strong>
@@ -305,6 +313,43 @@
                 Here's what's happening with your personal workspace today.
               </p>
 
+              <div class="personalization-card" id="personalizationCard">
+   <div class="section-heading">
+    <div>
+      <h2>Your Personal Workspace</h2>
+      <p>Your workspace is tailored to your goals and interests.</p>
+    </div>
+   </div>
+
+   <div class="stats-grid">
+    <article class="stat-card stat-blue">
+      <div class="stat-top">
+        <span>Your Role</span>
+        <i class="bi bi-person-badge"></i>
+      </div>
+      <strong class="stat-value" id="personalRole">Loading...</strong>
+    </article>
+
+    <article class="stat-card stat-green">
+      <div class="stat-top">
+        <span>Your Main Goal</span>
+        <i class="bi bi-bullseye"></i>
+      </div>
+      <strong class="stat-value" id="personalGoal">Loading...</strong>
+    </article>
+
+    <article class="stat-card stat-purple">
+      <div class="stat-top">
+        <span>Experience Level</span>
+        <i class="bi bi-lightning"></i>
+      </div>
+      <strong class="stat-value" id="personalExperience">Loading...</strong>
+    </article>
+
+  </div>
+
+  <p id="personalInterests" class="welcome-description"></p>
+</div>
             </div>
 
             <div class="date-display">
@@ -313,6 +358,146 @@
             </div>
 
           </section>
+
+  <section
+    class="content-section"
+    id="memory-center"
+    aria-labelledby="memoryHeading"
+>
+    <div class="section-heading">
+        <div>
+            <h2 id="memoryHeading">ZEN Memory Center</h2>
+            <p>Manage what ZEN remembers about you.</p>
+        </div>
+
+        <button type="button" class="tool-launch" id="refreshMemories">
+            <i class="bi bi-arrow-clockwise"></i>
+            Refresh
+        </button>
+    </div>
+
+    <article class="stat-card stat-blue">
+        <h3>Your saved memories</h3>
+        <p>ZEN uses these memories to personalize its responses.</p>
+
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input
+                type="search"
+                id="memorySearch"
+                placeholder="Search your memories..."
+            />
+        </div>
+
+        <div id="memoryList" aria-live="polite">
+            <p>Loading your memories...</p>
+        </div>
+    </article>
+
+    <article class="stat-card stat-purple">
+        <h3>Add a memory</h3>
+        <p>Tell ZEN something important to remember.</p>
+
+        <form id="memoryForm">
+            <label for="memoryContent">Memory</label>
+            <textarea
+                id="memoryContent"
+                maxlength="500"
+                required
+                placeholder="What should ZEN remember?"
+            ></textarea>
+
+            <label for="memoryCategory">Category</label>
+            <select id="memoryCategory" required>
+                <option value="personal">Personal</option>
+                <option value="preference">Preference</option>
+                <option value="business">Business</option>
+                <option value="project">Project</option>
+                <option value="general">General</option>
+            </select>
+
+            <label for="memoryImportance">Importance (1–10)</label>
+            <input
+                type="number"
+                id="memoryImportance"
+                min="1"
+                max="10"
+                value="5"
+                required
+            />
+
+            <button type="submit" class="tool-launch">
+                Save Memory
+            </button>
+        </form>
+    </article>
+</section>
+
+
+<section
+    class="content-section"
+    id="zen-chat"
+    aria-labelledby="zenChatHeading"
+>
+    <div class="section-heading">
+        <div>
+            <h2 id="zenChatHeading">Chat with ZEN</h2>
+            <p>Your intelligent AI assistant, ready to help you.</p>
+        </div>
+
+        <button type="button" class="tool-launch" id="newZenChat">
+            <i class="bi bi-plus-lg"></i>
+            New Chat
+        </button>
+    </div>
+
+    <div class="zen-chat-layout">
+
+        <!-- Conversation history -->
+        <aside class="zen-chat-sidebar">
+            <h3>Recent conversations</h3>
+            <div id="zenConversationList">
+                <p>Loading conversations...</p>
+            </div>
+        </aside>
+
+        <!-- Chat area -->
+        <div class="zen-chat-main">
+
+            <div class="zen-chat-messages" id="zenMessages" aria-live="polite">
+                <div class="zen-welcome">
+                    <i class="bi bi-stars"></i>
+                    <h3>Hello! I'm ZEN.</h3>
+                    <p>What would you like help with today?</p>
+                </div>
+            </div>
+
+            <!-- Memory suggestion -->
+            <div id="zenMemorySuggestion" hidden></div>
+
+            <!-- Message form -->
+            <form id="zenChatForm" class="zen-chat-form">
+                <textarea
+                    id="zenMessageInput"
+                    rows="1"
+                    maxlength="10000"
+                    placeholder="Message ZEN..."
+                    required
+                ></textarea>
+
+                <button type="submit" id="zenSendButton" aria-label="Send message">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </form>
+
+            <p class="zen-chat-disclaimer">
+                ZEN can make mistakes. Check important information.
+            </p>
+
+        </div>
+    </div>
+</section>
+
 
           <section
             class="stats-grid"
@@ -565,9 +750,79 @@
 
               </article>
 
+                      <!-- AI Image Assistant -->
+<article class="stat-card stat-blue" data-tool="images">
+    <div class="tool-card-top">
+        <span class="stat-icon purple">
+            <i class="bi bi-image"></i>
+        </span>
+    </div>
+
+    <h3>AI Image Assistant</h3>
+
+    <p>Create images, explore visual ideas, and improve designs with AI.</p>
+
+    <button class="tool-launch" type="button" data-launch="images">
+        Open tool
+        <i class="bi bi-arrow-up-right"></i>
+    </button>
+</article>
+
+<!-- AI Video Assistant -->
+<article class="stat-card stat-green" data-tool="video">
+    <div class="tool-card-top">
+        <span class="stat-icon green">
+            <i class="bi bi-camera-video"></i>
+        </span>
+    </div>
+
+    <h3>AI Video Assistant</h3>
+
+    <p>Develop video ideas, scripts, and creative video content.</p>
+
+    <button class="tool-launch" type="button" data-launch="video">
+        Open tool
+        <i class="bi bi-arrow-up-right"></i>
+    </button>
+</article>
+
+<!-- AI Automation Assistant -->
+<article class="stat-card stat-purple" data-tool="automation">
+    <div class="tool-card-top">
+        <span class="stat-icon orange">
+            <i class="bi bi-robot"></i>
+        </span>
+    </div>
+
+    <h3>AI Automation Assistant</h3>
+
+    <p>Discover workflows and automate repetitive tasks.</p>
+
+    <button class="tool-launch" type="button" data-launch="automation">
+        Open tool
+        <i class="bi bi-arrow-up-right"></i>
+    </button>
+</article>
+
+<!-- Data Analysis Assistant -->
+<article class="stat-card stat-orange" data-tool="data">
+    <div class="tool-card-top">
+        <span class="stat-icon blue">
+            <i class="bi bi-bar-chart-line"></i>
+        </span>
+    </div>
+
+    <h3>Data Analysis Assistant</h3>
+
+    <p>Understand data, identify patterns, and generate insights.</p>
+
+    <button class="tool-launch" type="button" data-launch="data">
+        Open tool
+        <i class="bi bi-arrow-up-right"></i>
+    </button>
+</article>
             </div>
           </section>
-
         </div>
 
         <!-- ================= FOOTER ================= -->
@@ -597,7 +852,9 @@
         </footer>
 
       </main>
+    
     </div>
   </body>
-  <script src="../../dashboards/business.js"></script>
+  <!-- <script src="../../dashboards/business.js"></script> -->
+  
 </html>

@@ -1,4 +1,5 @@
-import { ToolLoopAgent } from "ai";
+
+import { generateText } from "ai";
 
 const model = process.env.AI_GATEWAY_MODEL;
 
@@ -6,31 +7,35 @@ if (!model) {
   throw new Error("AI_GATEWAY_MODEL is missing from .env");
 }
 
-const zenAgent = new ToolLoopAgent({
-  model,
+const zenAgent = {
+  async generate({ prompt }) {
+    return await generateText({
+      model,
+      system: `
+        You are ZEN, an intelligent personal AI assistant.
 
-  instructions: `
-    You are ZEN, an intelligent personal AI assistant.
+        Help users with:
+        - Everyday questions and conversations
+        - Business strategy and productivity
+        - Research and learning
+        - Programming and coding
+        - Planning and organization
 
-    Your purpose is to help users with:
-    - Everyday questions and conversations
-    - Business strategy and productivity
-    - Research and learning
-    - Programming and coding
-    - Planning and organization
+        Personality:
+        - Intelligent and thoughtful
+        - Friendly and respectful
+        - Clear and practical
+        - Honest when you do not know something
 
-    Personality:
-    - Intelligent and thoughtful
-    - Friendly and respectful
-    - Clear and practical
-    - Honest when you do not know something
-
-    Always provide useful, accurate answers.
-    Never pretend to have performed an action
-    that you have not actually performed.
-  `,
-
-  tools: {},
-});
+        Always provide useful, accurate answers.
+        Never pretend to have performed an action
+        that you have not actually performed.
+      `,
+      prompt,
+      reasoning: "none",
+      maxOutputTokens: 2000,
+    });
+  },
+};
 
 export default zenAgent;

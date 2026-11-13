@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | BusinessGrowth</title>
+
+    <link rel="stylesheet" href="login.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+    </div>
+
+    <main class="page-container">
+
+        <section class="login-card">
+
+            <div class="logo">
+                <img
+                    src="../images/logo.jpg"
+                    alt="BusinessGrowth Logo"
+                    class="brand-logo"
+                >
+            </div>
+
+            <div class="form-heading">
+                <h1>Welcome back<span>.</span></h1>
+                <p>Log in to continue your BusinessGrowth journey.</p>
+            </div>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="toggle-password"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#" id="forgotPassword">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-button">
+                    <span>Log In</span>
+                    <span class="button-arrow">→</span>
+                </button>
+
+                <p id="message" class="message" role="status"></p>
+
+            </form>
+
+            <p class="signup-text">
+                Don't have an account?
+                <a href="auth.html">Create account</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="login.js" defer></script>
+
+</body>
+</html>

@@ -7,16 +7,23 @@ import {
   renameConversation,
 } from "../controllers/conversation.controller.js";
 
+import { protect } from "../middleware/auth.middleware.js";
+
 const router = express.Router();
 
-// Get all conversations for a user
-router.get("/user/:userId", getConversations);
+// Protect every conversation route
+router.use(protect);
+
+// Get all conversations for the authenticated user
+router.get("/", getConversations);
 
 // Get one conversation and its messages
 router.get("/:conversationId", getConversationById);
 
-router.delete("/:conversationId", deleteConversation)
+// Delete one conversation
+router.delete("/:conversationId", deleteConversation);
 
-router.patch("/:conversationId/rename", renameConversation)
+// Rename one conversation
+router.patch("/:conversationId/rename", renameConversation);
 
 export default router;

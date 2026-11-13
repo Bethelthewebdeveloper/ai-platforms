@@ -1,21 +1,12 @@
 import mongoose from "mongoose";
-import Conversation from "../models/conversation.js";
+import Conversation from "../models/Conversation.js";
 
-// Get all conversations belonging to a user
+// Get all conversations belonging to the authenticated user
 const getConversations = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = req.user._id.toString();
 
-    if (!userId || !userId.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: "A user ID is required.",
-      });
-    }
-
-    const conversations = await Conversation.find({
-      userId: userId.trim(),
-    })
+    const conversations = await Conversation.find({ userId })
       .select("title createdAt updatedAt")
       .sort({ updatedAt: -1 });
 
@@ -37,15 +28,8 @@ const getConversations = async (req, res) => {
 // Get messages from one conversation
 const getConversationById = async (req, res) => {
   try {
+    const userId = req.user._id.toString();
     const { conversationId } = req.params;
-    const { userId } = req.query;
-
-    if (!userId || !userId.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: "A user ID is required.",
-      });
-    }
 
     if (!mongoose.isValidObjectId(conversationId)) {
       return res.status(400).json({
@@ -56,7 +40,7 @@ const getConversationById = async (req, res) => {
 
     const conversation = await Conversation.findOne({
       _id: conversationId,
-      userId: userId.trim(),
+      userId,
     });
 
     if (!conversation) {
@@ -83,15 +67,8 @@ const getConversationById = async (req, res) => {
 // Delete one conversation
 const deleteConversation = async (req, res) => {
   try {
+    const userId = req.user._id.toString();
     const { conversationId } = req.params;
-    const { userId } = req.body;
-
-    if (!userId || typeof userId !== "string" || !userId.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: "A user ID is required.",
-      });
-    }
 
     if (!mongoose.isValidObjectId(conversationId)) {
       return res.status(400).json({
@@ -102,7 +79,7 @@ const deleteConversation = async (req, res) => {
 
     const conversation = await Conversation.findOneAndDelete({
       _id: conversationId,
-      userId: userId.trim(),
+      userId,
     });
 
     if (!conversation) {
@@ -126,19 +103,12 @@ const deleteConversation = async (req, res) => {
   }
 };
 
-
 // Rename a conversation
 const renameConversation = async (req, res) => {
   try {
+    const userId = req.user._id.toString();
     const { conversationId } = req.params;
-    const { userId, title } = req.body;
-
-    if (!userId || typeof userId !== "string" || !userId.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: "A user ID is required.",
-      });
-    }
+    const { title } = req.body;
 
     if (!mongoose.isValidObjectId(conversationId)) {
       return res.status(400).json({
@@ -164,7 +134,7 @@ const renameConversation = async (req, res) => {
     const conversation = await Conversation.findOneAndUpdate(
       {
         _id: conversationId,
-        userId: userId.trim(),
+        userId,
       },
       {
         $set: { title: title.trim() },
@@ -194,9 +164,9 @@ const renameConversation = async (req, res) => {
   }
 };
 
-export { 
-    getConversations, 
-    getConversationById, 
-    deleteConversation,
-    renameConversation,
- };
+export {
+  getConversations,
+  getConversationById,
+  deleteConversation,
+  renameConversation,
+};
