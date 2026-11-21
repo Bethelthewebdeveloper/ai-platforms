@@ -3,7 +3,7 @@
 // BUSINESSGROWTH LOGIN AUTHENTICATION
 // ========================================
 
-const API_URL = "http://127.0.0.1:4000/api/auth";
+const API_URL = `${window.BusinessGrowthAPI.core}/auth`;
 
 // Select HTML elements
 const loginForm = document.getElementById("loginForm");

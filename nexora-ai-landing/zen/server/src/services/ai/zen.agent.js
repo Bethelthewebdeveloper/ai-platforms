@@ -1,14 +1,11 @@
 
 import { generateText } from "ai";
 
-const model = process.env.AI_GATEWAY_MODEL;
-
-if (!model) {
-  throw new Error("AI_GATEWAY_MODEL is missing from .env");
-}
 
 const zenAgent = {
-  async generate({ prompt }) {
+  async generate({ prompt, personaInstruction }) {
+    const model = process.env.AI_GATEWAY_MODEL;
+    if (!model) throw new Error("AI_GATEWAY_MODEL is not configured on the server.");
     return await generateText({
       model,
       system: `
@@ -26,6 +23,9 @@ const zenAgent = {
         - Friendly and respectful
         - Clear and practical
         - Honest when you do not know something
+
+        Persona preference:
+        ${personaInstruction || "Use a gender-neutral persona."}
 
         Always provide useful, accurate answers.
         Never pretend to have performed an action

@@ -1,6 +1,9 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
+    const ZEN_API_URL = window.BusinessGrowthAPI.zen;
+    const API_URL = `${window.BusinessGrowthAPI.core}/auth`;
+    const token = sessionStorage.getItem("businessGrowthToken");
     /* =========================================
        1. HELPER FUNCTIONS
     ========================================= */
@@ -35,22 +38,132 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.showDashboardToast = showToast;
 
-    function safelyStore(key, value) {
+    // ZEN chat widget for the business dashboard.
+    const zenWidget = $("#zenWidget");
+    const zenOrb = $("#zenOrb");
+    const zenPanel = $("#zenWidgetPanel");
+    const zenMessages = $("#zenMessages");
+    const zenForm = $("#zenChatForm");
+    const zenInput = $("#zenMessageInput");
+    const zenSend = $("#zenSendButton");
+    const zenConversationList = $("#zenConversationList");
+    let currentZenConversationId = null;
+
+    function setZenOpen(open) {
+        if (!zenPanel || !zenOrb) return;
+        zenPanel.hidden = !open;
+        zenOrb.setAttribute("aria-expanded", String(open));
+        zenOrb.setAttribute("aria-label", open ? "Close chat with ZEN" : "Open chat with ZEN");
+        if (open) zenInput?.focus();
+    }
+
+    function addZenMessage(role, content) {
+        if (!zenMessages) return;
+        zenMessages.querySelector(".zen-welcome")?.remove();
+        const item = document.createElement("div");
+        item.className = `zen-message ${role}`;
+        const label = document.createElement("span");
+        label.className = "zen-message-label";
+        label.textContent = role === "user" ? "You" : "ZEN";
+        const text = document.createElement("div");
+        text.className = "zen-message-content";
+        text.textContent = content;
+        item.append(label, text);
+        zenMessages.appendChild(item);
+        zenMessages.scrollTop = zenMessages.scrollHeight;
+    }
+
+    async function loadZenConversations() {
+        if (!zenConversationList) return;
+        if (!token) {
+            zenConversationList.textContent = "Sign in to view your conversations.";
+            return;
+        }
+        zenConversationList.textContent = "Loading conversations...";
         try {
-            localStorage.setItem(key, JSON.stringify(value));
+            const response = await fetch(`${ZEN_API_URL}/conversations`, { headers: { Authorization: `Bearer ${token}` } });
+            const result = await response.json();
+            if (!response.ok || !result.success) throw new Error(result.message || "Unable to load conversations.");
+            zenConversationList.replaceChildren();
+            if (!result.conversations?.length) {
+                const empty = document.createElement("p");
+                empty.textContent = "No conversations yet.";
+                zenConversationList.appendChild(empty);
+                return;
+            }
+            result.conversations.forEach((conversation) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "zen-conversation-item";
+                button.textContent = conversation.title || "New conversation";
+                button.addEventListener("click", async () => {
+                    try {
+                        const itemResponse = await fetch(`${ZEN_API_URL}/conversations/${conversation._id}`, { headers: { Authorization: `Bearer ${token}` } });
+                        const itemResult = await itemResponse.json();
+                        if (!itemResponse.ok || !itemResult.success) throw new Error(itemResult.message || "Unable to open conversation.");
+                        currentZenConversationId = conversation._id;
+                        zenMessages.replaceChildren();
+                        (itemResult.conversation.messages || []).forEach((message) => addZenMessage(message.role, message.content));
+                        if (!itemResult.conversation.messages?.length) zenMessages.innerHTML = '<div class="zen-welcome"><i class="bi bi-stars"></i><h3>Hello! I\'m ZEN.</h3><p>What would you like help with today?</p></div>';
+                    } catch (error) { showToast(error.message); }
+                });
+                zenConversationList.appendChild(button);
+            });
         } catch (error) {
-            // Continue without persistent storage.
+            console.error("ZEN conversation load failed:", error);
+            zenConversationList.textContent = "Unable to load conversations. Check that ZEN is running on port 5000.";
         }
     }
 
-    function safelyRead(key, fallback = null) {
+    zenOrb?.addEventListener("click", () => {
+        setZenOpen(zenPanel?.hidden ?? true);
+        if (zenPanel && !zenPanel.hidden) loadZenConversations();
+    });
+    $("#closeZenChat")?.addEventListener("click", () => setZenOpen(false));
+    $("#newZenChat")?.addEventListener("click", () => {
+        currentZenConversationId = null;
+        if (zenMessages) zenMessages.innerHTML = '<div class="zen-welcome"><i class="bi bi-stars"></i><h3>Hello! I\'m ZEN.</h3><p>What would you like help with today?</p></div>';
+        zenInput?.focus();
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && zenPanel && !zenPanel.hidden) setZenOpen(false);
+    });
+
+    zenForm?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const message = zenInput?.value.trim();
+        if (!message) return;
+        if (!token) { addZenMessage("assistant", "Please sign in again to chat with ZEN."); return; }
+        addZenMessage("user", message);
+        zenInput.value = "";
+        if (zenSend) zenSend.disabled = true;
+        const typing = document.createElement("div");
+        typing.className = "zen-message assistant";
+        typing.textContent = "ZEN is thinking...";
+        zenMessages?.appendChild(typing);
         try {
-            const value = localStorage.getItem(key);
-            return value === null ? fallback : value;
+            const response = await fetch(`${ZEN_API_URL}/chat`, {
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+                body: JSON.stringify({ message, conversationId: currentZenConversationId, persona: window.ZenPreferences?.getPersona?.() || "neutral" }),
+            });
+            const result = await response.json();
+            if (!response.ok || !result.success) throw new Error(result.message || "ZEN could not respond.");
+            currentZenConversationId = result.conversationId;
+            typing.remove();
+            addZenMessage("assistant", result.reply);
+            window.dispatchEvent(new Event("ai-usage-updated"));
+            await loadZenConversations();
         } catch (error) {
-            return fallback;
+            typing.remove();
+            addZenMessage("assistant", error.message || "ZEN could not respond. Check that the ZEN server and AI model are configured.");
+        } finally {
+            if (zenSend) zenSend.disabled = false;
+            zenInput?.focus();
         }
-    }
+    });
+
+    loadZenConversations();
 
     /* =========================================
        2. CURRENT DATE
@@ -83,31 +196,74 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const greetingText = $("#greetingText");
-        const greetingName = $("#greetingName");
-        const welcomeName = $("#welcomeName");
-
         if (greetingText) {
             greetingText.textContent = greeting;
         }
 
-        let displayName = safelyRead("businessGrowthDisplayName", "");
+    }
 
-        if (!displayName) {
-            displayName = safelyRead("displayName", "");
+    function renderBusinessOwner(user) {
+        if (!user) return;
+        const firstName = (user.firstName || "").trim();
+        const lastName = (user.lastName || "").trim();
+        const fullName = `${firstName} ${lastName}`.trim() || user.username || "Business Owner";
+        const nameForGreeting = firstName || fullName;
+        const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase() || fullName.slice(0, 2).toUpperCase();
+
+        const profileName = $("#profileName");
+        const profileRole = $("#profileRole");
+        const profileAvatar = $("#profileAvatar");
+        const sidebarAccountName = $("#sidebarAccountName");
+        const sidebarAccountRole = $("#sidebarAccountRole");
+        const sidebarAccountAvatar = $("#sidebarAccountAvatar");
+        const profileMenuName = $("#profileMenuName");
+        const profileMenuEmail = $("#profileMenuEmail");
+        const sidebarMenuName = $("#sidebarMenuName");
+        const sidebarMenuEmail = $("#sidebarMenuEmail");
+        const greetingName = $("#greetingName");
+        const welcomeName = $("#welcomeName");
+
+        if (profileName) profileName.textContent = fullName;
+        if (profileRole) profileRole.textContent = user.accountType === "business" ? "Business Owner" : "Account Owner";
+        if (profileAvatar) profileAvatar.textContent = initials;
+        if (sidebarAccountName) sidebarAccountName.textContent = fullName;
+        if (sidebarAccountRole) sidebarAccountRole.textContent = user.accountType === "business" ? "Business Owner" : "Account Owner";
+        if (sidebarAccountAvatar) sidebarAccountAvatar.textContent = initials;
+        if (profileMenuName) profileMenuName.textContent = fullName;
+        if (profileMenuEmail) profileMenuEmail.textContent = user.email || "";
+        if (sidebarMenuName) sidebarMenuName.textContent = fullName;
+        if (sidebarMenuEmail) sidebarMenuEmail.textContent = user.email || "";
+        if (greetingName) greetingName.textContent = nameForGreeting;
+        if (welcomeName) welcomeName.textContent = nameForGreeting;
+    }
+
+    async function loadBusinessOwner() {
+        try {
+            const savedUser = sessionStorage.getItem("businessGrowthUser");
+            if (savedUser) renderBusinessOwner(JSON.parse(savedUser));
+        } catch (error) {
+            console.warn("Could not read saved profile information.", error);
         }
 
-        displayName = displayName.trim();
+        if (!token) return;
 
-        if (greetingName) {
-            greetingName.textContent = displayName || "there";
-        }
-
-        if (welcomeName) {
-            welcomeName.textContent = displayName || "there";
+        try {
+            const response = await fetch(`${API_URL}/me`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const result = await response.json();
+            if (!response.ok || !result.success || !result.user) {
+                throw new Error(result.message || "Could not load the signed-in profile.");
+            }
+            sessionStorage.setItem("businessGrowthUser", JSON.stringify(result.user));
+            renderBusinessOwner(result.user);
+        } catch (error) {
+            console.warn("Business owner profile could not be refreshed.", error);
         }
     }
 
     updateGreeting();
+    loadBusinessOwner();
 
     /* =========================================
        4. SIDEBAR AND NAVIGATION
@@ -116,25 +272,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const sidebar = $("#sidebar");
     const menuToggle = $("#menuToggle");
 
-    const navLinks = $$(".side-nav [data-section]");
+    const navLinks = $$(".sidebar-nav [data-section]");
+    const settingsSection = $("#settings");
+    const aiAgentPlansSection = $("#ai-agent-plans");
+    const integrationsSection = $("#integrations");
+    const marketingSection = $("#marketing-studio");
 
     const sectionTargets = {
         "Dashboard": null,
-        "AI Tools": "ai-tools",
-        "CRM": "crm",
-        "Customers": "customers",
         "Deals": "deals",
-        "Company": "company",
-        "Team & Roles": "team",
-        "Integrations": "integrations",
-        "Business Management": "business-management",
-        "Projects": "projects",
         "Tasks": "tasks",
-        "Calendar": "calendar",
-        "Reports": "reports",
         "Settings": "settings",
-        "Help & Support": "help-support",
-        "My Profile": "profile"
+        "AI Plans": "ai-agent-plans",
+        "Integrations": "integrations",
+        "Marketing Studio": "marketing-studio"
     };
 
     function closeSidebar() {
@@ -151,6 +302,19 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!(sectionName in sectionTargets)) {
             showToast("Section not found.");
             return;
+        }
+
+        if (settingsSection) {
+            settingsSection.hidden = sectionName !== "Settings";
+        }
+        if (aiAgentPlansSection) {
+            aiAgentPlansSection.hidden = sectionName !== "AI Plans";
+        }
+        if (integrationsSection) {
+            integrationsSection.hidden = sectionName !== "Integrations";
+        }
+        if (marketingSection) {
+            marketingSection.hidden = sectionName !== "Marketing Studio";
         }
 
         navLinks.forEach(function (link) {
@@ -199,9 +363,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            event.preventDefault();
-
             if (link.classList.contains("nav-expand")) {
+                event.preventDefault();
                 const submenu = link.nextElementSibling;
 
                 if (submenu && submenu.classList.contains("sub-nav")) {
@@ -220,6 +383,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+            const href = link.getAttribute("href");
+            if (href && !href.startsWith("#")) {
+                if (window.innerWidth <= 768) closeSidebar();
+                return;
+            }
+
+            event.preventDefault();
             showDashboardSection(sectionName);
         });
     });
@@ -361,6 +531,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const profileToggle = $("#profileToggle");
     const profilePopover = $("#profilePopover");
+    const sidebarAccountToggle = $("#sidebarAccountToggle");
+    const sidebarAccountMenu = $("#sidebarAccountMenu");
+
+    function closeSidebarAccount() {
+        if (sidebarAccountMenu) sidebarAccountMenu.hidden = true;
+        if (sidebarAccountToggle) sidebarAccountToggle.setAttribute("aria-expanded", "false");
+    }
+
+    if (sidebarAccountToggle && sidebarAccountMenu) {
+        sidebarAccountToggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const shouldOpen = sidebarAccountMenu.hidden;
+            closeNotifications();
+            closeProfile();
+            sidebarAccountMenu.hidden = !shouldOpen;
+            sidebarAccountToggle.setAttribute("aria-expanded", String(shouldOpen));
+        });
+        sidebarAccountMenu.addEventListener("click", function (event) { event.stopPropagation(); });
+        sidebarAccountMenu.querySelector("[data-sidebar-settings]")?.addEventListener("click", function (event) {
+            event.preventDefault();
+            showDashboardSection("Settings");
+            closeSidebarAccount();
+        });
+    }
 
     function closeProfile() {
         if (profilePopover) {
@@ -391,11 +585,28 @@ document.addEventListener("DOMContentLoaded", function () {
         profilePopover.addEventListener("click", function (event) {
             event.stopPropagation();
         });
+
+        profilePopover.querySelectorAll("[data-section]").forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                showDashboardSection(link.dataset.section);
+                closeProfile();
+            });
+        });
     }
+
+    $$('[data-action="signout"]').forEach(button => {
+        button.addEventListener("click", () => {
+            sessionStorage.removeItem("businessGrowthToken");
+            sessionStorage.removeItem("businessGrowthUser");
+            window.location.href = "../../auth/login.html";
+        });
+    });
 
     document.addEventListener("click", function () {
         closeNotifications();
         closeProfile();
+        closeSidebarAccount();
     });
 
     /* =========================================
@@ -406,21 +617,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const searchableSections = [
         { terms: ["dashboard", "home"], name: "Dashboard" },
-        { terms: ["ai tools", "assistant", "artificial intelligence"], name: "AI Tools" },
-        { terms: ["crm"], name: "CRM" },
-        { terms: ["customer", "customers", "clients"], name: "Customers" },
+        { terms: ["customer", "customers", "clients"], name: "Customers", href: "pages/customer.html" },
         { terms: ["deal", "deals", "sales"], name: "Deals" },
-        { terms: ["company", "business information"], name: "Company" },
-        { terms: ["team", "roles", "employees"], name: "Team & Roles" },
-        { terms: ["integration", "integrations"], name: "Integrations" },
-        { terms: ["business management"], name: "Business Management" },
-        { terms: ["project", "projects"], name: "Projects" },
         { terms: ["task", "tasks"], name: "Tasks" },
-        { terms: ["calendar", "meeting", "meetings"], name: "Calendar" },
-        { terms: ["report", "reports", "analytics"], name: "Reports" },
-        { terms: ["setting", "settings", "preferences"], name: "Settings" },
-        { terms: ["help", "support"], name: "Help & Support" },
-        { terms: ["profile", "account"], name: "My Profile" }
+        { terms: ["setting", "settings", "preferences"], name: "Settings" }
     ];
 
     if (globalSearch) {
@@ -443,7 +643,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (match) {
                 event.preventDefault();
-                showDashboardSection(match.name);
+                if (match.href) {
+                    window.location.href = match.href;
+                } else {
+                    showDashboardSection(match.name);
+                }
             } else {
                 showToast("No matching dashboard section found.");
             }
@@ -465,6 +669,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.key === "Escape") {
             closeNotifications();
             closeProfile();
+            closeSidebarAccount();
 
             if (globalSearch) {
                 globalSearch.blur();
@@ -476,592 +681,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    /* =========================================
-       9. REVENUE DATA
-    ========================================= */
-
-    const revenueData = {
-        7: {
-            total: 12480,
-            growth: 18.4,
-            labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            values: [1200, 1800, 1500, 2200, 1700, 2400, 1680]
-        },
-
-        30: {
-            total: 48650,
-            growth: 22.6,
-            labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-            values: [9500, 11200, 12450, 15500]
-        },
-
-        90: {
-            total: 138900,
-            growth: 31.2,
-            labels: ["Month 1", "Month 2", "Month 3"],
-            values: [38500, 45200, 55200]
-        }
-    };
-
-    window.revenueData = revenueData;
-
-    /* =========================================
-       10. REVENUE CHART
-    ========================================= */
-
-    const chartCanvas = $("#revenueChart");
-    const chartRange = $("#chartRange");
-
-    let revenueChart = null;
-
-    function formatCurrency(amount) {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 0
-        }).format(amount);
-    }
-
-    function updateRevenueChart(range = "7") {
-        const data = revenueData[range];
-
-        if (!data) {
-            return;
-        }
-
-        const totalElement = $("#totalRevenue");
-        const growthElement = $("#revenueGrowth");
-
-        if (totalElement) {
-            totalElement.textContent = formatCurrency(data.total);
-        }
-
-        if (growthElement) {
-            growthElement.textContent = "+" + data.growth + "%";
-        }
-
-        if (!chartCanvas || typeof Chart === "undefined") {
-            return;
-        }
-
-        if (revenueChart) {
-            revenueChart.destroy();
-        }
-
-        revenueChart = new Chart(chartCanvas, {
-            type: "line",
-
-            data: {
-                labels: data.labels,
-
-                datasets: [{
-                    label: "Revenue",
-                    data: data.values,
-                    borderColor: "#3b82f6",
-                    backgroundColor: "rgba(59, 130, 246, 0.12)",
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 3,
-                    pointRadius: 4,
-                    pointHoverRadius: 6
-                }]
-            },
-
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-
-                interaction: {
-                    intersect: false,
-                    mode: "index"
-                },
-
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                return "Revenue: " +
-                                    formatCurrency(context.parsed.y);
-                            }
-                        }
-                    }
-                },
-
-                scales: {
-                    y: {
-                        beginAtZero: true,
-
-                        ticks: {
-                            callback: function (value) {
-                                return "$" + Number(value).toLocaleString();
-                            }
-                        },
-
-                        grid: {
-                            color: "rgba(128, 128, 128, 0.12)"
-                        }
-                    },
-
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    if (chartRange) {
-        chartRange.addEventListener("change", function () {
-            updateRevenueChart(chartRange.value);
-        });
-    }
-
-    updateRevenueChart(chartRange ? chartRange.value : "7");
-
-    /* =========================================
-       11. QUICK ACTIONS
-    ========================================= */
-
-    const quickActionsData = [
-        {
-            title: "AI Tools",
-            description: "Generate content, ideas and more",
-            icon: "bi-stars",
-            color: "quick-purple",
-            action: "ai-tools"
-        },
-        {
-            title: "Add Customer",
-            description: "Grow your client base",
-            icon: "bi-person-add",
-            color: "quick-blue",
-            action: "add-customer"
-        },
-        {
-            title: "Create Deal",
-            description: "Track and close more deals",
-            icon: "bi-plus-lg",
-            color: "quick-green",
-            action: "create-deal"
-        },
-        {
-            title: "Schedule Meeting",
-            description: "Keep your team aligned",
-            icon: "bi-calendar-event",
-            color: "quick-orange",
-            action: "schedule-meeting"
-        },
-        {
-            title: "View Reports",
-            description: "Check your performance",
-            icon: "bi-file-earmark-bar-graph",
-            color: "quick-indigo",
-            action: "view-reports"
-        }
-    ];
-
-    window.quickActionsData = quickActionsData;
-
-    /* =========================================
-       12. ACTIVITY FEED
-    ========================================= */
-
-    const activityData = [
-        {
-            title: "Customer registered",
-            description: "A new customer joined your business.",
-            icon: "bi-person-plus-fill",
-            color: "blue",
-            time: new Date(Date.now() - 2 * 60 * 60 * 1000)
-        },
-        {
-            title: "Deal updated",
-            description: "A deal's status was updated.",
-            icon: "bi-graph-up-arrow",
-            color: "green",
-            time: new Date(Date.now() - 3 * 60 * 60 * 1000)
-        },
-        {
-            title: "Task completed",
-            description: "A task was marked as completed.",
-            icon: "bi-check2-circle",
-            color: "teal",
-            time: new Date(Date.now() - 5 * 60 * 60 * 1000)
-        }
-    ];
-
-    window.activityData = activityData;
-
-    function formatRelativeTime(date) {
-        const seconds = Math.floor(
-            (Date.now() - date.getTime()) / 1000
-        );
-
-        if (seconds < 60) {
-            return "Just now";
-        }
-
-        if (seconds < 3600) {
-            return Math.floor(seconds / 60) + " minutes ago";
-        }
-
-        if (seconds < 86400) {
-            return Math.floor(seconds / 3600) + " hours ago";
-        }
-
-        return date.toLocaleDateString();
-    }
-
-    function renderActivity() {
-        const activityList = $("#activityList");
-
-        if (!activityList) {
-            return;
-        }
-
-        activityList.replaceChildren();
-
-        activityData.forEach(function (activity) {
-            const item = document.createElement("div");
-            item.className = "activity-item";
-
-            const icon = document.createElement("i");
-            icon.className = "bi " + activity.icon;
-            icon.setAttribute("aria-hidden", "true");
-
-            const content = document.createElement("div");
-            content.className = "activity-content";
-
-            const title = document.createElement("h4");
-            title.textContent = activity.title;
-
-            const description = document.createElement("p");
-            description.textContent = activity.description;
-
-            const time = document.createElement("small");
-            time.textContent = formatRelativeTime(activity.time);
-
-            content.append(title, description, time);
-            item.append(icon, content);
-
-            activityList.appendChild(item);
-        });
-    }
-
-    renderActivity();
-
-    /* =========================================
-       13. DEALS
-    ========================================= */
-
-    const dealsData = [];
-
-    window.dealsData = dealsData;
-
-    const dealList = $("#dealList");
-    const viewAllDeals = $("#viewAllDeals");
-
-    function formatDealAmount(amount) {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 2
-        }).format(Number(amount) || 0);
-    }
-
-    function formatDealDate(dateString) {
-        if (!dateString) {
-            return "Date unavailable";
-        }
-
-        const date = new Date(dateString + "T12:00:00");
-
-        if (Number.isNaN(date.getTime())) {
-            return "Date unavailable";
-        }
-
-        return date.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-        });
-    }
-
-    function renderDeals() {
-        if (!dealList) {
-            return;
-        }
-
-        dealList.replaceChildren();
-
-        if (dealsData.length === 0) {
-            const emptyMessage = document.createElement("p");
-
-            emptyMessage.className = "empty-state";
-            emptyMessage.textContent =
-                "No deals yet. Your deals will appear here.";
-
-            dealList.appendChild(emptyMessage);
-            return;
-        }
-
-        dealsData.forEach(function (deal) {
-            const item = document.createElement("div");
-            item.className = "deal-item";
-
-            const details = document.createElement("div");
-            details.className = "deal-details";
-
-            const title = document.createElement("h4");
-            title.textContent = deal.name;
-
-            const customer = document.createElement("p");
-            customer.textContent =
-                deal.customer || "No customer assigned";
-
-            const date = document.createElement("small");
-            date.textContent = formatDealDate(deal.date);
-
-            const amount = document.createElement("strong");
-            amount.textContent = formatDealAmount(deal.amount);
-
-            const status = document.createElement("span");
-            status.className = "deal-status";
-            status.textContent = deal.status || "Pending";
-
-            details.append(title, customer, date);
-            item.append(details, amount, status);
-
-            dealList.appendChild(item);
-        });
-    }
-
-    window.addDashboardDeal = function (deal) {
-        if (!deal || !deal.name) {
-            showToast("Please provide a deal name.");
-            return;
-        }
-
-        dealsData.unshift({
-            name: String(deal.name),
-            customer: String(deal.customer || ""),
-            amount: Number(deal.amount) || 0,
-            date:
-                deal.date ||
-                new Date().toISOString().slice(0, 10),
-            status: String(deal.status || "Pending")
-        });
-
-        renderDeals();
-
-        showToast("Deal added successfully.");
-    };
-
-    renderDeals();
-
-    if (viewAllDeals) {
-        viewAllDeals.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            const dealsSection = $("#deals");
-
-            if (dealsSection) {
-                dealsSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            } else {
-                showToast(
-                    "The Deals section could not be found."
-                );
-            }
-        });
-    }
-
-    /* =========================================
-       14. TASKS
-    ========================================= */
-
-    const tasksData = [];
-
-    window.tasksData = tasksData;
-
-    /* =========================================
-       15. QUICK ACTION BUTTONS
-    ========================================= */
-
-    $$("[data-action]").forEach(function (button) {
-        button.addEventListener("click", function (event) {
-            const action = button.dataset.action;
-
-            if (action === "ai-tools") {
-                const aiSection = $("#ai-tools");
-
-                if (aiSection) {
-                    event.preventDefault();
-
-                    aiSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                    const assistantInput = $("#assistantInput");
-
-                    if (assistantInput) {
-                        setTimeout(function () {
-                            assistantInput.focus();
-                        }, 400);
-                    }
-                }
-
-                return;
-            }
-
-            if (action === "view-deals") {
-                const dealsSection = $("#deals");
-
-                if (dealsSection) {
-                    event.preventDefault();
-
-                    dealsSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-                }
-
-                return;
-            }
-
-            const messages = {
-                "add-customer":
-                    "Customer registration is not connected yet.",
-
-                "create-deal":
-                    "Use the deal form to add a deal.",
-
-                "schedule-meeting":
-                    "Meeting scheduling is not connected yet.",
-
-                "view-reports":
-                    "Reports are not connected yet."
-            };
-
-            if (messages[action]) {
-                event.preventDefault();
-                showToast(messages[action]);
-            }
-        });
-    });
-
-    /* =========================================
-       16. AI ASSISTANT DEMO
-    ========================================= */
-
-    const assistantForm = $("#assistantForm");
-    const assistantInput = $("#assistantInput");
-    const assistantChat = $("#assistantChat");
-    const assistantStatus = $("#assistantStatus");
-
-    function addAssistantMessage(message, sender) {
-        if (!assistantChat) {
-            return null;
-        }
-
-        const bubble = document.createElement("div");
-
-        bubble.className =
-            sender === "user"
-                ? "user-bubble"
-                : "assistant-bubble";
-
-        bubble.textContent = message;
-
-        assistantChat.appendChild(bubble);
-
-        assistantChat.scrollTop =
-            assistantChat.scrollHeight;
-
-        return bubble;
-    }
-
-    function sendAssistantMessage(message) {
-        const cleanMessage = message.trim();
-
-        if (!cleanMessage || !assistantChat) {
-            return;
-        }
-
-        addAssistantMessage(cleanMessage, "user");
-
-        if (assistantInput) {
-            assistantInput.value = "";
-        }
-
-        const suggestionList =
-            $(".suggestion-list", assistantChat);
-
-        if (suggestionList) {
-            suggestionList.remove();
-        }
-
-        addAssistantMessage(
-            "Thanks for your message! The BusinessGrowth AI " +
-            "backend has not been connected yet. This is demo " +
-            "mode. Once an AI backend is configured, the assistant " +
-            "can help with business questions, content generation " +
-            "and analysis.",
-            "assistant"
-        );
-
-        if (assistantStatus) {
-            assistantStatus.textContent =
-                "Demo mode · Live AI responses are not connected.";
-        }
-    }
-
-    if (assistantForm && assistantInput) {
-        assistantForm.addEventListener(
-            "submit",
-            function (event) {
-                event.preventDefault();
-
-                sendAssistantMessage(
-                    assistantInput.value
-                );
-            }
-        );
-    }
-
-    $$(".suggestion-btn").forEach(function (button) {
-        button.addEventListener("click", function () {
-            if (!assistantInput || !assistantForm) {
-                return;
-            }
-
-            assistantInput.value =
-                button.textContent.trim();
-
-            assistantForm.requestSubmit();
-        });
-    });
-
-    /* =========================================
+    
+/* =========================================
        17. RESPONSIVE RESIZE
     ========================================= */
 
     window.addEventListener("resize", function () {
         if (window.innerWidth > 768) {
             closeSidebar();
-        }
-
-        if (revenueChart) {
-            revenueChart.resize();
         }
     });
 

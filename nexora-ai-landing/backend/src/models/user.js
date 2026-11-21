@@ -161,6 +161,39 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+
+    aiPlan: {
+      type: String,
+      enum: ["free", "pro", "business"],
+      default: "free",
+    },
+
+    aiTokensUsed: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
+
+    aiTokenBalance: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
+
+    aiUsagePeriodStart: {
+      type: Date,
+      default: Date.now,
+    },
+
+    paystackCustomerCode: {
+      type: String,
+      default: "",
+    },
+
+    aiBillingEventRefs: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,

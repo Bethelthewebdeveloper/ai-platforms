@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // CONFIGURATION
     // =====================================
 
-    const API_URL = "http://127.0.0.1:4000/api/auth";
-    const ZEN_API_URL = "http://127.0.0.1:5000/api";
+    const API_URL = `${window.BusinessGrowthAPI.core}/auth`;
+    const ZEN_API_URL = window.BusinessGrowthAPI.zen;
 
     const token = sessionStorage.getItem("businessGrowthToken");
 
@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sidebar = document.getElementById("sidebar");
     const menuToggle = document.getElementById("menuToggle");
+    const zenSettingsSection = document.getElementById("settings");
+    const aiAgentPlansSection = document.getElementById("ai-agent-plans");
+    const integrationsSection = document.getElementById("integrations");
 
     const themeToggle = document.getElementById("themeToggle");
 
@@ -84,9 +87,105 @@ const zenMessageInput = document.getElementById("zenMessageInput");
 const zenSendButton = document.getElementById("zenSendButton");
 const newZenChat = document.getElementById("newZenChat");
 const zenMemorySuggestion = document.getElementById("zenMemorySuggestion");
+const zenWidgetPanel = document.getElementById("zenWidgetPanel");
+const zenOrb = document.getElementById("zenOrb");
+
+function setZenWidgetOpen(open) {
+    if (!zenWidgetPanel || !zenOrb) return;
+    zenWidgetPanel.hidden = !open;
+    zenOrb.setAttribute("aria-expanded", String(open));
+    zenOrb.setAttribute("aria-label", open ? "Close chat with ZEN" : "Open chat with ZEN");
+    positionZenPanel();
+    if (open) zenMessageInput?.focus();
+}
+
+function positionZenPanel() {
+    const widget = document.getElementById("zenWidget");
+    if (!widget || !zenOrb) return;
+    const rect = zenOrb.getBoundingClientRect();
+    const panelHeight = zenWidgetPanel && !zenWidgetPanel.hidden
+        ? zenWidgetPanel.getBoundingClientRect().height
+        : Math.min(650, window.innerHeight - 130);
+    widget.classList.toggle("zen-widget--left", rect.left > window.innerWidth / 2);
+    widget.classList.toggle("zen-widget--top", rect.top < panelHeight + 100);
+}
+
+function setupZenOrbDragging(widget, orb) {
+    if (!widget || !orb) return;
+    const storageKey = "businessGrowthZenOrbPosition";
+    let drag = null;
+    let moved = false;
+    let suppressClick = false;
+
+    const applyPosition = (left, top) => {
+        const maxLeft = Math.max(8, window.innerWidth - orb.offsetWidth - 8);
+        const maxTop = Math.max(8, window.innerHeight - orb.offsetHeight - 8);
+        const x = Math.max(8, Math.min(left, maxLeft));
+        const y = Math.max(8, Math.min(top, maxTop));
+        widget.classList.add("zen-widget--positioned");
+        widget.style.left = `${x}px`;
+        widget.style.top = `${y}px`;
+        widget.style.right = "auto";
+        widget.style.bottom = "auto";
+        positionZenPanel();
+        return { x, y };
+    };
+
+    try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+        if (Number.isFinite(saved?.x) && Number.isFinite(saved?.y)) applyPosition(saved.x, saved.y);
+    } catch (error) { /* Ignore unavailable or invalid saved positions. */ }
+
+    orb.title = "Drag to move · Click to open chat";
+    orb.addEventListener("pointerdown", event => {
+        if (event.button !== 0) return;
+        const rect = orb.getBoundingClientRect();
+        drag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, left: rect.left, top: rect.top };
+        moved = false;
+        orb.setPointerCapture(event.pointerId);
+    });
+    orb.addEventListener("pointermove", event => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+        if (!moved && Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) < 5) return;
+        moved = true;
+        event.preventDefault();
+        applyPosition(drag.left + event.clientX - drag.startX, drag.top + event.clientY - drag.startY);
+    });
+    const finishDrag = event => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+        if (moved) {
+            const rect = orb.getBoundingClientRect();
+            try { localStorage.setItem(storageKey, JSON.stringify({ x: rect.left, y: rect.top })); } catch (error) { /* Keep the moved position for this page view. */ }
+            suppressClick = true;
+            setTimeout(() => { suppressClick = false; }, 0);
+        }
+        drag = null;
+    };
+    orb.addEventListener("pointerup", finishDrag);
+    orb.addEventListener("pointercancel", finishDrag);
+    orb.addEventListener("click", event => {
+        if (!suppressClick) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }, true);
+    window.addEventListener("resize", () => {
+        if (!widget.classList.contains("zen-widget--positioned")) return;
+        const rect = orb.getBoundingClientRect();
+        applyPosition(rect.left, rect.top);
+        try { localStorage.setItem(storageKey, JSON.stringify({ x: rect.left, y: rect.top })); } catch (error) { /* Ignore unavailable storage. */ }
+    });
+}
 
 let currentConversationId = null;
 let zenConversations = [];
+
+zenOrb?.addEventListener("click", () => {
+    setZenWidgetOpen(zenWidgetPanel?.hidden ?? true);
+});
+document.getElementById("closeZenChat")?.addEventListener("click", () => setZenWidgetOpen(false));
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && zenWidgetPanel && !zenWidgetPanel.hidden) setZenWidgetOpen(false);
+});
 
 
     // =====================================
@@ -685,7 +784,8 @@ if (zenChatForm) {
                 },
                 body: JSON.stringify({
                     message,
-                    conversationId: currentConversationId
+                    conversationId: currentConversationId,
+                    persona: window.ZenPreferences?.getPersona?.() || "neutral"
                 })
             });
 
@@ -700,6 +800,7 @@ if (zenChatForm) {
             currentConversationId = result.conversationId;
 
             addZenMessage("assistant", result.reply);
+            window.dispatchEvent(new Event("ai-usage-updated"));
 
             renderZenMemorySuggestion(result.memorySuggestion);
 
@@ -895,15 +996,30 @@ async function deleteZenConversation(conversationId) {
             `${firstName} ${lastName}`.trim() ||
             currentUser.username ||
             "User";
+        const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.trim().toUpperCase() || fullName.slice(0, 2).toUpperCase();
 
         if (profileName) {
             profileName.textContent = fullName;
         }
 
         if (profileAvatar) {
-    profileAvatar.textContent =
-        (firstName || fullName).charAt(0).toUpperCase();
-}
+            profileAvatar.textContent = initials;
+        }
+
+        const sidebarAccountName = document.getElementById("sidebarAccountName");
+        const sidebarAccountRole = document.getElementById("sidebarAccountRole");
+        const sidebarAccountAvatar = document.getElementById("sidebarAccountAvatar");
+        const profileMenuName = document.getElementById("profileMenuName");
+        const profileMenuEmail = document.getElementById("profileMenuEmail");
+        const sidebarMenuName = document.getElementById("sidebarMenuName");
+        const sidebarMenuEmail = document.getElementById("sidebarMenuEmail");
+        if (sidebarAccountName) sidebarAccountName.textContent = fullName;
+        if (sidebarAccountRole) sidebarAccountRole.textContent = currentUser.accountType === "individual" ? "Individual" : currentUser.accountType === "business" ? "Business Owner" : "Account";
+        if (sidebarAccountAvatar) sidebarAccountAvatar.textContent = initials;
+        if (profileMenuName) profileMenuName.textContent = fullName;
+        if (profileMenuEmail) profileMenuEmail.textContent = currentUser.email || "";
+        if (sidebarMenuName) sidebarMenuName.textContent = fullName;
+        if (sidebarMenuEmail) sidebarMenuEmail.textContent = currentUser.email || "";
 
         if (greetingName) {
             greetingName.textContent = firstName || fullName;
@@ -916,9 +1032,9 @@ async function deleteZenConversation(conversationId) {
         if (profileRole) {
     profileRole.textContent =
         currentUser.accountType === "individual"
-            ? "Individual Account"
+            ? "Individual"
             : currentUser.accountType === "business"
-                ? "Business Account"
+                ? "Business Owner"
                 : "Account";
 }
 
@@ -1036,9 +1152,27 @@ document.querySelectorAll('[data-action="signout"]').forEach(button => {
     // Close sidebar when a navigation link is selected on mobile
     document.querySelectorAll(".sidebar-nav [data-section]").forEach(item => {
         item.addEventListener("click", () => {
+            if (zenSettingsSection && item.dataset.section !== "Settings") {
+                zenSettingsSection.hidden = true;
+            }
+            if (aiAgentPlansSection) {
+                aiAgentPlansSection.hidden = item.dataset.section !== "AI Plans";
+            }
+            if (integrationsSection) {
+                integrationsSection.hidden = item.dataset.section !== "Integrations";
+            }
             if (sidebar) {
                 sidebar.classList.remove("active");
             }
+        });
+    });
+
+    document.querySelectorAll('[data-section="Settings"]').forEach(item => {
+        item.addEventListener("click", event => {
+            if (!zenSettingsSection) return;
+            event.preventDefault();
+            zenSettingsSection.hidden = false;
+            zenSettingsSection.scrollIntoView({ behavior: "smooth", block: "start" });
         });
     });
 
@@ -1212,6 +1346,26 @@ if (markRead) {
         });
     }
 
+    const sidebarAccountToggle = document.getElementById("sidebarAccountToggle");
+    const sidebarAccountMenu = document.getElementById("sidebarAccountMenu");
+    function closeSidebarAccount() {
+        if (sidebarAccountMenu) sidebarAccountMenu.hidden = true;
+        if (sidebarAccountToggle) sidebarAccountToggle.setAttribute("aria-expanded", "false");
+    }
+    if (sidebarAccountToggle && sidebarAccountMenu) {
+        sidebarAccountToggle.addEventListener("click", event => {
+            event.stopPropagation();
+            const shouldOpen = sidebarAccountMenu.hidden;
+            closeProfile();
+            closeNotifications();
+            sidebarAccountMenu.hidden = !shouldOpen;
+            sidebarAccountToggle.setAttribute("aria-expanded", String(shouldOpen));
+        });
+        sidebarAccountMenu.addEventListener("click", event => event.stopPropagation());
+    }
+    sidebarAccountMenu?.querySelector("[data-sidebar-settings]")?.addEventListener("click", closeSidebarAccount);
+    document.addEventListener("click", closeSidebarAccount);
+
        // =====================================
     // CLOSE DROPDOWNS WITH ESCAPE
     // =====================================
@@ -1220,6 +1374,7 @@ if (markRead) {
         if (event.key === "Escape") {
             closeNotifications();
             closeProfile();
+            closeSidebarAccount();
 
             if (sidebar) {
                 sidebar.classList.remove("active");
@@ -1269,6 +1424,10 @@ const target = document.getElementById(targetId);
 
             if (target) {
                 event.preventDefault();
+
+                if (zenSettingsSection) zenSettingsSection.hidden = target !== zenSettingsSection;
+                if (aiAgentPlansSection) aiAgentPlansSection.hidden = target !== aiAgentPlansSection;
+                if (integrationsSection) integrationsSection.hidden = target !== integrationsSection;
 
                 target.scrollIntoView({
                     behavior: "smooth",
@@ -1418,33 +1577,61 @@ function personalizeAITools() {
 // AI TOOL LAUNCH BUTTONS
 // =====================================
 
+
+// =====================================
+// AI TOOLS LAUNCHER
+// =====================================
+
+const toolPrompts = {
+    writing: "Act as my AI Writing Assistant. Help me write, rewrite, edit, proofread and summarize content. What would you like me to work on?",
+
+    coding: "Act as my AI Coding Assistant. Help me write code, explain programming concepts, debug errors and build applications. What are we coding today?",
+
+    research: "Act as my AI Research Assistant. Help me investigate topics, organize information and develop well-informed insights. What would you like to research?",
+
+    learning: "Act as my AI Learning Assistant. Teach me difficult topics in simple steps, with examples and practice questions. What would you like to learn?",
+
+    images: "Act as my AI Image Assistant. Help me develop image ideas, write image-generation prompts and plan visual designs. What image would you like to create?",
+
+    video: "Act as my AI Video Assistant. Help me develop video concepts, scripts, storyboards and production plans. What video are we creating?",
+
+    automation: "Act as my AI Automation Assistant. Help me identify repetitive tasks, design workflows and plan business process automation. What would you like to automate?",
+
+    data: "Act as my Data Analysis Assistant. Help me understand datasets, calculate statistics, identify patterns and interpret results. What data would you like to analyse?"
+};
+
 document.querySelectorAll("[data-launch]").forEach(button => {
 
     button.addEventListener("click", () => {
 
         const toolName = button.dataset.launch;
+        const prompt = toolPrompts[toolName];
 
-        const toolLabels = {
-            writing: "AI Writing Assistant",
-            coding: "AI Coding Assistant",
-            research: "AI Research Assistant",
-            learning: "AI Learning Assistant",
-            images: "AI Image Assistant",
-            video: "AI Video Assistant",
-            automation: "AI Automation Assistant",
-            data: "Data Analysis Assistant"
-        };
+        if (!prompt) {
+            showToast("This AI tool is not available yet.");
+            return;
+        }
 
-        const selectedTool =
-            toolLabels[toolName] || "AI Assistant";
-
-        showToast(
-            `${selectedTool} is being prepared. It will be available soon.`
+        const messageInput = document.getElementById(
+            "zenMessageInput"
         );
 
+        if (!zenWidgetPanel || !messageInput) {
+            showToast("ZEN Chat could not be opened.");
+            return;
+        }
+
+        setZenWidgetOpen(true);
+
+        // Prepare the selected assistant
+        messageInput.value = prompt;
+        messageInput.focus();
+
+        showToast("Your AI assistant is ready!");
     });
 
 });
+
 
     // =====================================
     // CLOSE DROPDOWNS WITH ESCAPE

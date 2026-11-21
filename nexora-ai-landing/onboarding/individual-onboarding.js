@@ -2,7 +2,7 @@
 // BUSINESSGROWTH - INDIVIDUAL ONBOARDING
 // =====================================
 
-const API_URL = "http://127.0.0.1:4000/api/onboarding/individual";
+const API_URL = `${window.BusinessGrowthAPI.core}/onboarding/individual`;
 
 const onboardingForm = document.getElementById("individualOnboardingForm");
 const onboardingMessage = document.getElementById("onboardingMessage");

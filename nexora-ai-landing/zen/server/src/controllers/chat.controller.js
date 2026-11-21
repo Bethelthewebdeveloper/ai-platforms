@@ -4,6 +4,7 @@ import Conversation from "../models/Conversation.js";
 
 import { getMemories } from "../services/memory/memory.service.js";
 import { detectMemorySuggestion } from "../services/memory/memory.suggestion.service.js";
+import { getActualTokenCount, recordApiUsage } from "./developer.controller.js";
 
 const sendMessage = async (req, res) => {
   try {
@@ -11,6 +12,14 @@ const sendMessage = async (req, res) => {
     const userId = req.user._id.toString();
 
     const { message, conversationId } = req.body;
+    const personaOptions = {
+      neutral: "Use a gender-neutral persona and avoid gendered self-reference unless relevant.",
+      male: "Present yourself as a male assistant when identity is relevant. Do not make gender central to ordinary answers.",
+      female: "Present yourself as a female assistant when identity is relevant. Do not make gender central to ordinary answers.",
+      gay_man: "Present yourself as a gay man when identity is relevant. Be respectful and natural; do not rely on stereotypes or make sexuality central to ordinary answers.",
+    };
+    const personaKey = req.body?.persona;
+    const personaInstruction = personaOptions[personaKey] || personaOptions.neutral;
 
     // Validate message
     if (!message || typeof message !== "string" || !message.trim()) {
@@ -106,7 +115,8 @@ Respond naturally, helpfully, and honestly.
     await conversation.save();
 
     // Generate ZEN's response
-    const result = await zenAgent.generate({ prompt });
+    const result = await zenAgent.generate({ prompt, personaInstruction });
+    const usage = await recordApiUsage(req, getActualTokenCount(result, prompt));
 
     // Save ZEN's reply
     conversation.messages.push({
@@ -124,9 +134,14 @@ Respond naturally, helpfully, and honestly.
       title: conversation.title,
       memoriesUsed: Math.min(memories.length, 10),
       memorySuggestion,
+      usage,
     });
   } catch (error) {
     console.error("ZEN chat error:", error);
+
+    if (/token allowance exhausted|token limit/i.test(error.message)) {
+      return res.status(402).json({ success: false, message: error.message });
+    }
 
     return res.status(500).json({
       success: false,

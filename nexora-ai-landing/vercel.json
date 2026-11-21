@@ -1,0 +1,41 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 300
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/zen/:path*",
+      "destination": "/api/zen-handler?path=:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/core-handler?path=:path*"
+    },
+    {
+      "source": "/login",
+      "destination": "/auth/login.html"
+    },
+    {
+      "source": "/signup",
+      "destination": "/auth/auth.html"
+    },
+    {
+      "source": "/business",
+      "destination": "/dashboards/business/business.html"
+    },
+    {
+      "source": "/individual",
+      "destination": "/dashboards/individual/individual.html"
+    },
+    {
+      "source": "/billing/return",
+      "destination": "/api/billing/return"
+    }
+  ]
+}

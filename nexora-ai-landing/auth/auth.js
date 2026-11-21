@@ -3,7 +3,7 @@
 // BUSINESSGROWTH SIGNUP AUTHENTICATION
 // ========================================
 
-const API_URL = "http://127.0.0.1:4000/api/auth";
+const API_URL = `${window.BusinessGrowthAPI.core}/auth`;
 
 // Select HTML elements
 const signupForm = document.getElementById("signupForm");
@@ -144,7 +144,38 @@ if (signupForm) {
                 body: JSON.stringify(userData)
             });
 
-            const result = await response.json();
+            const responseText = await response.text();
+            let result = null;
+
+            try {
+                result = responseText ? JSON.parse(responseText) : null;
+            } catch {
+                // Hosting platforms can return plain-text or HTML error pages
+                // when an API route is missing. Keep that response from
+                // surfacing as a confusing JSON parse error to the user.
+                console.error("Signup endpoint returned a non-JSON response:", {
+                    status: response.status,
+                    contentType: response.headers.get("content-type")
+                });
+            }
+
+            if (!result || typeof result !== "object") {
+                if (response.status === 404) {
+                    throw new Error(
+                        "The signup service could not be reached. Please try again later."
+                    );
+                }
+
+                if (response.status >= 500) {
+                    throw new Error(
+                        "The signup service is temporarily unavailable. Please try again later."
+                    );
+                }
+
+                throw new Error(
+                    "The signup service returned an unexpected response. Please try again later."
+                );
+            }
 
             if (!response.ok) {
                 throw new Error(

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="../shared/api-config.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#07111f" />
@@ -27,6 +28,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link rel="stylesheet" href="../../dashboards/business/business.css" />
+    <script src="../zen-preferences.js" defer></script>
+     <script src="../shared/zen-media.js" defer></script>
      <script src="individual.js" defer></script>
   </head>
 
@@ -58,14 +61,15 @@
             <span>AI Tools</span>
           </a>
 
+          <a class="nav-link" href="#ai-agent-plans" data-section="AI Plans">
+            <i class="bi bi-cpu" aria-hidden="true"></i>
+            <span>AI Plans</span>
+          </a>
+
           <a class="nav-link" href="#memory-center" data-section="Memory Center">
     <i class="bi bi-brain" aria-hidden="true"></i>
     <span>ZEN Memory Center</span>
     </a>
-    <a class="nav-link" href="#zen-chat" data-section="ZEN Chat">
-    <i class="bi bi-chat-dots" aria-hidden="true"></i>
-    <span>Chat with ZEN</span>
-</a>
           <button
             class="nav-link nav-expand"
             type="button"
@@ -141,6 +145,18 @@
           </a>
 
         </nav>
+
+        <div class="sidebar-account">
+          <button class="sidebar-account-button" id="sidebarAccountToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="sidebarAccountMenu">
+            <span class="sidebar-account-avatar" id="sidebarAccountAvatar">U</span>
+            <span class="sidebar-account-copy"><strong id="sidebarAccountName">User</strong><small id="sidebarAccountRole">Individual</small></span>
+            <i class="bi bi-chevron-down sidebar-account-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="sidebar-account-menu account-dropdown-menu" id="sidebarAccountMenu" hidden>
+            <div class="account-menu-summary"><strong id="sidebarMenuName">User</strong><small id="sidebarMenuEmail"></small></div>
+            <button type="button" data-action="signout"><i class="bi bi-box-arrow-right"></i> Sign out</button>
+          </div>
+        </div>
       </aside>
 
       <main class="main-area" id="dashboard">
@@ -159,6 +175,9 @@
             <i class="bi bi-list" aria-hidden="true"></i>
           </button>
 
+          <div class="dashboard-header-context" aria-label="Current location">
+            <span>Workspace</span><i class="bi bi-chevron-right" aria-hidden="true"></i><strong>Dashboard</strong>
+          </div>
 
           <label class="search-box" for="globalSearch">
             <i class="bi bi-search" aria-hidden="true"></i>
@@ -259,21 +278,8 @@
                 ></i>
               </button>
 
-              <div
-                class="popover profile-popover"
-                id="profilePopover"
-                hidden
-              >
-                <a href="#profile" data-section="My Profile">
-                  <i class="bi bi-person" aria-hidden="true"></i>
-                  My Profile
-                </a>
-
-                <a href="#settings" data-section="Settings">
-                  <i class="bi bi-gear" aria-hidden="true"></i>
-                  Account Settings
-                </a>
-
+              <div class="popover profile-popover account-dropdown-menu" id="profilePopover" hidden>
+                <div class="account-menu-summary"><strong id="profileMenuName">User</strong><small id="profileMenuEmail"></small></div>
                 <button type="button" data-action="signout">
                   <i
                     class="bi bi-box-arrow-right"
@@ -434,22 +440,15 @@
 </section>
 
 
-<section
-    class="content-section"
-    id="zen-chat"
-    aria-labelledby="zenChatHeading"
->
-    <div class="section-heading">
-        <div>
-            <h2 id="zenChatHeading">Chat with ZEN</h2>
-            <p>Your intelligent AI assistant, ready to help you.</p>
+<aside class="zen-widget" id="zenWidget" aria-label="ZEN AI assistant">
+    <section class="zen-widget-panel" id="zenWidgetPanel" aria-labelledby="zenChatHeading" hidden>
+      <header class="zen-widget-header">
+        <span class="zen-widget-brand"><i class="bi bi-stars"></i><span><strong id="zenChatHeading">ZEN</strong><small>Your AI assistant</small></span></span>
+        <div class="zen-widget-actions">
+          <button type="button" class="zen-widget-new" id="newZenChat" aria-label="Start a new chat" title="New chat"><i class="bi bi-plus-lg"></i></button>
+          <button type="button" class="zen-widget-close" id="closeZenChat" aria-label="Close ZEN chat"><i class="bi bi-x-lg"></i></button>
         </div>
-
-        <button type="button" class="tool-launch" id="newZenChat">
-            <i class="bi bi-plus-lg"></i>
-            New Chat
-        </button>
-    </div>
+      </header>
 
     <div class="zen-chat-layout">
 
@@ -477,6 +476,11 @@
 
             <!-- Message form -->
             <form id="zenChatForm" class="zen-chat-form">
+                <div class="zen-media-controls">
+                    <select id="zenMediaMode" aria-label="ZEN media tool"><option value="chat">Chat with ZEN</option><option value="analyze">Analyze image or video</option><option value="image">Generate image</option><option value="video">Generate video</option></select>
+                    <label class="zen-media-file-button" for="zenMediaFile"><i class="bi bi-paperclip"></i> <span id="zenMediaFileName">Add media</span></label>
+                    <input id="zenMediaFile" type="file" accept="image/png,image/jpeg,image/webp,video/mp4,video/webm,video/quicktime" hidden>
+                </div>
                 <textarea
                     id="zenMessageInput"
                     rows="1"
@@ -491,15 +495,19 @@
             </form>
 
             <p class="zen-chat-disclaimer">
-                ZEN can make mistakes. Check important information.
+                ZEN can make mistakes. Media you choose is sent to the AI provider for processing and is not saved by BusinessGrowth.
             </p>
 
         </div>
     </div>
 </section>
+    <button type="button" class="zen-orb" id="zenOrb" aria-label="Open chat with ZEN" aria-expanded="false" aria-controls="zenWidgetPanel">
+      <span class="zen-orb-halo"></span><i class="bi bi-stars" aria-hidden="true"></i><span class="zen-orb-label">ZEN</span>
+    </button>
+</aside>
 
 
-          <section
+          <!-- <section
             class="stats-grid"
             aria-label="Dashboard statistics"
           >
@@ -597,7 +605,7 @@
 
             </article>
 
-          </section>
+          </section> -->
 
 
           <section
@@ -823,6 +831,112 @@
 </article>
             </div>
           </section>
+          <section class="content-section deals-panel" id="deals" aria-labelledby="dealsHeading">
+            <div class="deal-manager">
+              <div class="deal-page-heading"><div><span class="deal-eyebrow">CUSTOMER RELATIONSHIPS</span><h2 id="dealsHeading">Deals</h2><p>Track opportunities from first conversation through close.</p></div><button class="deal-primary-button" id="createDealButton" type="button"><i class="bi bi-plus-lg"></i> New deal</button></div>
+              <div class="deal-summary-grid"><article><span>Open deals</span><strong id="dealOpenCount">0</strong></article><article><span>Open pipeline value</span><strong id="dealPipelineValue">₦0</strong></article><article><span>Won deals</span><strong id="dealWonCount">0</strong></article></div>
+              <div class="deal-toolbar"><div class="deal-filters" role="group" aria-label="Filter deals"><button type="button" class="active" data-deal-filter="all">All</button><button type="button" data-deal-filter="open">Open</button><button type="button" data-deal-filter="won">Won</button><button type="button" data-deal-filter="lost">Lost</button></div><label class="deal-search"><i class="bi bi-search"></i><input id="dealSearch" type="search" placeholder="Search deals or customers" aria-label="Search deals"></label></div>
+              <p id="dealsStatus" class="deal-status-message" role="status" aria-live="polite">Loading deals…</p>
+              <div class="deal-list" id="dealList" aria-live="polite"></div>
+            </div>
+            <dialog class="deal-dialog" id="dealDialog" aria-labelledby="dealDialogHeading"><form id="dealForm"><div class="deal-dialog-heading"><div><span class="deal-eyebrow">OPPORTUNITY DETAILS</span><h3 id="dealDialogHeading">Create a deal</h3></div><button class="deal-icon-button" id="closeDealDialog" type="button" aria-label="Close deal form"><i class="bi bi-x-lg"></i></button></div><input id="dealId" type="hidden"><label for="dealName">Deal name</label><input id="dealName" maxlength="120" placeholder="e.g. Annual service contract" required><label for="dealCustomer">Customer or company</label><input id="dealCustomer" maxlength="120" placeholder="Customer name"><div class="deal-form-row"><div><label for="dealAmount">Deal value (NGN)</label><input id="dealAmount" type="number" min="0" step="0.01" placeholder="0.00" required></div><div><label for="dealCloseDate">Expected close date</label><input id="dealCloseDate" type="date"></div></div><div class="deal-form-row"><div><label for="dealStage">Stage</label><select id="dealStage"><option value="lead">Lead</option><option value="qualified">Qualified</option><option value="proposal">Proposal</option><option value="negotiation">Negotiation</option><option value="won">Won</option><option value="lost">Lost</option></select></div></div><label for="dealNotes">Notes <span>Optional</span></label><textarea id="dealNotes" rows="3" maxlength="1500" placeholder="Next steps or useful context"></textarea><p id="dealFormError" role="alert"></p><div class="deal-dialog-actions"><button class="deal-secondary-button" id="cancelDealDialog" type="button">Cancel</button><button class="deal-primary-button" id="saveDealButton" type="submit">Save deal</button></div></form></dialog>
+          </section>
+
+          <section class="content-section" id="tasks" aria-labelledby="tasksHeading">
+            <div class="task-manager-page">
+              <div class="task-page-heading"><div><span class="task-eyebrow">PERSONAL WORKSPACE</span><h2 id="tasksHeading">My Tasks</h2><p>Plan your work, keep priorities clear, and track what’s done.</p></div><button class="task-primary-button" id="createTaskButton" type="button"><i class="bi bi-plus-lg"></i> New task</button></div>
+              <div class="task-stats-grid" aria-label="Task summary"><article><span>Total tasks</span><strong id="taskTotalCount">0</strong></article><article><span>To do</span><strong id="taskOpenCount">0</strong></article><article><span>In progress</span><strong id="taskProgressCount">0</strong></article><article><span>Completed</span><strong id="taskCompletedCount">0</strong></article></div>
+              <div class="task-toolbar"><div class="task-filters" role="group" aria-label="Filter tasks"><button type="button" class="active" data-task-filter="all">All</button><button type="button" data-task-filter="todo">To do</button><button type="button" data-task-filter="in_progress">In progress</button><button type="button" data-task-filter="done">Completed</button><button type="button" data-task-filter="overdue">Overdue</button></div><label class="task-search"><i class="bi bi-search"></i><input id="taskSearch" type="search" placeholder="Search tasks" aria-label="Search tasks"></label></div>
+              <div class="task-color-legend" aria-label="Task color guide"><span><i class="legend-dot legend-green"></i>Completed</span><span><i class="legend-dot legend-yellow"></i>Due within 3 days</span><span><i class="legend-dot legend-red"></i>Overdue</span></div>
+              <p id="tasksStatus" class="task-status-message" role="status" aria-live="polite">Loading tasks…</p>
+              <div class="task-list" id="taskList" aria-live="polite"></div>
+            </div>
+            <dialog class="task-dialog" id="taskDialog" aria-labelledby="taskDialogHeading"><form id="taskForm"><div class="task-dialog-heading"><div><span class="task-eyebrow">TASK DETAILS</span><h3 id="taskDialogHeading">Create a task</h3></div><button class="task-icon-button" id="closeTaskDialog" type="button" aria-label="Close task form"><i class="bi bi-x-lg"></i></button></div><input id="taskId" type="hidden"><label for="taskTitle">Task name</label><input id="taskTitle" name="title" maxlength="120" placeholder="What needs to get done?" required><label for="taskDescription">Description <span>Optional</span></label><textarea id="taskDescription" name="description" maxlength="1000" rows="3" placeholder="Add a few details"></textarea><div class="task-form-row"><div><label for="taskDueDate">Due date</label><input id="taskDueDate" name="dueDate" type="date"></div><div><label for="taskPriority">Priority</label><select id="taskPriority" name="priority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div></div><div class="task-form-row"><div><label for="taskCategory">Category</label><input id="taskCategory" name="category" maxlength="40" placeholder="General"></div><div><label for="taskStatusSelect">Status</label><select id="taskStatusSelect" name="status"><option value="todo">To do</option><option value="in_progress">In progress</option><option value="done">Completed</option></select></div></div><p id="taskFormError" role="alert"></p><div class="task-dialog-actions"><button class="task-secondary-button" id="cancelTaskDialog" type="button">Cancel</button><button class="task-primary-button" id="saveTaskButton" type="submit">Save task</button></div></form></dialog>
+          </section>
+
+          <section class="content-section" id="settings" aria-labelledby="zenSettingsHeading" hidden>
+            <div class="section-heading">
+              <div><h2 id="zenSettingsHeading">ZEN preferences</h2><p>Choose ZEN's conversational persona and how its orb moves.</p></div>
+            </div>
+            <form class="zen-settings-card" id="zenPreferencesForm">
+              <label for="zenPersona">ZEN's persona</label>
+              <select id="zenPersona" name="persona">
+                <option value="neutral">Neutral</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="gay_man">Gay man</option>
+              </select>
+              <p>ZEN will use this identity when it is relevant, while staying respectful and avoiding stereotypes.</p>
+              <label for="zenOrbMotion">Orb movement</label>
+              <select id="zenOrbMotion" name="motion">
+                <option value="drift">Gently move around the screen</option>
+                <option value="stationary">Stay in one place</option>
+              </select>
+              <button class="tool-launch" type="submit">Save ZEN preferences</button>
+              <span id="zenPreferencesStatus" role="status" aria-live="polite"></span>
+            </form>
+          </section>
+          <section class="content-section ai-agent-plans-page" id="ai-agent-plans" aria-labelledby="aiAgentPlansHeading" hidden>
+            <div class="developer-center" id="aiPlansCenter">
+              <div class="section-heading"><div><h2 id="aiAgentPlansHeading">AI agent plans</h2><p>Compare plans, track monthly tokens, and manage your allowance.</p></div></div>
+              <div id="aiPlanCards" class="ai-plan-grid" aria-live="polite"><p>Loading plans…</p></div>
+              <div class="ai-usage-card"><div><strong id="aiUsageLabel">AI token usage</strong><span id="aiUsageText">Loading usage…</span></div><progress id="aiUsageProgress" max="100" value="0"></progress><button id="aiTopupButton" class="tool-launch" type="button">Buy token top-up</button></div>
+            </div>
+          </section>
+          <section class="content-section" id="integrations" aria-labelledby="integrationsHeading" hidden>
+            <div class="integration-control-center" id="developerCenter">
+              <div class="integration-page-heading"><div><span class="integration-eyebrow">BUSINESSGROWTH CONNECT</span><h2 id="integrationsHeading">Quick Integration</h2><p>Connect your business apps, manage access, and give ZEN permission to work with the tools you choose.</p></div><span class="integration-preview-badge"><i class="bi bi-info-circle"></i> Catalogue preview</span></div>
+
+              <section class="integration-overview" aria-label="Integration overview">
+                <article class="integration-stat"><span class="integration-stat-icon"><i class="bi bi-plug"></i></span><div><strong>0</strong><span>Connected apps</span></div></article>
+                <article class="integration-stat"><span class="integration-stat-icon"><i class="bi bi-grid"></i></span><div><strong>10</strong><span>Available apps</span></div></article>
+                <article class="integration-stat"><span class="integration-stat-icon"><i class="bi bi-activity"></i></span><div><strong>0</strong><span>Recent activities</span></div></article>
+              </section>
+              <p class="integration-preview-note"><i class="bi bi-info-circle"></i> This is an illustrative integration catalogue. External app connections are not live yet; Connect actions will not authorize or sync accounts.</p>
+
+              <section class="integration-section" aria-labelledby="availableIntegrationsHeading">
+                <div class="integration-section-heading"><div><span>DISCOVER</span><h3 id="availableIntegrationsHeading">Available integrations</h3><p>Start with the apps businesses use most.</p></div><label class="integration-search"><i class="bi bi-search"></i><input id="integrationSearch" type="search" placeholder="Search apps" aria-label="Search integrations"></label></div>
+                <p id="integrationConnectNotice" class="integration-preview-note" role="status" aria-live="polite" hidden></p>
+                <div class="integration-app-grid" id="integrationAppGrid">
+                  <article class="integration-app-card" data-app-name="Gmail" data-app-category="Communication"><div class="integration-app-top"><span class="integration-app-logo gmail-logo"><i class="bi bi-envelope-fill"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Gmail</h4><p>Email management</p><button type="button" class="integration-connect" data-integration-connect="Gmail">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="Google Calendar" data-app-category="Productivity"><div class="integration-app-top"><span class="integration-app-logo calendar-logo"><i class="bi bi-calendar3"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Google Calendar</h4><p>Meetings and scheduling</p><button type="button" class="integration-connect" data-integration-connect="Google Calendar">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="Google Drive" data-app-category="Productivity"><div class="integration-app-top"><span class="integration-app-logo drive-logo"><i class="bi bi-cloud-fill"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Google Drive</h4><p>File management</p><button type="button" class="integration-connect" data-integration-connect="Google Drive">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="Slack" data-app-category="Communication"><div class="integration-app-top"><span class="integration-app-logo slack-logo"><i class="bi bi-chat-dots-fill"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Slack</h4><p>Team communication</p><button type="button" class="integration-connect" data-integration-connect="Slack">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="Paystack" data-app-category="Finance"><div class="integration-app-top"><span class="integration-app-logo paystack-logo"><i class="bi bi-credit-card-2-front-fill"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Paystack</h4><p>Payment management</p><button type="button" class="integration-connect" data-integration-connect="Paystack">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="Shopify" data-app-category="E-commerce"><div class="integration-app-top"><span class="integration-app-logo shopify-logo"><i class="bi bi-bag-fill"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Shopify</h4><p>E-commerce management</p><button type="button" class="integration-connect" data-integration-connect="Shopify">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="Mailchimp" data-app-category="Marketing"><div class="integration-app-top"><span class="integration-app-logo mailchimp-logo"><i class="bi bi-megaphone-fill"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Mailchimp</h4><p>Email marketing</p><button type="button" class="integration-connect" data-integration-connect="Mailchimp">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="HubSpot" data-app-category="CRM"><div class="integration-app-top"><span class="integration-app-logo hubspot-logo"><i class="bi bi-diagram-3-fill"></i></span><span class="integration-status status-preview">Preview</span></div><h4>HubSpot</h4><p>Customer relationship management</p><button type="button" class="integration-connect" data-integration-connect="HubSpot">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="Salesforce" data-app-category="CRM"><div class="integration-app-top"><span class="integration-app-logo salesforce-logo"><i class="bi bi-cloud"></i></span><span class="integration-status status-preview">Preview</span></div><h4>Salesforce</h4><p>Customer relationship management</p><button type="button" class="integration-connect" data-integration-connect="Salesforce">Connect <i class="bi bi-arrow-right"></i></button></article>
+                  <article class="integration-app-card" data-app-name="GitHub" data-app-category="Development"><div class="integration-app-top"><span class="integration-app-logo github-logo"><i class="bi bi-github"></i></span><span class="integration-status status-preview">Preview</span></div><h4>GitHub</h4><p>Code and project workflows</p><button type="button" class="integration-connect" data-integration-connect="GitHub">Connect <i class="bi bi-arrow-right"></i></button></article>
+                </div>
+                <p id="integrationSearchEmpty" class="integration-empty-state" hidden>No integrations match that search.</p>
+              </section>
+
+              <section class="integration-section" aria-labelledby="integrationCategoriesHeading"><div class="integration-section-heading"><div><span>BROWSE BY TYPE</span><h3 id="integrationCategoriesHeading">Integration categories</h3><p>Find the right tools for each part of your business.</p></div></div><div class="integration-category-grid">
+                <article><i class="bi bi-chat-square-text"></i><h4>Communication</h4><p>Gmail · Slack</p></article><article><i class="bi bi-calendar-check"></i><h4>Productivity</h4><p>Google Calendar · Google Drive</p></article><article><i class="bi bi-cash-coin"></i><h4>Finance</h4><p>Paystack</p></article><article><i class="bi bi-megaphone"></i><h4>Marketing</h4><p>Mailchimp</p></article><article><i class="bi bi-bag"></i><h4>E-commerce</h4><p>Shopify</p></article><article><i class="bi bi-people"></i><h4>CRM</h4><p>HubSpot · Salesforce</p></article><article><i class="bi bi-code-slash"></i><h4>Development</h4><p>GitHub</p></article>
+              </div></section>
+
+              <section class="integration-section" aria-labelledby="connectedAppsHeading"><div class="integration-section-heading"><div><span>YOUR WORKSPACE</span><h3 id="connectedAppsHeading">Connected applications</h3><p>Manage apps authorized for this workspace.</p></div><span class="integration-count">0 connected</span></div><div class="integration-empty-state"><i class="bi bi-plug"></i><strong>No connected applications yet</strong><span>When you authorize an app, its connection status, date, settings, and disconnect controls will appear here.</span></div></section>
+
+              <section class="integration-section" aria-labelledby="integrationActivityHeading"><div class="integration-section-heading"><div><span>MONITOR</span><h3 id="integrationActivityHeading">Integration activity</h3><p>Recent syncs, events, and connection issues.</p></div><span class="integration-count">No activity</span></div><div class="integration-empty-state"><i class="bi bi-clock-history"></i><strong>No integration activity yet</strong><span>Sync events and connection errors will be recorded here once live integrations are enabled.</span></div></section>
+
+              <section class="integration-section" aria-labelledby="integrationSettingsHeading"><div class="integration-section-heading"><div><span>CONTROL</span><h3 id="integrationSettingsHeading">Integration settings</h3><p>Choose what connected apps can share with BusinessGrowth.</p></div></div><div class="integration-settings-grid"><label><span><strong>Automatic synchronisation</strong><small>Let connected apps keep information up to date.</small></span><input type="checkbox" disabled aria-label="Automatic synchronisation (unavailable until an app is connected)"></label><label><span><strong>Share activity with ZEN</strong><small>Allow ZEN to use data from approved connections.</small></span><input type="checkbox" disabled aria-label="Share activity with ZEN (unavailable until an app is connected)"></label><label><span><strong>Reconnect expired accounts</strong><small>Prompt an owner when an app needs authorization again.</small></span><input type="checkbox" disabled aria-label="Reconnect expired accounts (unavailable until an app is connected)"></label></div></section>
+
+              <section class="integration-section zen-integration-card" aria-labelledby="zenIntegrationHeading"><span class="integration-zen-icon"><i class="bi bi-stars"></i></span><div><span class="integration-eyebrow">WORKS WITH ZEN</span><h3 id="zenIntegrationHeading">Your apps, with your permission</h3><p>Once an app is connected, you’ll be able to choose whether ZEN can use its information—for example, finding Drive files or checking your calendar. ZEN will only access apps and data you authorize.</p><span class="integration-status status-preview">Available when live app connections are enabled</span></div></section>
+
+              <section class="integration-section" aria-labelledby="advancedIntegrationsHeading"><div class="integration-section-heading"><div><span>FOR DEVELOPERS</span><h3 id="advancedIntegrationsHeading">Advanced integrations</h3><p>Connect your own product or build a custom workflow.</p></div></div><div class="advanced-integration-grid"><article class="api-key-manager"><div class="integration-app-top"><h4>ZEN Agent API</h4><span class="integration-status status-ready">API available</span></div><p>Generate short-lived API keys for your own server integration.</p><form id="apiKeyCreateForm"><label for="apiKeyName">Key name</label><input id="apiKeyName" maxlength="50" placeholder="e.g. My product backend" required><button class="tool-launch" type="submit">Generate API key</button></form><p id="newApiKeyNotice" class="new-api-key" hidden></p><div id="apiKeyList" aria-live="polite"></div><p id="developerCenterStatus" role="status" aria-live="polite"></p><p class="api-key-hint">Keep keys on your server. Never put them in browser code or public repositories.</p></article><article class="advanced-capability"><i class="bi bi-arrow-left-right"></i><div><h4>Webhooks</h4><p>Send or receive events with your own application.</p><span class="integration-status status-preview">Setup required</span></div></article><article class="advanced-capability"><i class="bi bi-shield-lock"></i><div><h4>Custom app authentication</h4><p>Configure OAuth or API credentials for a private app.</p><span class="integration-status status-preview">Setup required</span></div></article></div><div class="api-integration-guide"><h4>Call the ZEN agent</h4><p><strong>POST</strong> <code>http://localhost:5000/v1/agents/run</code> with an <code>X-API-Key</code> header and a JSON body containing <code>prompt</code>.</p><pre><code>const response = await fetch("http://localhost:5000/v1/agents/run", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-Key": process.env.NEXORA_API_KEY
+  },
+  body: JSON.stringify({ prompt: "Summarize this customer feedback" })
+});
+
+const result = await response.json();
+console.log(result.output);</code></pre><p>Store the key on your server. Replace the local URL with your deployed API URL when you go live. Token usage and quota errors are included in API responses.</p></div></section>
+            </div>
+          </section>
         </div>
 
         <!-- ================= FOOTER ================= -->
@@ -855,6 +969,9 @@
     
     </div>
   </body>
+  <script src="../developer-center.js" defer></script>
+  <script src="../tasks.js" defer></script>
+  <script src="../deals.js" defer></script>
   <!-- <script src="../../dashboards/business.js"></script> -->
   
 </html>

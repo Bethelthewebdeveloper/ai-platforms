@@ -1,15 +1,19 @@
 import mongoose from "mongoose";
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
+let connectionPromise;
 
-    console.log("ZEN MongoDB connected successfully");
-    console.log("Database:", mongoose.connection.name);
-  } catch (error) {
-    console.error("MongoDB connection failed:", error.message);
-    process.exit(1);
+const connectDB = async () => {
+  if (mongoose.connection.readyState === 1) return mongoose.connection;
+  if (!connectionPromise) {
+    connectionPromise = mongoose.connect(process.env.MONGODB_URI).catch((error) => {
+      connectionPromise = null;
+      console.error("MongoDB connection failed:", error.message);
+      throw error;
+    });
   }
+  const connection = await connectionPromise;
+  console.log("MongoDB connected successfully");
+  return connection;
 };
 
 export default connectDB;

@@ -258,6 +258,25 @@
         gap: 15px;
       }
 
+      .topbar-right { position: relative; }
+      .topbar-menu-wrap { position: relative; }
+      .topbar-popover { position: absolute; top: calc(100% + 12px); right: 0; z-index: 1200; width: 250px; padding: 15px; color: var(--text-color); background: var(--card-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,.32); }
+      .topbar-popover[hidden] { display: none; }
+      .topbar-popover strong { display:block; margin-bottom:5px; font-size:13px; }
+      .topbar-popover p, .topbar-popover small { color:var(--muted-color); font-size:11px; }
+      .topbar-popover a { display:flex; align-items:center; gap:8px; padding:9px 0; color:var(--text-color); font-size:12px; }
+      .topbar-popover a + a { border-top:1px solid var(--border-color); }
+      .topbar-avatar { padding:0; border:0; cursor:pointer; }
+      .topbar-avatar[aria-expanded="true"] { outline:2px solid var(--primary-color); outline-offset:2px; }
+
+      body.light-mode {
+        --bg-color:#f3f6fb; --sidebar-color:#fff; --card-color:#fff; --card-hover:#edf2f9;
+        --border-color:#d9e1ec; --text-color:#182334; --muted-color:#64748b;
+      }
+      body.light-mode .topbar { background:rgba(255,255,255,.92); }
+      body.light-mode .nav-link.active { color:#1d4ed8; background:rgba(59,130,246,.1); }
+      body.light-mode .customer-table-wrap { box-shadow:0 5px 18px rgba(20,40,70,.05); }
+
       .breadcrumb {
         display: flex;
         align-items: center;
@@ -616,6 +635,25 @@
           width: 100%;
         }
       }
+      .customers-toolbar { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:22px 0 14px; }
+      .customers-toolbar h2 { color:var(--text-color); font-size:17px; }
+      .customer-search { display:flex; align-items:center; gap:9px; width:min(340px,100%); padding:10px 12px; color:var(--muted-color); background:var(--card-color); border:1px solid var(--border-color); border-radius:9px; }
+      .customer-search input { width:100%; color:var(--text-color); background:transparent; border:0; outline:0; }
+      .customer-table-wrap { overflow-x:auto; background:var(--card-color); border:1px solid var(--border-color); border-radius:12px; }
+      .customer-table { width:100%; border-collapse:collapse; min-width:760px; }
+      .customer-table th, .customer-table td { padding:13px 15px; border-bottom:1px solid var(--border-color); text-align:left; vertical-align:middle; }
+      .customer-table th { color:var(--muted-color); font-size:11px; font-weight:700; }
+      .customer-table td { color:var(--text-color); font-size:12px; }
+      .customer-table tbody tr:last-child td { border-bottom:0; }
+      .customer-primary { display:grid; gap:3px; }
+      .customer-primary strong { font-size:12px; }
+      .customer-primary span { color:var(--muted-color); font-size:10px; }
+      .customer-status { display:inline-flex; padding:4px 8px; border-radius:999px; color:#70d5ae; background:rgba(42,184,132,.12); font-size:10px; }
+      .customer-status.inactive { color:#f2ca75; background:rgba(242,201,109,.1); }
+      .customer-delete { padding:6px 8px; color:#ff9ba7; background:transparent; border:0; cursor:pointer; }
+      .customer-empty { padding:38px 18px; text-align:center; color:var(--muted-color); }
+      .customer-empty strong { display:block; margin-bottom:5px; color:var(--text-color); }
+      @media(max-width:650px) { .customers-toolbar { align-items:stretch; flex-direction:column; }.customer-search { width:100%; } }
     </style>
   </head>
 
@@ -646,7 +684,7 @@
             </a>
 
             <!-- <a
-              href="customers.html"
+              href="customer.html"
               class="nav-link active"
               aria-current="page"
             >
@@ -744,22 +782,29 @@
               type="button"
               class="icon-button"
               id="themeToggle"
-              aria-label="Toggle theme"
+              aria-label="Switch to light mode"
+              title="Switch to light mode"
             >
-              <i class="bi bi-moon-stars"></i>
+              <i class="bi bi-sun"></i>
             </button>
 
-            <button
-              type="button"
-              class="icon-button notification-button"
-              id="notificationButton"
-              aria-label="Notifications"
-            >
-              <i class="bi bi-bell"></i>
-              <span class="notification-indicator"></span>
-            </button>
+            <div class="topbar-menu-wrap">
+              <button type="button" class="icon-button notification-button" id="notificationButton" aria-label="Notifications" aria-expanded="false" aria-controls="notificationsPopover">
+                <i class="bi bi-bell"></i><span class="notification-indicator" id="notificationIndicator" hidden></span>
+              </button>
+              <div class="topbar-popover" id="notificationsPopover" role="status" hidden>
+                <strong>Notifications</strong><p>No new notifications.</p>
+              </div>
+            </div>
 
-            <div class="topbar-avatar" id="topbarAvatar">U</div>
+            <div class="topbar-menu-wrap">
+              <button type="button" class="topbar-avatar" id="topbarAvatar" aria-label="Open account menu" aria-expanded="false" aria-controls="profilePopover">U</button>
+              <div class="topbar-popover" id="profilePopover" hidden>
+                <strong id="topbarUserName">Your account</strong><small id="topbarUserEmail"></small>
+                <a href="../business.html"><i class="bi bi-grid"></i> Dashboard</a>
+                <a href="../../../auth/login.html" id="signOutLink"><i class="bi bi-box-arrow-right"></i> Sign out</a>
+              </div>
+            </div>
           </div>
         </header>
 
@@ -787,15 +832,10 @@
                 Export
               </button>
 
-              <button
-                type="button"
-                class="btn btn-primary"
-                id="addCustomerButton"
-              > <a href="../pages/Addclient.html">
+              <a class="btn btn-primary" id="addCustomerButton" href="Addclient.html">
                 <i class="bi bi-plus-lg"></i>
                 Add Customer
               </a>
-              </button>
             </div>
           </section>
 
@@ -867,9 +907,15 @@
             </article>
           </section>
 
-          <!-- MORE CUSTOMER SECTIONS WILL GO HERE -->
+          <section aria-labelledby="customerListHeading">
+            <div class="customers-toolbar"><h2 id="customerListHeading">Customer list</h2><label class="customer-search"><i class="bi bi-search" aria-hidden="true"></i><input id="customerSearch" type="search" placeholder="Search name, company, or email" aria-label="Search customers"></label></div>
+            <p id="customerPageMessage" class="muted" role="status" aria-live="polite"></p>
+            <div class="customer-table-wrap"><table class="customer-table"><thead><tr><th>Customer</th><th>Company</th><th>Phone</th><th>Type</th><th>Status</th><th>Added</th><th><span class="visually-hidden">Actions</span></th></tr></thead><tbody id="customerTableBody"></tbody></table><div class="customer-empty" id="customerEmpty" hidden></div></div>
+          </section>
         </div>
       </main>
     </div>
   </body>
+  <script src="../../customer-api.js" defer></script>
+  <script src="customer.js" defer></script>
 </html>

@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import Conversation from "../models/Conversation.js";
 
-// Get all conversations belonging to the authenticated user
 const getConversations = async (req, res) => {
   try {
     const userId = req.user._id.toString();
@@ -25,7 +24,6 @@ const getConversations = async (req, res) => {
   }
 };
 
-// Get messages from one conversation
 const getConversationById = async (req, res) => {
   try {
     const userId = req.user._id.toString();
@@ -64,7 +62,6 @@ const getConversationById = async (req, res) => {
   }
 };
 
-// Delete one conversation
 const deleteConversation = async (req, res) => {
   try {
     const userId = req.user._id.toString();
@@ -103,7 +100,6 @@ const deleteConversation = async (req, res) => {
   }
 };
 
-// Rename a conversation
 const renameConversation = async (req, res) => {
   try {
     const userId = req.user._id.toString();

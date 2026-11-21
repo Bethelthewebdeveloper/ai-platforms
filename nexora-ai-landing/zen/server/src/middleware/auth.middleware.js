@@ -1,9 +1,13 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-const businessGrowthDB = mongoose.createConnection(
-  process.env.BUSINESSGROWTH_MONGODB_URI
-);
+const businessGrowthDB = mongoose.createConnection();
+const businessGrowthMongoUri = process.env.BUSINESSGROWTH_MONGODB_URI || process.env.MONGODB_URI;
+if (businessGrowthMongoUri) {
+  businessGrowthDB.openUri(businessGrowthMongoUri).catch((error) => {
+    console.error("BusinessGrowth database connection failed:", error.message);
+  });
+}
 
 const User =
   businessGrowthDB.models.User ||
@@ -15,6 +19,12 @@ const User =
         lastName: String,
         username: String,
         email: String,
+        aiPlan: { type: String, default: "free" },
+        aiTokensUsed: { type: Number, default: 0 },
+        aiTokenBalance: { type: Number, default: 0 },
+        aiUsagePeriodStart: { type: Date, default: Date.now },
+        paystackCustomerCode: String,
+        aiBillingEventRefs: { type: [String], default: [] },
         accountType: String,
         role: String,
         isActive: {
@@ -64,3 +74,5 @@ export const protect = async (req, res, next) => {
     });
   }
 };
+
+export { businessGrowthDB };
